@@ -1,0 +1,11 @@
+<div *ngIf="citation">
+    <h2> {{ citation.name }} </h2>
+    <div>
+        Name:
+        <input [(ngModel)]="citation.name" placeholder="Name"/>
+    </div>
+    <button (click)="updateCitation(citation)" *ngIf="citation.id">Save</button>
+    <button (click)="deleteCitation(citation)" *ngIf="citation.id">Delete</button>
+    <button (click)="createCitation(citation)" *ngIf="!citation.id">Create</button>
+
+</div>

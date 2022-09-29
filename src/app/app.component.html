@@ -1,10 +1,15 @@
+<button (click)="initNewCitation()"> Create New Citation</button>
+
 <table>
   <thead>
     <th>Name</th>
   </thead>
   <tbody>
     <tr *ngFor="let citation of citations">
-      <td>{{ citation.name }}</td>
+      <td> {{ citation.name }} </td>
+      <td><button (click)="editCitation(citation)">Edit</button></td>
     </tr>
   </tbody>
 </table>
+
+<app-edit-citation [citation]="citationToEdit" (citationsUpdated)="updateCitationList($event)"></app-edit-citation>
