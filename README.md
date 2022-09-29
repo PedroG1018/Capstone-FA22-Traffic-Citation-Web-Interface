@@ -1,4 +1,7 @@
-# TrafficCitationUI
+# Traffic Citation Inteface
+Backend web api can be found [HERE](https://github.com/ahernandez1215/traffic-citation-backend)
+
+Learning Resources: [CRUD with Angular 14 & .NET 6 Web API, EF Core & SQL Server](https://www.youtube.com/watch?v=dtthbiP3SE0)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.3.
 
