@@ -5,13 +5,12 @@ const path = require('path');
 const port = process.env.PORT || 8080;
 const server = require('http').Server(app);
 
-app.use(express.static(__dirname, 'dist', {index: false}));
+app.use(express.static('./dist/traffic-citation.ui'));
 
 server.listen(port, () => 
     console.log("App running on port " + port),
 );
 
 app.get('/*', (req, res) => 
-    res.sendFile(path.join(__dirname, 'src', 'index.html')),
+    res.sendFile('index.html', {root: 'dist/traffic-citation-frontend'}),
 );
-
