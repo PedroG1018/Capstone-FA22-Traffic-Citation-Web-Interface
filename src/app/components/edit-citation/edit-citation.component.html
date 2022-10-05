@@ -1,0 +1,61 @@
+<div *ngIf="citation">
+    <h2> {{ citation.type }} </h2>
+    <div>
+        Type:
+        <input [(ngModel)]="citation.type" placeholder="Type"/>
+    </div>
+    <div>
+        Date:
+        <input [(ngModel)]="citation.date" type="date"/>
+    </div>
+    <div>
+        Time:
+        <input [(ngModel)]="citation.time" type="time"/>
+    </div>
+    <div>
+        Owner's Fault:
+        <label>
+            <input [(ngModel)]="citation.owner_fault" type="radio" value="true"/> Yes
+        </label>
+        <label>
+            <input [(ngModel)]="citation.owner_fault" type="radio" value="false"/> No
+        </label>
+    </div>
+    <div>
+        Description:
+        <input [(ngModel)]="citation.desc" placeholder="Description"/>
+    </div>
+    <div>
+        Violation Location:
+        <input [(ngModel)]="citation.violation_loc" placeholder="Location"/>
+    </div>
+    <div>
+        VIN:
+        <input [(ngModel)]="citation.vin" placeholder="VIN"/>
+    </div>
+    <div>
+        VIN State:
+        <input [(ngModel)]="citation.vin_state" placeholder="State"/>
+    </div>
+    <div>
+        Code:
+        <input [(ngModel)]="citation.code_section" placeholder="Code"/>
+    </div>
+    <div>
+        Officer Name:
+        <input [(ngModel)]="citation.officer_name" placeholder="Name"/>
+    </div>
+    <div>
+        Officer Badge:
+        <input [(ngModel)]="citation.officer_badge" placeholder="Badge Number"/>
+    </div>
+    <div>
+        Signed Date:
+        <input [(ngModel)]="citation.sign_date" type="date"/>
+    </div>
+    
+    <button (click)="updateCitation(citation)" *ngIf="citation.citation_id">Save</button>
+    <button (click)="deleteCitation(citation)" *ngIf="citation.citation_id">Delete</button>
+    <button (click)="createCitation(citation)" *ngIf="!citation.citation_id">Create</button>
+
+</div>

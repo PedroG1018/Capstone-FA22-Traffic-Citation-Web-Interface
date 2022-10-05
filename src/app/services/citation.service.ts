@@ -15,4 +15,16 @@ export class CitationService {
   public getCitations() : Observable<Citation[]> {
     return this.http.get<Citation[]>(`${environment.apiUrl}/${this.url}`);
   }
+
+  public createCitation(citation: Citation) : Observable<Citation[]> {
+    return this.http.post<Citation[]>(`${environment.apiUrl}/${this.url}`, citation);
+  }
+
+  public updateCitation(citation: Citation) : Observable<Citation[]> {
+    return this.http.put<Citation[]>(`${environment.apiUrl}/${this.url}`, citation);
+  }
+
+  public deleteCitation(citation: Citation) : Observable<Citation[]> {
+    return this.http.delete<Citation[]>(`${environment.apiUrl}/${this.url}/${citation.citation_id}`);
+  }
 }
