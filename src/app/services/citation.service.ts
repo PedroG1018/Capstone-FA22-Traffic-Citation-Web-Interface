@@ -25,6 +25,6 @@ export class CitationService {
   }
 
   public deleteCitation(citation: Citation) : Observable<Citation[]> {
-    return this.http.delete<Citation[]>(`${environment.apiUrl}/${this.url}/${citation.id}`);
+    return this.http.delete<Citation[]>(`${environment.apiUrl}/${this.url}/${citation.citation_id}`);
   }
 }
