@@ -15,7 +15,7 @@ export class EditCitationComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  
   // Call citation.service methods to perform CRUD operations here
   createCitation(citation: Citation) {
     this.citationService.createCitation(citation).subscribe((citations: Citation[]) => this.citationsUpdated.emit(citations));
