@@ -13,6 +13,7 @@ import { CreateCitationComponent } from './components/create-citation/create-cit
 import { ViewCitationsComponent } from './components/view-citations/view-citations.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { HomeComponent } from './components/home/home.component';
     ViewCitationsComponent,
     PageNotFoundComponent,
     HomeComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

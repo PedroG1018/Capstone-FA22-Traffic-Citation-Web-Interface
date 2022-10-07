@@ -7,10 +7,10 @@ const server = require('http').Server(app);
 
 app.use(express.static('./dist/traffic-citation.ui'));
 
-server.listen(port, () => 
+server.listen(port, () =>
     console.log("App running on port " + port),
 );
 
-app.get('/*', (req, res) => 
-    res.sendFile('index.html', {root: 'dist/traffic-citation-frontend'}),
+app.get('/*', (req, res) =>
+    res.sendFile('index.html', {root: './dist/traffic-citation.ui'}),
 );
