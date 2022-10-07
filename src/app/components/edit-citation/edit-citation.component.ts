@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Citation } from 'src/app/models/citation';
 import { CitationService } from 'src/app/services/citation.service';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-edit-citation',
@@ -10,6 +11,7 @@ import { CitationService } from 'src/app/services/citation.service';
 export class EditCitationComponent implements OnInit {
   @Input() citation?: Citation;
   @Output() citationsUpdated = new EventEmitter<Citation[]>();
+
 
   constructor(private citationService: CitationService) { }
 

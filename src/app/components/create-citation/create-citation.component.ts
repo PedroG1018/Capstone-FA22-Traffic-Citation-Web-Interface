@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { Citation } from 'src/app/models/citation';
 import { CitationService } from 'src/app/services/citation.service';
 
@@ -8,27 +8,22 @@ import { CitationService } from 'src/app/services/citation.service';
   styleUrls: ['./create-citation.component.css']
 })
 export class CreateCitationComponent implements OnInit {
-  citations: Citation[] = [];
-  citationToEdit?: Citation;
+  @Input() citation?: Citation;
+  @Output() citationsCreated = new EventEmitter<Citation[]>();
 
   constructor(private citationService: CitationService) { }
 
   ngOnInit(): void {
-    this.citationService
-      .getCitations()
-      .subscribe((result: Citation[]) => (this.citations = result));
+    this.initNewCitation();
   }
 
   initNewCitation() {
-    this.citationToEdit = new Citation();
+    this.citation = new Citation();
   }
 
-  editCitation(citation: Citation) {
-    this.citationToEdit = citation;
-  }
-
-  updateCitationList(citations: Citation[]) {
-    this.citations = citations;
+  createCitation(citation: Citation) {
+    this.citationService.createCitation(citation).subscribe((citations: Citation[]) => this.citationsCreated.emit(citations));
+    this.initNewCitation();
   }
 
 }
