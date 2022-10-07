@@ -1,5 +1,26 @@
+
+<!-- TODO: When clicking edit button create a modal, maybe do this for create citation too-->
+<ng-template #modal let-modal>
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Editing Citation Modal WIP</h3>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Exit click')">
+            <span aria-hidden="true">x</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Close</button>
+    </div>
+</ng-template>
+
+
+
+
 <div *ngIf="citation">
-    <h2> {{ citation.type }} </h2>
+    
+    <h2> Editing Citation </h2>
     <div>
         Type:
         <input [(ngModel)]="citation.type" placeholder="Type"/>

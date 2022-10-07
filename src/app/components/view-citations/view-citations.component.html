@@ -1,0 +1,35 @@
+<table>
+    <thead>
+      <th>Type</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Owner's Fault</th>
+      <th>Description</th>
+      <th>Violation Location</th>
+      <th>Signed Date</th>
+      <th>VIN</th>
+      <th>VIN State</th>
+      <th>Code Section</th>
+      <th>Officer Name</th>
+      <th>Officer Badge #</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let citation of citations">
+        <td> {{ citation.type }} </td>
+        <td> {{ citation.date }} </td>
+        <td> {{ citation.time }} </td>
+        <td> {{ citation.owner_fault }} </td>
+        <td> {{ citation.desc }} </td>
+        <td> {{ citation.violation_loc }} </td>
+        <td> {{ citation.sign_date }} </td>
+        <td> {{ citation.vin }} </td>
+        <td> {{ citation.vin_state }} </td>
+        <td> {{ citation.code_section }} </td>
+        <td> {{ citation.officer_name }} </td>
+        <td> {{ citation.officer_badge }} </td>
+        <td><button (click)="editCitation(citation)">Edit</button></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <app-edit-citation [citation]="citationToEdit" (citationsUpdated)="updateCitationList($event)"></app-edit-citation>
