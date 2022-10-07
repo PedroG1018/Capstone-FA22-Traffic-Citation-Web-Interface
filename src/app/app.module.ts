@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CreateCitationComponent } from './components/create-citation/create-citation.component';
 import { ViewCitationsComponent } from './components/view-citations/view-citations.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { ViewCitationsComponent } from './components/view-citations/view-citatio
     EditCitationComponent,
     CreateCitationComponent,
     ViewCitationsComponent,
+    PageNotFoundComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
