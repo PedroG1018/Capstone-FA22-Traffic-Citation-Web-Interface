@@ -3,7 +3,7 @@ export class Citation {
     driver_id?: number;
     user_id?: number;
     type = "";
-    date = Date; // May need to change this!
+    date = new Date(); // May need to change this!
     time = Date;
     owner_fault = Boolean;
     desc = "";

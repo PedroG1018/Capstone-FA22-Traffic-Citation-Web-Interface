@@ -1,67 +1,118 @@
-<div *ngIf="citation">
+<div class="container" *ngIf="citation">
     
     <h2> Creating Citation </h2>
-    <div>
-        Type:
-        <input [(ngModel)]="citation.type" placeholder="Type"/>
-    </div>
-    <div>
-        Date:
-        <input [(ngModel)]="citation.date" type="date"/>
-    </div>
-    <div>
-        Time:
-        <input [(ngModel)]="citation.time" type="time"/>
-    </div>
-    <div>
-        Owner's Fault:
-        <label>
-            <input [(ngModel)]="citation.owner_fault" type="radio" [value]="true"/> Yes
-        </label>
-        <label>
-            <input [(ngModel)]="citation.owner_fault" type="radio" [value]="false"/> No
-        </label>
-    </div>
-    <div>
-        Description:
-        <input [(ngModel)]="citation.desc" placeholder="Description"/>
-    </div>
-    <div>
-        Violation Location:
-        <input [(ngModel)]="citation.violation_loc" placeholder="Location"/>
-    </div>
-    <div>
-        VIN:
-        <input [(ngModel)]="citation.vin" placeholder="VIN"/>
-    </div>
-    <div>
-        VIN State:
-        <input [(ngModel)]="citation.vin_state" placeholder="State"/>
-    </div>
-    <div>
-        Code:
-        <input [(ngModel)]="citation.code_section" placeholder="Code"/>
-    </div>
-    <div>
-        Officer Name:
-        <input [(ngModel)]="citation.officer_name" placeholder="Name"/>
-    </div>
-    <div>
-        Officer Badge:
-        <input [(ngModel)]="citation.officer_badge" placeholder="Badge Number"/>
-    </div>
-    <div>
-        Signed Date:
-        <input [(ngModel)]="citation.sign_date" type="date"/>
-    </div>
-    
-    <button (click)="createCitation(citation)" *ngIf="!citation.citation_id">Save</button><br><br>
+    <form>
+        <div class="form-group">
+            <label for="type">Type:</label><br>
+
+            <mat-radio-group [(ngModel)]="citation.type">
+                <mat-radio-button value="Misdemeanor">Misdemeanor</mat-radio-button>
+                <mat-radio-button value="Traffic">Traffic</mat-radio-button>
+                <mat-radio-button value="Non-Traffic">Non-Traffic</mat-radio-button>
+            </mat-radio-group>
+            <br><br>
+            <!--
+            <input [(ngModel)]="citation.type" type="text" name="Type" class="form-control" placeholder="Type"/>
+            -->
+        </div>
+        <div class="form-group">
+            <!--
+                
+            <br><br>
+            <input [(ngModel)]="citation.date" class="form-control" type="date"/>
+            -->
+            <input [(ngModel)]="citation.date" class="form-control" type="date"/>
+            <br>
+        </div>
+        <div class="form-group">
+            Time:
+            <input [(ngModel)]="citation.time" class="form-control" type="time"/>
+            <br>
+        </div>
+        <div class="form-group">
+            <label for="owner_fault">Owner's Fault:</label><br>
+
+            <mat-radio-group [(ngModel)]="citation.owner_fault">
+                <mat-radio-button [value]="true">Yes</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+            </mat-radio-group>
+            <br><br>
+
+            <!-- 
+            <label>
+                <input [(ngModel)]="citation.owner_fault" type="radio" [value]="true"/> Yes
+            </label>
+            <label>
+                <input [(ngModel)]="citation.owner_fault" type="radio" [value]="false"/> No
+            </label>
+            -->
+        </div>
+        <div class="form-group">
+            <label for="desc">Other Description:</label>
+            <input [(ngModel)]="citation.desc" type="text" name="desc" class="form-control" placeholder="Description"/>
+            <br>
+        </div>
+        <div class="form-group">
+            <label for="violation_loc">Violation Location:</label>
+            <input [(ngModel)]="citation.violation_loc" type="text" name="violation_loc" class="form-control" placeholder="Location"/>
+            <br>
+        </div>
+        <div class="form-group">
+            <label for="vin">Vehicle License Number or VIN:</label>
+            <input [(ngModel)]="citation.vin" type="text" name="vin" class="form-control" placeholder="Veh. Lic. No. or VIN"/>
+            <br>
+        </div>
+        <div class="form-group">
+            <mat-form-field appearance="fill">
+                <mat-label>State</mat-label>
+                <mat-select [(ngModel)]="citation.vin_state">
+                    <mat-option value="CA">CA</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <!--
+            VIN State:
+            <input [(ngModel)]="citation.vin_state" placeholder="State"/>
+            -->
+        </div>
+        <div>
+            <!-- Will be converted to drop-down menu with different codes, their description, misd or infraction -->
+            <label for="code_section">Code</label>
+            <input [(ngModel)]="citation.code_section" type="text" name="code_section" class="form-control" placeholder="Code"/>
+            <br>
+        </div>
+        <div class="form-group">
+            <!-- Can probably prepopulate this from the officer's account information -->
+            <label for="officer_name">Arresting Officer Name:</label>
+            <input [(ngModel)]="citation.officer_name" type="text" name="officer_name" class="form-control" placeholder="Name"/>
+            <br>
+        </div>
+        <div>
+            <!-- Can probably prepopulate this from the officer's account information -->
+            <label for="officer_badge">Badge No.</label>
+            <input [(ngModel)]="citation.officer_badge" type="text" name="officer_badge" class="form-control" placeholder="Badge #"/>
+            <br>
+        </div>
+        <div>
+            <!--
+                <mat-form-field appearance="fill">
+                <mat-label>Signed date</mat-label>
+                <input matInput [matDatepicker]="picker2" [formControl]="date" [(ngModel)]="citation.sign_date">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+            <br><br>
+            Signed Date:
+            <input [(ngModel)]="citation.sign_date" type="date"/>
+            -->
+            <input [(ngModel)]="citation.sign_date" class="form-control" type="date"/>
+            <br>
+        </div>
+        <button (click)="createCitation(citation)" *ngIf="!citation.citation_id" class="btn btn-primary" type="submit">Submit</button><br><br>
+    </form>
 
 </div>
 
 
-
-
-
-
-<!-- TODO: Show dialog showing citation created successfully-->
+<!-- TODO: Show dialog showing citation created successfully
+            Backend should send back response message that will also be store in the citations table -->

@@ -7,17 +7,20 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "heroku-postbuild": "ng build"
+    "heroku-postbuild": "ng build --prod"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "^14.2.4",
+    "@angular/cdk": "^14.2.4",
     "@angular/cli": "~14.2.4",
     "@angular/common": "^14.2.4",
     "@angular/compiler": "^14.2.4",
     "@angular/compiler-cli": "^14.2.4",
     "@angular/core": "^14.2.4",
     "@angular/forms": "^14.2.4",
+    "@angular/material": "^14.2.4",
+    "@angular/material-moment-adapter": "^14.2.4",
     "@angular/platform-browser": "^14.2.4",
     "@angular/platform-browser-dynamic": "^14.2.4",
     "@angular/router": "^14.2.4",
@@ -25,6 +28,7 @@
     "@ng-bootstrap/ng-bootstrap": "^13.0.0",
     "bootstrap": "^5.2.2",
     "express": "^4.18.1",
+    "moment": "^2.29.4",
     "path": "^0.12.7",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
@@ -44,7 +48,7 @@
     "typescript": "~4.7.2"
   },
   "engines": {
-    "node": "16.17.1",
+    "node": "18.10.0",
     "npm": "8.19.2"
   }
 }
