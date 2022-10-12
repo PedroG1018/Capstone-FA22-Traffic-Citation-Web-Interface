@@ -8,3 +8,36 @@ a:hover {
     color: darkblue;
     transition: 0.2s;
 }
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #1c2a48;
+  }
+  
+  nav li {
+    display: inline-block;
+  }
+  
+  nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 15px 20px;
+    text-decoration: none;
+    font-family: sans-serif;
+  }
+  
+  nav li a:hover {
+    background-color: #ffc107;
+  }
+  img {
+    max-width:3.5%;
+    max-height:3.5%;
+    padding-top: 5px;
+    padding-bottom: 5px; 
+    padding-right: 5px;
+    padding-left: 5px;
+}
