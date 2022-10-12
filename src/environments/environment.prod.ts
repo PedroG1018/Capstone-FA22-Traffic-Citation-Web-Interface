@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: "https://localhost:7190/api",
+  apiUrl: "https://traffic-citation-backend.herokuapp.com/api",
 };
