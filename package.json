@@ -38,6 +38,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^14.2.5",
     "@types/jasmine": "~4.0.0",
+    "@types/node": "^18.8.4",
     "enhanced-resolve": "^3.3.0",
     "jasmine-core": "~4.3.0",
     "karma": "~6.4.0",
