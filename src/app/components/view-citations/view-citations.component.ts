@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Citation } from 'src/app/models/citation';
 import { CitationService } from 'src/app/services/citation.service';
-import { CitationDataSource } from 'src/app/data/CitationDataSource';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { PageEvent } from '@angular/material/paginator';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { tap } from 'rxjs/internal/operators/tap';
 import { EditCitationComponent } from '../edit-citation/edit-citation.component';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { catchError, finalize, of } from 'rxjs';
 
 
 @Component({
@@ -17,8 +17,11 @@ export class ViewCitationsComponent implements OnInit {
   citations: Citation[] = [];
   citationsToShow: Citation[] = [];
   citationToEdit?: Citation;
-  dataSource!: CitationDataSource;
   citationCount?: number;
+  pageSize = 10;
+
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  public loading$ = this.loadingSubject.asObservable();
 
   
   pageEvent: PageEvent = new PageEvent;
@@ -27,12 +30,12 @@ export class ViewCitationsComponent implements OnInit {
   // Used to determine order of material table columns
   displayedColumns = [
     'type',
-    'date',
-    'time',
-    'owner_fault',
-    'desc',
-    'violation_loc',
     'sign_date',
+    //'date',
+    'time',
+    //'owner_fault',
+    //'desc',
+    'violation_loc',
     'vin',
     'vin_state',
     'code_section',
@@ -43,13 +46,19 @@ export class ViewCitationsComponent implements OnInit {
   constructor(private citationService: CitationService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
+    this.loadingSubject.next(true);
     this.citationService
       .getCitations()
-      .subscribe((result: Citation[]) => (this.citations = result, this.citationCount = result.length, this.citationsToShow = result));
-      //TODO Dont get citations twice
-    
-    this.dataSource = new CitationDataSource(this.citationService);
-    this.dataSource.loadCitations();
+      .pipe(catchError(() => of([])), finalize(() => this.loadingSubject.next(false)))
+      .subscribe((result: Citation[]) => (
+        this.citations = result, 
+        this.citationCount = result.length, 
+        this.citationsToShow = result.slice(0, this.pageSize)));
+
+  }
+
+  ngOnDestroy() {
+    this.loadingSubject.complete();
   }
 
   editCitation(citation: Citation) {
@@ -70,6 +79,7 @@ export class ViewCitationsComponent implements OnInit {
     this.dialog.open(EditCitationComponent, dialogConfig);
   }
 
+  // Determine which page and what range of array you're looking at
   onPageChanged(event: PageEvent) {
     const startIndex = event.pageIndex * event.pageSize;
     const endIndex = (event.pageIndex + 1) * event.pageSize;
