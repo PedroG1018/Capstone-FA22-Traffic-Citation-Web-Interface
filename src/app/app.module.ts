@@ -14,6 +14,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog'
+import { AuthService } from './login/auth.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -62,7 +63,7 @@ import { CitationService } from './services/citation.service';
   ],
   providers: [
     {provide: MatDialogRef, useValue: {}}, CitationService, 
-    {provide: MAT_DIALOG_DATA, useValue:{}}
+    {provide: MAT_DIALOG_DATA, useValue:{}}, AuthService
   ],
   bootstrap: [AppComponent],
 })
