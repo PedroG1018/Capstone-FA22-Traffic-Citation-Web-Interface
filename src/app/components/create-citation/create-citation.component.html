@@ -5,7 +5,7 @@
         <div class="form-group">
             <label for="type">Type:</label><br>
 
-            <mat-radio-group [(ngModel)]="citation.type">
+            <mat-radio-group [(ngModel)]="citation.type" name="Type">
                 <mat-radio-button value="Misdemeanor">Misdemeanor</mat-radio-button>
                 <mat-radio-button value="Traffic">Traffic</mat-radio-button>
                 <mat-radio-button value="Non-Traffic">Non-Traffic</mat-radio-button>
@@ -21,18 +21,18 @@
             <br><br>
             <input [(ngModel)]="citation.date" class="form-control" type="date"/>
             -->
-            <input [(ngModel)]="citation.date" class="form-control" type="date"/>
+            <input [(ngModel)]="citation.date" class="form-control" type="date" name="Date"/>
             <br>
         </div>
         <div class="form-group">
             Time:
-            <input [(ngModel)]="citation.time" class="form-control" type="time"/>
+            <input [(ngModel)]="citation.time" class="form-control" type="time" name="Time"/>
             <br>
         </div>
         <div class="form-group">
             <label for="owner_fault">Owner's Fault:</label><br>
 
-            <mat-radio-group [(ngModel)]="citation.owner_fault">
+            <mat-radio-group [(ngModel)]="citation.owner_fault" name="owner_fault">
                 <mat-radio-button [value]="true">Yes</mat-radio-button>
                 <mat-radio-button [value]="false">No</mat-radio-button>
             </mat-radio-group>
@@ -65,7 +65,7 @@
         <div class="form-group">
             <mat-form-field appearance="fill">
                 <mat-label>State</mat-label>
-                <mat-select [(ngModel)]="citation.vin_state">
+                <mat-select [(ngModel)]="citation.vin_state" name="vin_state">
                     <mat-option value="CA">CA</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -105,7 +105,7 @@
             Signed Date:
             <input [(ngModel)]="citation.sign_date" type="date"/>
             -->
-            <input [(ngModel)]="citation.sign_date" class="form-control" type="date"/>
+            <input [(ngModel)]="citation.sign_date" class="form-control" type="date" name="sign_date"/>
             <br>
         </div>
         <button (click)="createCitation(citation)" *ngIf="!citation.citation_id" class="btn btn-primary" type="submit">Submit</button><br><br>

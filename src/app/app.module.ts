@@ -13,6 +13,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +25,8 @@ import { ViewCitationsComponent } from './components/view-citations/view-citatio
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './login/login.component';
+import { CitationDialogComponent } from './citation-dialog/citation-dialog.component';
+import { CitationService } from './services/citation.service';
 
 
 @NgModule({
@@ -35,6 +38,7 @@ import { LoginComponent } from './login/login.component';
     PageNotFoundComponent,
     HomeComponent,
     LoginComponent,
+    CitationDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,9 +56,14 @@ import { LoginComponent } from './login/login.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    NgbModule
   ],
-  providers: [],
+  providers: [
+    {provide: MatDialogRef, useValue: {}}, CitationService, 
+    {provide: MAT_DIALOG_DATA, useValue:{}}
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -16,7 +16,6 @@ export class CitationDataSource implements DataSource<Citation> {
         return this.citationsSubject.asObservable();
     }
   
-
     disconnect(collectionViewer: CollectionViewer): void {
         this.citationsSubject.complete();
         this.loadingSubject.complete();
@@ -28,6 +27,6 @@ export class CitationDataSource implements DataSource<Citation> {
         this.citationService
             .getCitations()
             .pipe(catchError(() => of([])), finalize(() => this.loadingSubject.next(false)))
-            .subscribe(citations => this.citationsSubject.next(citations));
+            .subscribe((citations) => this.citationsSubject.next(citations));
     }
 }

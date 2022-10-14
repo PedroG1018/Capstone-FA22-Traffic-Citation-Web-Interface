@@ -1,24 +1,33 @@
+<h2 mat-dialog-title *ngIf="citation"> Editing Citation </h2>
+<mat-dialog-content *ngIf="citation">
+    <mat-form-field>
+        <input matInput placeholder="Type" class="p-2" [(ngModel)]="citation.type" type="type">
+        <input matInput placeholder="Date" [(ngModel)]="citation.date" type="date"/>
+        <input matInput placeholder="Time" [(ngModel)]="citation.time" type="time"/>
+        
+        <label>
+            <input [(ngModel)]="citation.owner_fault" type="radio" [value]="true"/> Yes
+        </label>
+        <label>
+            <input [(ngModel)]="citation.owner_fault" type="radio" [value]="false"/> No
+        </label>
 
-<!-- TODO: When clicking edit button create a modal, maybe do this for create citation too-->
-<ng-template #modal let-modal>
-    <div class="modal-header">
-        <h3 class="modal-title" id="modal-title">Editing Citation Modal WIP</h3>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Exit click')">
-            <span aria-hidden="true">x</span>
-        </button>
-    </div>
-    <div class="modal-body">
-
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Close</button>
-    </div>
-</ng-template>
-
+        <textarea matInput placeholder="Description" [(ngModel)]="citation.desc" type="desc"></textarea>
 
 
+    </mat-form-field>
 
-<div *ngIf="citation">
+</mat-dialog-content>
+
+<mat-dialog-actions *ngIf="citation">
+    <button class="mat-raised-button mat-primary" (click)="updateCitation(citation)" *ngIf="citation.citation_id">Save</button>
+    <button class="mat-raised-button mat-warn" (click)="deleteCitation(citation)" *ngIf="citation.citation_id">Delete</button>
+    <button class="mat-raised-button"(click)="closeDialog()">Close</button>
+</mat-dialog-actions>
+
+
+
+<!-- <div *ngIf="citation">
     
     <h2> Editing Citation </h2>
     <div>
@@ -79,4 +88,4 @@
     <button (click)="deleteCitation(citation)" *ngIf="citation.citation_id">Delete</button>
     <button (click)="createCitation(citation)" *ngIf="!citation.citation_id">Create</button>
 
-</div>
+</div> -->

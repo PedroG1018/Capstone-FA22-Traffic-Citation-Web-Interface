@@ -1,9 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Citation } from 'src/app/models/citation';
 import { CitationService } from 'src/app/services/citation.service';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTable } from '@angular/material/table';
 import { CitationDataSource } from 'src/app/data/CitationDataSource';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { tap } from 'rxjs/internal/operators/tap';
+import { EditCitationComponent } from '../edit-citation/edit-citation.component';
+
 
 @Component({
   selector: 'app-view-citations',
@@ -12,8 +15,14 @@ import { CitationDataSource } from 'src/app/data/CitationDataSource';
 })
 export class ViewCitationsComponent implements OnInit {
   citations: Citation[] = [];
+  citationsToShow: Citation[] = [];
   citationToEdit?: Citation;
   dataSource!: CitationDataSource;
+  citationCount?: number;
+
+  
+  pageEvent: PageEvent = new PageEvent;
+
 
   // Used to determine order of material table columns
   displayedColumns = [
@@ -31,12 +40,13 @@ export class ViewCitationsComponent implements OnInit {
     'officer_badge',
   ];
 
-  constructor(private citationService: CitationService) {}
+  constructor(private citationService: CitationService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.citationService
       .getCitations()
-      .subscribe((result: Citation[]) => (this.citations = result));
+      .subscribe((result: Citation[]) => (this.citations = result, this.citationCount = result.length, this.citationsToShow = result));
+      //TODO Dont get citations twice
     
     this.dataSource = new CitationDataSource(this.citationService);
     this.dataSource.loadCitations();
@@ -50,8 +60,22 @@ export class ViewCitationsComponent implements OnInit {
     this.citations = citations;
   }
 
-  // Use to later display modal to display or edit that citation
-  onRowCLicked(row) {
-    console.log('Row Clicked', row);
+  openDialog(citation : Citation) {
+    // Open a dialog showing citation and options to edit/delete
+    const dialogConfig = new MatDialogConfig();
+    
+    dialogConfig.data = citation;
+    dialogConfig.autoFocus = true;
+    dialogConfig.disableClose = false;
+    this.dialog.open(EditCitationComponent, dialogConfig);
+  }
+
+  onPageChanged(event: PageEvent) {
+    const startIndex = event.pageIndex * event.pageSize;
+    const endIndex = (event.pageIndex + 1) * event.pageSize;
+    const sliceCitations = this.citations.slice(startIndex, endIndex);
+    this.citationsToShow = sliceCitations;
+    
+    return this.pageEvent;
   }
 }
