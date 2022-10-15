@@ -13,10 +13,13 @@ export class EditCitationComponent implements OnInit {
   @Input() citation?: Citation;
   @Output() citationsUpdated = new EventEmitter<Citation[]>();
 
+  endIndex?: number;
+
   // Used injection token to access data stored in dialog
   constructor(
     private citationService: CitationService, 
-    private dialogRef: MatDialogRef<ViewCitationsComponent>, @Inject(MAT_DIALOG_DATA) data) {
+    private dialogRef: MatDialogRef<ViewCitationsComponent>, @Inject(MAT_DIALOG_DATA) data,
+    ) {
     
     this.citation = data;
   }
@@ -32,7 +35,8 @@ export class EditCitationComponent implements OnInit {
 
   deleteCitation(citation:Citation) {
     this.citationService.deleteCitation(citation).subscribe((citations: Citation[]) => this.citationsUpdated.emit(citations));
-    this.closeDialog();
+    let deleted = true;
+    this.dialogRef.close(deleted)
   }
 
   closeDialog() {

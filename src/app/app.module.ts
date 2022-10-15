@@ -3,7 +3,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatRadioModule } from '@angular/material/radio'
+import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio'
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -63,7 +63,8 @@ import { CitationService } from './services/citation.service';
   ],
   providers: [
     {provide: MatDialogRef, useValue: {}}, CitationService, 
-    {provide: MAT_DIALOG_DATA, useValue:{}}, AuthService
+    {provide: MAT_DIALOG_DATA, useValue:{}}, AuthService,
+    {provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: {color: 'primary'}}
   ],
   bootstrap: [AppComponent],
 })

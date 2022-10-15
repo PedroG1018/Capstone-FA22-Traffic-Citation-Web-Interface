@@ -26,18 +26,13 @@ export class ViewCitationsComponent implements OnInit {
   
   pageEvent: PageEvent = new PageEvent;
 
-
-  // Used to determine order of material table columns
+  // Used to determine order of table columns
   displayedColumns = [
     'type',
     'sign_date',
-    //'date',
     'time',
-    //'owner_fault',
-    //'desc',
     'violation_loc',
     'vin',
-    'vin_state',
     'code_section',
     'officer_name',
     'officer_badge',
@@ -46,6 +41,11 @@ export class ViewCitationsComponent implements OnInit {
   constructor(private citationService: CitationService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
+    this.updateCitationsArray();
+  }
+
+  updateCitationsArray() {
+    // Retrieve citations from database. Display progress spinner until data is loaded
     this.loadingSubject.next(true);
     this.citationService
       .getCitations()
@@ -61,22 +61,18 @@ export class ViewCitationsComponent implements OnInit {
     this.loadingSubject.complete();
   }
 
-  editCitation(citation: Citation) {
-    this.citationToEdit = citation;
-  }
-
-  updateCitationList(citations: Citation[]) {
-    this.citations = citations;
-  }
-
   openDialog(citation : Citation) {
-    // Open a dialog showing citation and options to edit/delete
     const dialogConfig = new MatDialogConfig();
     
     dialogConfig.data = citation;
     dialogConfig.autoFocus = true;
     dialogConfig.disableClose = false;
-    this.dialog.open(EditCitationComponent, dialogConfig);
+    const dialogRef = this.dialog.open(EditCitationComponent, dialogConfig).afterClosed().subscribe(result => {
+      // If citation was deleted after closing dialog, update list
+      if (result) {
+        this.updateCitationsArray()
+      }
+    });
   }
 
   // Determine which page and what range of array you're looking at
