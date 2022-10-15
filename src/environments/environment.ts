@@ -7,7 +7,7 @@ export const environment = {
   apiUrl: "https://traffic-citation-backend.herokuapp.com/api"
 };
 
-// Uncomment when running locally 
+// Uncomment when running locally
 // export const environment = {
 //   production: false,
 //   apiUrl: "https://localhost:7190/api"
