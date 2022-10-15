@@ -9,7 +9,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select'
-import { AuthService } from './login/auth.service';
+import { AuthModule } from '@auth0/auth0-angular';
+import { environment as env } from '../environments/environment';
+import { auth0 as auth0} from '../environments/auth0.prod';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,7 +22,7 @@ import { CreateCitationComponent } from './components/create-citation/create-cit
 import { ViewCitationsComponent } from './components/view-citations/view-citations.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 @NgModule({
@@ -34,6 +36,11 @@ import { LoginComponent } from './login/login.component';
     LoginComponent,
   ],
   imports: [
+    AuthModule.forRoot({
+      domain: auth0.auth.domain,
+      clientId: auth0.auth.clientId,
+      redirectUri: window.location.origin,
+    }),
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -48,7 +55,6 @@ import { LoginComponent } from './login/login.component';
     MatSelectModule
   ],
   providers: [
-    AuthService
   ],
   bootstrap: [AppComponent]
 })
