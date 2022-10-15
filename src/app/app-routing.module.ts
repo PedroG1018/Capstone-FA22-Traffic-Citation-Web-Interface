@@ -8,7 +8,7 @@ import { EditCitationComponent } from './components/edit-citation/edit-citation.
 import { ViewCitationsComponent } from './components/view-citations/view-citations.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './components/login/login.component';
 
 // Define all routes in Routes array
 const routes: Routes = [

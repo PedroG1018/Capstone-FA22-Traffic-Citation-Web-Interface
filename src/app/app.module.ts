@@ -14,7 +14,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog'
-import { AuthService } from './login/auth.service';
+import { AuthModule } from '@auth0/auth0-angular';
+import { environment as env } from '../environments/environment';
+import { auth0 as auth0} from '../environments/auth0.prod';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,7 +27,7 @@ import { CreateCitationComponent } from './components/create-citation/create-cit
 import { ViewCitationsComponent } from './components/view-citations/view-citations.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './components/login/login.component';
 import { CitationDialogComponent } from './citation-dialog/citation-dialog.component';
 import { CitationService } from './services/citation.service';
 
@@ -42,6 +44,11 @@ import { CitationService } from './services/citation.service';
     CitationDialogComponent,
   ],
   imports: [
+    AuthModule.forRoot({
+      domain: auth0.auth.domain,
+      clientId: auth0.auth.clientId,
+      redirectUri: window.location.origin,
+    }),
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -63,7 +70,7 @@ import { CitationService } from './services/citation.service';
   ],
   providers: [
     {provide: MatDialogRef, useValue: {}}, CitationService, 
-    {provide: MAT_DIALOG_DATA, useValue:{}}, AuthService,
+    {provide: MAT_DIALOG_DATA, useValue:{}},
     {provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: {color: 'primary'}}
   ],
   bootstrap: [AppComponent],
