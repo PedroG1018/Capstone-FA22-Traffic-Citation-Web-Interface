@@ -1,30 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Citation } from 'src/app/models/citation';
 import { CitationService } from 'src/app/services/citation.service';
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EditCitationComponent } from '../edit-citation/edit-citation.component';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-import { catchError, finalize, of } from 'rxjs';
-
+import { catchError, finalize, of, tap } from 'rxjs';
+import { CitationsResponse } from 'src/app/DTO/citationsResponse';
 
 @Component({
   selector: 'app-view-citations',
   templateUrl: './view-citations.component.html',
   styleUrls: ['./view-citations.component.css'],
 })
-export class ViewCitationsComponent implements OnInit {
+export class ViewCitationsComponent implements AfterViewInit, OnInit {
   citations: Citation[] = [];
-  citationsToShow: Citation[] = [];
   citationToEdit?: Citation;
   citationCount?: number;
-  pageSize = 10;
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
 
-  
-  pageEvent: PageEvent = new PageEvent;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   // Used to determine order of table columns
   displayedColumns = [
@@ -38,29 +35,41 @@ export class ViewCitationsComponent implements OnInit {
     'officer_badge',
   ];
 
-  constructor(private citationService: CitationService, private dialog: MatDialog) {}
-
-  ngOnInit(): void {
-    this.updateCitationsArray();
+  constructor(private citationService: CitationService, private dialog: MatDialog) {
+    this.paginator = new MatPaginator(new MatPaginatorIntl, ChangeDetectorRef.prototype)
   }
 
-  updateCitationsArray() {
-    // Retrieve citations from database. Display progress spinner until data is loaded
-    this.loadingSubject.next(true);
-    this.citationService
-      .getCitations()
-      .pipe(catchError(() => of([])), finalize(() => this.loadingSubject.next(false)))
-      .subscribe((result: Citation[]) => (
-        this.citations = result, 
-        this.citationCount = result.length, 
-        this.citationsToShow = result.slice(0, this.pageSize)));
+  ngOnInit(): void {
+    this.loadCitations(1,5);
+  }
 
+  ngAfterViewInit() {
+    this.paginator.page.pipe(tap(() => this.loadCitationsPage())).subscribe();
   }
 
   ngOnDestroy() {
     this.loadingSubject.complete();
   }
 
+  loadCitationsPage() {
+    this.loadCitations(this.paginator.pageIndex, this.paginator.pageSize);
+  }
+
+  loadCitations(pageNumber = 1, pageSize = 5) {
+    // Retrieve citations from database. Display progress spinner until data is loaded
+    console.log(this.paginator);
+    this.loadingSubject.next(true);
+    this.citationService
+      .getCitationsPaginator(pageNumber, pageSize)
+      .pipe(catchError(() => of([])), finalize(() => this.loadingSubject.next(false)))
+      .subscribe((result: CitationsResponse) => (
+        console.log(result),
+        this.citations = result.citations,
+        this.citationCount = result.totalCitationsCount
+        ));
+  }
+
+  
   openDialog(citation : Citation) {
     const dialogConfig = new MatDialogConfig();
     
@@ -70,18 +79,8 @@ export class ViewCitationsComponent implements OnInit {
     const dialogRef = this.dialog.open(EditCitationComponent, dialogConfig).afterClosed().subscribe(result => {
       // If citation was deleted after closing dialog, update list
       if (result) {
-        this.updateCitationsArray()
+        this.loadCitationsPage();
       }
     });
-  }
-
-  // Determine which page and what range of array you're looking at
-  onPageChanged(event: PageEvent) {
-    const startIndex = event.pageIndex * event.pageSize;
-    const endIndex = (event.pageIndex + 1) * event.pageSize;
-    const sliceCitations = this.citations.slice(startIndex, endIndex);
-    this.citationsToShow = sliceCitations;
-    
-    return this.pageEvent;
   }
 }

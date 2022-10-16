@@ -4,7 +4,7 @@
 
 <div class="citation-container mat-elevation-z8" [hidden]="loading$ | async">
   <div class="table-container text-center">
-    <mat-table [dataSource]="citationsToShow">
+    <mat-table [dataSource]="citations">
 
       <!-- Type Column -->
       <ng-container matColumnDef="type">
@@ -54,9 +54,8 @@
   
     <mat-paginator #paginator
                    [length]="citationCount"
-                   [pageSize]="10"
-                   [pageIndex]="0" (page)="pageEvent = onPageChanged($event)"
-                   [pageSizeOptions]="[5, 10, 20, 40]"
+                   [pageSize]="5"
+                   [pageSizeOptions]="[3, 5, 10, 20, 30, 40]"
                    [showFirstLastButtons]="true"
                    [hidden]="loading$ | async"
                    >
