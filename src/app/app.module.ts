@@ -28,7 +28,6 @@ import { ViewCitationsComponent } from './components/view-citations/view-citatio
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
-import { CitationDialogComponent } from './citation-dialog/citation-dialog.component';
 import { CitationService } from './services/citation.service';
 
 
@@ -41,7 +40,6 @@ import { CitationService } from './services/citation.service';
     PageNotFoundComponent,
     HomeComponent,
     LoginComponent,
-    CitationDialogComponent,
   ],
   imports: [
     AuthModule.forRoot({
