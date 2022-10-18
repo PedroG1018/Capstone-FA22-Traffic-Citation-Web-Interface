@@ -1,0 +1,14 @@
+.citation-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px; 
+}
+
+.spinner-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+}

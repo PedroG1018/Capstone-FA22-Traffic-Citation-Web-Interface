@@ -1,82 +1,69 @@
+<h2 mat-dialog-title *ngIf="citation"> Editing Citation </h2>
+<div mat-dialog-content *ngIf="citation">
+    <mat-form-field>
+        <mat-label>Type</mat-label>
+        <input matInput placeholder="Type" [(ngModel)]="citation.type"/>
+    </mat-form-field>
 
-<!-- TODO: When clicking edit button create a modal, maybe do this for create citation too-->
-<ng-template #modal let-modal>
-    <div class="modal-header">
-        <h3 class="modal-title" id="modal-title">Editing Citation Modal WIP</h3>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Exit click')">
-            <span aria-hidden="true">x</span>
-        </button>
-    </div>
-    <div class="modal-body">
+    <mat-form-field>
+        <mat-label>Date</mat-label>
+        <input matInput placeholder="Date" [(ngModel)]="citation.date" type="date"/>
+    </mat-form-field>
 
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Close</button>
-    </div>
-</ng-template>
+    <mat-form-field>
+        <mat-label>Time</mat-label>
+        <input matInput placeholder="Time" [(ngModel)]="citation.time" type="time"/>
+    </mat-form-field><br>
 
+    <mat-form-field>
+        <mat-label>VIN</mat-label>
+        <input matInput placeholder="VIN" [(ngModel)]="citation.vin"/>
+    </mat-form-field>
 
+    <mat-form-field>
+        <mat-label>State</mat-label>
+        <input matInput placeholder="State" [(ngModel)]="citation.vin_state"/>
+    </mat-form-field>
 
+    <mat-form-field>
+        <mat-label>Code</mat-label>
+        <input matInput placeholder="Code" [(ngModel)]="citation.code_section"/>
+    </mat-form-field><br>
 
-<div *ngIf="citation">
-    
-    <h2> Editing Citation </h2>
-    <div>
-        Type:
-        <input [(ngModel)]="citation.type" placeholder="Type"/>
-    </div>
-    <div>
-        Date:
-        <input [(ngModel)]="citation.date" type="date"/>
-    </div>
-    <div>
-        Time:
-        <input [(ngModel)]="citation.time" type="time"/>
-    </div>
-    <div>
-        Owner's Fault:
-        <label>
-            <input [(ngModel)]="citation.owner_fault" type="radio" [value]="true"/> Yes
-        </label>
-        <label>
-            <input [(ngModel)]="citation.owner_fault" type="radio" [value]="false"/> No
-        </label>
-    </div>
-    <div>
-        Description:
-        <input [(ngModel)]="citation.desc" placeholder="Description"/>
-    </div>
-    <div>
-        Violation Location:
-        <input [(ngModel)]="citation.violation_loc" placeholder="Location"/>
-    </div>
-    <div>
-        VIN:
-        <input [(ngModel)]="citation.vin" placeholder="VIN"/>
-    </div>
-    <div>
-        VIN State:
-        <input [(ngModel)]="citation.vin_state" placeholder="State"/>
-    </div>
-    <div>
-        Code:
-        <input [(ngModel)]="citation.code_section" placeholder="Code"/>
-    </div>
-    <div>
-        Officer Name:
-        <input [(ngModel)]="citation.officer_name" placeholder="Name"/>
-    </div>
-    <div>
-        Officer Badge:
-        <input [(ngModel)]="citation.officer_badge" placeholder="Badge Number"/>
-    </div>
-    <div>
-        Signed Date:
-        <input [(ngModel)]="citation.sign_date" type="date"/>
-    </div>
-    
-    <button (click)="updateCitation(citation)" *ngIf="citation.citation_id">Save</button>
-    <button (click)="deleteCitation(citation)" *ngIf="citation.citation_id">Delete</button>
-    <button (click)="createCitation(citation)" *ngIf="!citation.citation_id">Create</button>
+    <mat-form-field>
+        <mat-label>Officer Name</mat-label>
+        <input matInput placeholder="Name" [(ngModel)]="citation.officer_name"/>
+    </mat-form-field>
 
+    <mat-form-field>
+        <mat-label>Badge #</mat-label>
+        <input matInput placeholder="Badge Number" [(ngModel)]="citation.officer_badge"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Sign Date</mat-label>
+        <input matInput placeholder="Sign Date" [(ngModel)]="citation.sign_date" type="date"/>
+    </mat-form-field><br>
+
+    <mat-form-field>
+        <mat-label>Location</mat-label>
+        <input matInput placeholder="Location" [(ngModel)]="citation.violation_loc"/>
+    </mat-form-field>
+
+    <mat-label style="margin-right: 12px;">Owner Fault</mat-label>
+    <mat-radio-group [(ngModel)]="citation.owner_fault">
+        <mat-radio-button [value]="true">Yes</mat-radio-button>
+        <mat-radio-button [value]="false">No</mat-radio-button>
+    </mat-radio-group><br>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea matInput cols="50" placeholder="Description"[(ngModel)]="citation.desc"></textarea><br>
+    </mat-form-field>
+</div>
+
+<div mat-dialog-actions *ngIf="citation">
+    <button class="mat-raised-button mat-warn" (click)="deleteCitation(citation)" *ngIf="citation.citation_id">Delete</button>
+    <button class="mat-raised-button"(click)="closeDialog()">Close</button>
+    <button class="mat-raised-button mat-primary" (click)="updateCitation(citation)" *ngIf="citation.citation_id">Save</button>
 </div>

@@ -16,6 +16,10 @@ export class CitationService {
     return this.http.get<Citation[]>(`${environment.apiUrl}/${this.url}`);
   }
 
+  public getCitationsPaginator(pageNumber: number,pageSize: number) : Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/${this.url}/${pageNumber}/${pageSize}`);
+  }
+
   public createCitation(citation: Citation) : Observable<Citation[]> {
     return this.http.post<Citation[]>(`${environment.apiUrl}/${this.url}`, citation);
   }

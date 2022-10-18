@@ -1,0 +1,25 @@
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+}
+
+mat-form-field {
+    margin-right: 12px;
+}
+
+.mat-raised-button {
+    margin-right: 10px;
+}
+
+/* .mat-dialog-content {
+    min-width: fit-content;
+    min-height: fit-content;
+} */
+
+.mat-warn {
+    margin-right: 60%;
+}
+
+.fault-radio-buttons {
+    justify-content: right;
+
+}
