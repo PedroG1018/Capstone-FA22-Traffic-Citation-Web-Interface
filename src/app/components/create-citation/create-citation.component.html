@@ -1,4 +1,4 @@
-<div class="container" *ngIf="citation">
+<div class="container" *ngIf="citation && violation && citationWithViolations">
     
     <h2> Creating Citation </h2>
     <form>
@@ -74,11 +74,42 @@
             <input [(ngModel)]="citation.vin_state" placeholder="State"/>
             -->
         </div>
-        <div>
+        <div class="form-group">
             <!-- Will be converted to drop-down menu with different codes, their description, misd or infraction -->
             <label for="code_section">Code</label>
             <input [(ngModel)]="citation.code_section" type="text" name="code_section" class="form-control" placeholder="Code"/>
             <br>
+        </div>
+        <div class="form-group">
+            <form [formGroup]="productForm">
+                <table class="table table-bordered" formArrayName="violations">
+                    <tr>
+                        <th colspan="2">Add Violation(s):</th>
+                        <th width="150px"><button (click)="addViolation()" class="btn btn-primary">Add More</button></th>
+                    </tr>
+                    <tr *ngFor="let quantity of violations().controls; let i=index" [formGroupName]="i">
+                        <td>
+                            Group:
+                            <input [(ngModel)]="violation.group" type="text" formControlName="group" class="form-control">
+                        </td>
+                        <td>
+                            Code:
+                            <input [(ngModel)]="violation.code" type="text" formControlName="code" class="form-control">
+                        </td>
+                        <td>
+                            Degree:
+                            <input [(ngModel)]="violation.degree" type="text" formControlName="degree" class="form-control">
+                        </td>
+                        <td>
+                            Description:
+                            <input [(ngModel)]="violation.desc" type="text" formControlName="desc" class="form-control">
+                        </td>
+                        <td>
+                            <button (click)="removeViolation(i)" class="btn btn-danger">Remove</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
         </div>
         <div class="form-group">
             <!-- Can probably prepopulate this from the officer's account information -->
@@ -86,13 +117,13 @@
             <input [(ngModel)]="citation.officer_name" type="text" name="officer_name" class="form-control" placeholder="Name"/>
             <br>
         </div>
-        <div>
+        <div class="form-group">
             <!-- Can probably prepopulate this from the officer's account information -->
             <label for="officer_badge">Badge No.</label>
             <input [(ngModel)]="citation.officer_badge" type="text" name="officer_badge" class="form-control" placeholder="Badge #"/>
             <br>
         </div>
-        <div>
+        <div class="form-group">
             <!--
                 <mat-form-field appearance="fill">
                 <mat-label>Signed date</mat-label>
@@ -108,7 +139,7 @@
             <input [(ngModel)]="citation.sign_date" class="form-control" type="date" name="sign_date"/>
             <br>
         </div>
-        <button (click)="createCitation(citation)" *ngIf="!citation.citation_id" class="btn btn-primary" type="submit">Submit</button><br><br>
+        <button (click)="createCitationWithViolations(citation, violation, citationWithViolations)" *ngIf="!citation.citation_id" class="btn btn-primary" type="submit">Submit</button><br><br>
     </form>
 
 </div>

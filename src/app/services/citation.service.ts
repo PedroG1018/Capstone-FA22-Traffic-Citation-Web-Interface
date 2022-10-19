@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
 import { Citation } from '../models/citation';
+import { CitationWithViolations } from '../models/citation-with-violations';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CitationService {
   private url = "Citation";
+  private newUrl = "CitationWithViolations"
 
   constructor(private http: HttpClient) { }
 
@@ -22,6 +24,11 @@ export class CitationService {
 
   public createCitation(citation: Citation) : Observable<Citation[]> {
     return this.http.post<Citation[]>(`${environment.apiUrl}/${this.url}`, citation);
+  }
+
+  // creates a citation with 1 or more violations
+  public createCitationWithViolations(citation: CitationWithViolations) : Observable<CitationWithViolations[]> {
+    return this.http.post<CitationWithViolations[]>(`${environment.apiUrl}/${this.newUrl}`, citation)
   }
 
   public updateCitation(citation: Citation) : Observable<Citation[]> {
