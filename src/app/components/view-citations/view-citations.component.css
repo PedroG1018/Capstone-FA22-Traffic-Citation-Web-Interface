@@ -4,6 +4,14 @@
   min-width: 300px; 
 }
 
+.mat-row:hover  {
+  background-color: #FFE1AA;
+}
+
+/* .mat-row {
+  min-height: 55px;
+} */
+
 .spinner-container {
   position: absolute;
   top: 50%;
