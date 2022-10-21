@@ -1,4 +1,4 @@
-<div class="container" *ngIf="citation && violation && citationWithViolations">
+<div class="container" *ngIf="citation && citationViolations && citationWithViolations">
     
     <h2> Creating Citation </h2>
     <form>
@@ -90,19 +90,19 @@
                     <tr *ngFor="let quantity of violations().controls; let i=index" [formGroupName]="i">
                         <td>
                             Group:
-                            <input [(ngModel)]="violation.group" type="text" formControlName="group" class="form-control">
+                            <input [(ngModel)]="citationViolations[i].group" type="text" formControlName="group" class="form-control">
                         </td>
                         <td>
                             Code:
-                            <input [(ngModel)]="violation.code" type="text" formControlName="code" class="form-control">
+                            <input [(ngModel)]="citationViolations[i].code" type="text" formControlName="code" class="form-control">
                         </td>
                         <td>
                             Degree:
-                            <input [(ngModel)]="violation.degree" type="text" formControlName="degree" class="form-control">
+                            <input [(ngModel)]="citationViolations[i].degree" type="text" formControlName="degree" class="form-control">
                         </td>
                         <td>
                             Description:
-                            <input [(ngModel)]="violation.desc" type="text" formControlName="desc" class="form-control">
+                            <input [(ngModel)]="citationViolations[i].desc" type="text" formControlName="desc" class="form-control">
                         </td>
                         <td>
                             <button (click)="removeViolation(i)" class="btn btn-danger">Remove</button>
@@ -139,7 +139,7 @@
             <input [(ngModel)]="citation.sign_date" class="form-control" type="date" name="sign_date"/>
             <br>
         </div>
-        <button (click)="createCitationWithViolations(citation, violation, citationWithViolations)" *ngIf="!citation.citation_id" class="btn btn-primary" type="submit">Submit</button><br><br>
+        <button (click)="createCitationWithViolations(citation, citationViolations, citationWithViolations)" *ngIf="!citation.citation_id" class="btn btn-primary" type="submit">Submit</button><br><br>
     </form>
 
 </div>
