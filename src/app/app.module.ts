@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio'
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { ErrorStateMatcher, MatNativeDateModule, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select'
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -20,7 +20,6 @@ import { environment as env } from '../environments/environment';
 import { auth0 as auth0} from '../environments/auth0.prod';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 //Components
 import { AppComponent } from './app.component';
@@ -74,12 +73,12 @@ import { FormatTimeSpan } from './components/citations/view-citations/formatTime
     MatProgressSpinnerModule,
     MatDialogModule,
     NgbModule,
-    NgxMaterialTimepickerModule,
   ],
   providers: [
     {provide: MatDialogRef, useValue: {}}, CitationService, 
-    {provide: MAT_DIALOG_DATA, useValue:{}},
-    {provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: {color: 'primary'}}
+    {provide: MAT_DIALOG_DATA, useValue:{}}, // Pass data between dialogs
+    {provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: {color: 'primary'}}, // Change default radio btn color
+    {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}, // Used to check for valid input
   ],
   bootstrap: [AppComponent],
 })

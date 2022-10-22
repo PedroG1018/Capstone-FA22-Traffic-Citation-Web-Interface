@@ -1,1 +1,35 @@
-<p>create-driver works!</p>
+<h2 class="text-center"> Add Driver Information </h2>
+<form [formGroup]="driverForm" (ngSubmit)="onFormSubmit()">
+    Driver License Number: <input matInput formControlName="license_no" placeholder="Enter License Number" [errorStateMatcher]="matcher">
+    
+
+    License Number Class: <input matInput formControlName="license_class" placeholder="Enter License Class" [errorStateMatcher]="matcher">
+    
+    Driver Name: <input matInput formControlName="name" placeholder="Enter name" [errorStateMatcher]="matcher">
+    
+    Date of Birth: <input matInput formControlName="date_birth" placeholder="Enter DOB" type="date" [errorStateMatcher]="matcher">
+    
+    Sex: <input matInput formControlName="sex" placeholder="Enter Sex" [errorStateMatcher]="matcher">
+    
+    Hair Color: <input matInput formControlName="hair" placeholder="Enter hair color" [errorStateMatcher]="matcher">
+    
+    Eye Color: <input matInput formControlName="eyes" placeholder="Enter eye color" [errorStateMatcher]="matcher">
+    
+    Height: <input matInput formControlName="height" placeholder="Enter height" [errorStateMatcher]="matcher">
+    
+    Weight: <input matInput formControlName="weight" placeholder="Enter weight" [errorStateMatcher]="matcher">
+    
+    Race: <input matInput formControlName="race" placeholder="Enter race" [errorStateMatcher]="matcher">
+    
+    Address: <input matInput formControlName="address" placeholder="Enter address" [errorStateMatcher]="matcher">
+    
+    City: <input matInput formControlName="city" placeholder="Enter city" [errorStateMatcher]="matcher">
+    
+    State: <input matInput formControlName="state" placeholder="Enter state" [errorStateMatcher]="matcher">
+    
+    Zip: <input matInput formControlName="zip" placeholder="Enter zip code" [errorStateMatcher]="matcher">
+    <mat-error *ngIf="driverForm.controls.zip.hasError('required') && !driverForm.controls.zip.pristine"> Zip is <strong>required</strong> </mat-error>
+    <mat-error *ngIf="driverForm.controls.zip.hasError('pattern')"> Zip can only have digits </mat-error>
+    
+    <button type="submit">Submit</button>
+</form>

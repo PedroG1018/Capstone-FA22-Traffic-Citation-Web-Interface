@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'create-citation', component: CreateCitationComponent, title: 'Add Citation' },
   { path: 'edit-citation', component: EditCitationComponent, title: 'Editing Citations' },
   { path: 'view-citations', component: ViewCitationsComponent, title: 'Viewing Citations' },
-  { path: 'create-driver', component: CreateDriverComponent, title: 'Add Driver' },
+  { path: 'create-driver', component: CreateDriverComponent, title: 'Add Driver Information' },
   { path: 'edit-driver', component: EditDriverComponent, title: 'Editing Driver'},
   { path: 'login', component: LoginComponent, title: 'Login' },
   { path: '', redirectTo: 'home', pathMatch: 'full' }, // TODO: Change to login page

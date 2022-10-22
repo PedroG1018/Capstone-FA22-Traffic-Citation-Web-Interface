@@ -42,7 +42,6 @@ export class CreateCitationComponent implements OnInit {
 
   initNewCitation() {
     this.citation = new Citation();
-    console.log(this.citation.date);
   }
 
   initNewViolation() {
