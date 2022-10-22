@@ -20,7 +20,7 @@
       <!-- Time Column -->
       <ng-container matColumnDef="time">
         <mat-header-cell *matHeaderCellDef> Time </mat-header-cell>
-        <mat-cell *matCellDef="let citation"> {{ citation.time }} </mat-cell>
+        <mat-cell *matCellDef="let citation"> {{ citation.time | formatTimespan }} </mat-cell>
       </ng-container>
   
       <ng-container matColumnDef="violation_loc">

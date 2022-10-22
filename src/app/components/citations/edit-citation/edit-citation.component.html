@@ -12,7 +12,8 @@
 
     <mat-form-field>
         <mat-label>Time</mat-label>
-        <input matInput placeholder="Time" [(ngModel)]="citation.time" type="time"/>
+        <!-- One way binding for formatting timespan with pipe then on model change bind to citation.time Need to use 24H clock -->
+        <input matInput class="timepicker" vale="00:00:00" [ngModel]="(citation.time | formatTimespan)" (ngModelChange)="citation.time = $event" type="time"/>
     </mat-form-field><br>
 
     <mat-form-field>

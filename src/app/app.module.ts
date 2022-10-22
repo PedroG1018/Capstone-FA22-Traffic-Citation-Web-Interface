@@ -1,3 +1,4 @@
+// Modules
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,18 +18,24 @@ import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment as env } from '../environments/environment';
 import { auth0 as auth0} from '../environments/auth0.prod';
-
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { EditCitationComponent } from './components/edit-citation/edit-citation.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CreateCitationComponent } from './components/create-citation/create-citation.component';
-import { ViewCitationsComponent } from './components/view-citations/view-citations.component';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+
+//Components
+import { AppComponent } from './app.component';
+import { CreateDriverComponent } from './components/driver/create-driver/create-driver.component';
+import { EditDriverComponent } from './components/driver/edit-driver/edit-driver.component';
+import { CreateCitationComponent } from './components/citations/create-citation/create-citation.component';
+import { EditCitationComponent } from './components/citations/edit-citation/edit-citation.component';
+import { ViewCitationsComponent } from './components/citations/view-citations/view-citations.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
-import { CitationService } from './services/citation.service';
 
+// Misc
+import { CitationService } from './services/citation.service';
+import { FormatTimeSpan } from './components/citations/view-citations/formatTimespan';
 
 @NgModule({
   declarations: [
@@ -39,6 +46,9 @@ import { CitationService } from './services/citation.service';
     PageNotFoundComponent,
     HomeComponent,
     LoginComponent,
+    CreateDriverComponent,
+    EditDriverComponent,
+    FormatTimeSpan,
   ],
   imports: [
     AuthModule.forRoot({
@@ -63,7 +73,8 @@ import { CitationService } from './services/citation.service';
     MatSortModule,
     MatProgressSpinnerModule,
     MatDialogModule,
-    NgbModule
+    NgbModule,
+    NgxMaterialTimepickerModule,
   ],
   providers: [
     {provide: MatDialogRef, useValue: {}}, CitationService, 

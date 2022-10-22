@@ -13,8 +13,6 @@ export class EditCitationComponent implements OnInit {
   @Input() citation?: Citation;
   @Output() citationsUpdated = new EventEmitter<Citation[]>();
 
-  endIndex?: number;
-
   // Used injection token to access data stored in dialog
   constructor(
     private citationService: CitationService, 

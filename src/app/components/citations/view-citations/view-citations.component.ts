@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit, Pipe } from '@angular/core';
 import { Citation } from 'src/app/models/citation';
 import { CitationService } from 'src/app/services/citation.service';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
