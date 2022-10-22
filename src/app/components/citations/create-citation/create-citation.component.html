@@ -11,23 +11,14 @@
                 <mat-radio-button value="Non-Traffic">Non-Traffic</mat-radio-button>
             </mat-radio-group>
             <br><br>
-            <!--
-            <input [(ngModel)]="citation.type" type="text" name="Type" class="form-control" placeholder="Type"/>
-            -->
         </div>
         <div class="form-group">
-            <!--
-                
-            <br><br>
-            <input [(ngModel)]="citation.date" class="form-control" type="date"/>
-            -->
             <input [(ngModel)]="citation.date" class="form-control" type="date" name="Date"/>
             <br>
         </div>
         <div class="form-group">
             Time:
-            <input [(ngModel)]="citation.time" class="form-control" type="time" name="Time"/>
-            <br>
+            <input [ngModel]="(citation.time)" (ngModelChange)="citation.time = $event" class="form-control" type="time" name="Time"/>
         </div>
         <div class="form-group">
             <label for="owner_fault">Owner's Fault:</label><br>
@@ -37,15 +28,6 @@
                 <mat-radio-button [value]="false">No</mat-radio-button>
             </mat-radio-group>
             <br><br>
-
-            <!-- 
-            <label>
-                <input [(ngModel)]="citation.owner_fault" type="radio" [value]="true"/> Yes
-            </label>
-            <label>
-                <input [(ngModel)]="citation.owner_fault" type="radio" [value]="false"/> No
-            </label>
-            -->
         </div>
         <div class="form-group">
             <label for="desc">Other Description:</label>
@@ -69,10 +51,6 @@
                     <mat-option value="CA">CA</mat-option>
                 </mat-select>
             </mat-form-field>
-            <!--
-            VIN State:
-            <input [(ngModel)]="citation.vin_state" placeholder="State"/>
-            -->
         </div>
         <div class="form-group">
             <!-- Will be converted to drop-down menu with different codes, their description, misd or infraction -->

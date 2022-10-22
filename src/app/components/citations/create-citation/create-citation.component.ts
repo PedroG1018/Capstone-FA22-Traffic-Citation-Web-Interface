@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
 import { Citation } from 'src/app/models/citation';
@@ -41,6 +42,7 @@ export class CreateCitationComponent implements OnInit {
 
   initNewCitation() {
     this.citation = new Citation();
+    console.log(this.citation.date);
   }
 
   initNewViolation() {
