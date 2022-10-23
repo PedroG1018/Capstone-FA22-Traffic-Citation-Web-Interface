@@ -24,13 +24,13 @@ export class CreateDriverComponent implements OnInit {
     hair: new FormControl('', [Validators.required]),
     eyes: new FormControl('', [Validators.required]),
     height: new FormControl('', [Validators.required]),
-    weight: new FormControl('', [Validators.required]),
+    weight: new FormControl('', [Validators.required, Validators.pattern('[0-9]')]),
     race: new FormControl('', [Validators.required]),
     address: new FormControl('', [Validators.required]),
     city: new FormControl('', [Validators.required]),
     state: new FormControl('',[Validators.required]),
     zip: new FormControl('',[Validators.required, Validators.pattern('[0-9]')]),
-    license_no: new FormControl('', [Validators.required]),
+    license_no: new FormControl('', [Validators.required, Validators.pattern('[a-zA-z0-9]*')]),
     license_class: new FormControl('', [Validators.required]),
   })
 
