@@ -7,13 +7,14 @@ import { EditCitationComponent } from '../edit-citation/edit-citation.component'
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { catchError, finalize, of, tap } from 'rxjs';
 import { CitationsResponse } from 'src/app/DTO/citationsResponse';
+import { Unsubscriber } from 'src/app/services/unsubscriber';
 
 @Component({
   selector: 'app-view-citations',
   templateUrl: './view-citations.component.html',
   styleUrls: ['./view-citations.component.css'],
 })
-export class ViewCitationsComponent implements AfterViewInit, OnInit {
+export class ViewCitationsComponent extends Unsubscriber implements AfterViewInit, OnInit {
   citations: Citation[] = [];
   citationToEdit?: Citation;
   citationCount?: number;
@@ -36,6 +37,7 @@ export class ViewCitationsComponent implements AfterViewInit, OnInit {
   ];
 
   constructor(private citationService: CitationService, private dialog: MatDialog) {
+    super()
     this.paginator = new MatPaginator(new MatPaginatorIntl, ChangeDetectorRef.prototype)
   }
 
@@ -47,10 +49,6 @@ export class ViewCitationsComponent implements AfterViewInit, OnInit {
     this.paginator.page.pipe(tap(() => this.loadCitationsPage())).subscribe();
   }
 
-  ngOnDestroy() {
-    this.loadingSubject.complete();
-  }
-
   loadCitationsPage() {
     this.loadCitations(this.paginator.pageIndex, this.paginator.pageSize);
   }
@@ -59,7 +57,7 @@ export class ViewCitationsComponent implements AfterViewInit, OnInit {
     // Retrieve citations from database. Display progress spinner until data is loaded
     console.log(this.paginator);
     this.loadingSubject.next(true);
-    this.citationService
+    this.addNewSubscription = this.citationService
       .getCitationsPaginator(pageNumber, pageSize)
       .pipe(catchError(() => of([])), finalize(() => this.loadingSubject.next(false)))
       .subscribe((result: CitationsResponse) => (
@@ -82,5 +80,6 @@ export class ViewCitationsComponent implements AfterViewInit, OnInit {
         this.loadCitationsPage();
       }
     });
+    this.addNewSubscription = dialogRef;
   }
 }

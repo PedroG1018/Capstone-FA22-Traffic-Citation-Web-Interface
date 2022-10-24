@@ -35,6 +35,7 @@ import { LoginComponent } from './components/login/login.component';
 // Misc
 import { CitationService } from './services/citation.service';
 import { FormatTimeSpan } from './components/citations/view-citations/formatTimespan';
+import { DriverLicenseDialogComponent } from './components/driver/driver-license-dialog/driver-license-dialog.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { FormatTimeSpan } from './components/citations/view-citations/formatTime
     CreateDriverComponent,
     EditDriverComponent,
     FormatTimeSpan,
+    DriverLicenseDialogComponent,
   ],
   imports: [
     AuthModule.forRoot({

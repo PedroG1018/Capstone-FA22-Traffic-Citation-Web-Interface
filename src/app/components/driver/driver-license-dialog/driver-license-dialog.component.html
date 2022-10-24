@@ -1,0 +1,10 @@
+<h2 mat-dialog-title> Driver License Number</h2>
+<div mat-dialog-content>
+    <mat-form-field>
+        <input matInput [(ngModel)]="license_no" placeholder="Enter License Number">
+    </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+    <button class="mat-raised-button mat-primary" (click)="getDriverByLicense(license_no)" *ngIf="license_no">Next</button>
+</div>

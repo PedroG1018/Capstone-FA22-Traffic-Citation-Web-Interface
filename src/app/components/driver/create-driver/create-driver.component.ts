@@ -1,18 +1,24 @@
 import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { InputErrorStateMatcher } from 'src/app/error-state-matching';
 import { Driver } from 'src/app/models/driver';
 import { DriverService } from 'src/app/services/driver.service';
+import { Unsubscriber } from 'src/app/services/unsubscriber';
+import { DriverLicenseDialogComponent } from '../driver-license-dialog/driver-license-dialog.component';
 
 @Component({
   selector: 'app-create-driver',
   templateUrl: './create-driver.component.html',
   styleUrls: ['./create-driver.component.css']
 })
-export class CreateDriverComponent implements OnInit {
-  @Input() driver?: Driver;
+export class CreateDriverComponent extends Unsubscriber implements OnInit {
+  @Input() driver: Driver;
   @Output() driverCreated = new EventEmitter<Driver>();
+
+  createDriverNow: boolean;
 
   matcher = new InputErrorStateMatcher(); // For form validation
 
@@ -34,20 +40,41 @@ export class CreateDriverComponent implements OnInit {
     license_class: new FormControl('', [Validators.required]),
   })
 
-  constructor(private driverService: DriverService) {
-
+  constructor(private driverService: DriverService, private dialog: MatDialog, private router: Router) {
+    super()
+    this.createDriverNow = false;
+    this.driver = new Driver();
   }
 
   ngOnInit(): void {
+    this.openDialog();
   }
 
   onFormSubmit(): void {
-
+    this.router.navigate(['/create-citation'])
   }
 
-  createDriver(driver: Driver) {
-    this.driver = driver;
-    // this.driverService.createDriver(driver).subscribe((driver) => this.driverCreated.emit(driver));
+  createDriver() {
+    // this.driverService.createDriver(this.driver).subscribe((driver) => this.driverCreated.emit(this.driver));
+    
+  }
+
+  // If license number exists retrieves driver information and auto fills form
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+    
+    dialogConfig.autoFocus = true;
+    dialogConfig.disableClose = true;
+    const dialogRef = this.dialog.open(DriverLicenseDialogComponent, dialogConfig).afterClosed().subscribe(result => {
+      // If driver already exists make that current driver
+      if (result != "Not Found") {
+        this.driver = result;
+        console.log("RESULT: " + result);
+      }
+      // Can now fill the form even if driver doesn't exist
+      this.createDriverNow = true;
+    });
+    this.addNewSubscription = dialogRef;
   }
 
 }

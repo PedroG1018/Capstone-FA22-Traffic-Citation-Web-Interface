@@ -5,6 +5,7 @@ import { Citation } from 'src/app/models/citation';
 import { CitationWithViolations } from 'src/app/models/citation-with-violations';
 import { Violation } from 'src/app/models/violation';
 import { CitationService } from 'src/app/services/citation.service';
+import { Unsubscriber } from 'src/app/services/unsubscriber';
 
 @Component({
   selector: 'app-create-citation',
@@ -12,7 +13,7 @@ import { CitationService } from 'src/app/services/citation.service';
   styleUrls: ['./create-citation.component.css'],
 })
 
-export class CreateCitationComponent implements OnInit {
+export class CreateCitationComponent extends Unsubscriber implements OnInit {
   @Input() citation?: Citation;
   @Input() violation?: Violation;
   @Input() citationWithViolations?: CitationWithViolations;
@@ -28,6 +29,7 @@ export class CreateCitationComponent implements OnInit {
   productForm: FormGroup;
 
   constructor(private citationService: CitationService, private fb: FormBuilder) {
+    super()
     this.productForm = this.fb.group({
       name:'',
       violations: this.fb.array([]),
@@ -54,7 +56,7 @@ export class CreateCitationComponent implements OnInit {
 
   // original create citation method
   createCitation(citation: Citation) {
-    this.citationService.createCitation(citation).subscribe((citations) => this.citationsCreated.emit(citations));
+    this.addNewSubscription = this.citationService.createCitation(citation).subscribe((citations) => this.citationsCreated.emit(citations));
     this.initNewCitation();
   }
 
@@ -62,7 +64,7 @@ export class CreateCitationComponent implements OnInit {
   createCitationWithViolations(citation: Citation, violation: Violation, citationWithViolations: CitationWithViolations) {
     citationWithViolations.citation = citation;
     citationWithViolations.violations?.push(violation);
-    this.citationService.createCitationWithViolations(citationWithViolations).subscribe((citationsWithViolations) => this.citationsWithViolationsCreated.emit(citationsWithViolations));
+    this.addNewSubscription = this.citationService.createCitationWithViolations(citationWithViolations).subscribe((citationsWithViolations) => this.citationsWithViolationsCreated.emit(citationsWithViolations));
     this.initNewCitation();
     this.initNewViolation();
     this.initNewCitationWithViolations();

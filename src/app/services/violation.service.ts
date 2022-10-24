@@ -1,8 +1,9 @@
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError, Observable, throwError } from "rxjs";
+import { catchError, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Violation } from "../models/violation";
+import { ErrorHandleService } from "./error-service";
 
 @Injectable({
     providedIn: 'root'
@@ -10,27 +11,13 @@ import { Violation } from "../models/violation";
 export class ViolationService {
     private url = "Violation";
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private errorService: ErrorHandleService) { }
 
     public getViolations() : Observable<Violation[]> {
-        return this.http.get<Violation[]>(`${environment.apiUrl}/${this.url}`).pipe(catchError(this.handleError));
+        return this.http.get<Violation[]>(`${environment.apiUrl}/${this.url}`).pipe(catchError(this.errorService.handleError));
     }
 
     public createViolation(violation: Violation) : Observable<Violation[]> {
-        return this.http.post<Violation[]>(`${environment.apiUrl}/${this.url}`, violation).pipe(catchError(this.handleError));
+        return this.http.post<Violation[]>(`${environment.apiUrl}/${this.url}`, violation).pipe(catchError(this.errorService.handleError));
     }
-
-    handleError(error: HttpErrorResponse) {
-        let errorMessage = '';
-    
-        if (error.error instanceof ErrorEvent) {
-          errorMessage = error.error.message;
-        } else {
-          errorMessage = `Error Code: ${error.status}\nError Message: ${error.message}`; 
-        }
-        console.log(errorMessage);
-        return throwError((() => {
-          return errorMessage;
-        }))
-      }
 }
