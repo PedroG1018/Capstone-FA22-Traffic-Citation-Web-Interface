@@ -14,6 +14,7 @@ import { CitationService } from 'src/app/services/citation.service';
 export class CreateCitationComponent implements OnInit {
   @Input() citation?: Citation;
   @Input() violation?: Violation;
+  @Input() citationViolations?: Violation[]
   @Input() citationWithViolations?: CitationWithViolations;
   @Output() citationsCreated = new EventEmitter<Citation[]>();
   @Output() citationsWithViolationsCreated = new EventEmitter<CitationWithViolations[]>();
@@ -36,6 +37,7 @@ export class CreateCitationComponent implements OnInit {
   ngOnInit(): void {
     this.initNewCitation();
     this.initNewViolation();
+    this.initNewCitationViolations();
     this.initNewCitationWithViolations();
   }
 
@@ -45,6 +47,10 @@ export class CreateCitationComponent implements OnInit {
 
   initNewViolation() {
     this.violation = new Violation();
+  }
+
+  initNewCitationViolations() {
+    this.citationViolations = [];
   }
 
   initNewCitationWithViolations() {
@@ -58,9 +64,9 @@ export class CreateCitationComponent implements OnInit {
   }
 
   // new create citation method that includes violations
-  createCitationWithViolations(citation: Citation, violation: Violation, citationWithViolations: CitationWithViolations) {
+  createCitationWithViolations(citation: Citation, citationViolations: Violation[], citationWithViolations: CitationWithViolations) {
     citationWithViolations.citation = citation;
-    citationWithViolations.violations?.push(violation);
+    citationWithViolations.violations = citationViolations;
     this.citationService.createCitationWithViolations(citationWithViolations).subscribe((citationsWithViolations) => this.citationsWithViolationsCreated.emit(citationsWithViolations));
     this.initNewCitation();
     this.initNewViolation();
@@ -82,9 +88,11 @@ export class CreateCitationComponent implements OnInit {
 
   addViolation() {
     this.violations().push(this.newViolation());
+    this.citationViolations?.push(new Violation());
   }
 
   removeViolation(i: number) {
     this.violations().removeAt(i);
+    this.citationViolations?.splice(i, 1);
   }
 }
