@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>Check for existing driver</h2>
+<div class="container">
+    <form [formGroup]="licenseForm" (ngSubmit)="onFormSubmit()">
+        <mat-form-field>
+            <mat-label>License Number</mat-label>
+            <input matInput formControlName="license_no" placeholder="Enter License Number" [errorStateMatcher]="matcher" maxlength="8">
+            <mat-error *ngIf="licenseForm.controls.license_no.hasError('pattern')">Incorrect format must start with letter</mat-error>
+            <mat-error *ngIf="licenseForm.controls.license_no.hasError('maxlength') || licenseForm.controls.license_no.hasError('minlength') && !licenseForm.controls.license_no.hasError('pattern')"> License must be 8 characters long</mat-error>
+        </mat-form-field>
+        <div mat-dialog-actions>
+            <button class="mat-raised-button mat-primary">Next</button>
+        </div>
+    </form>
+</div>

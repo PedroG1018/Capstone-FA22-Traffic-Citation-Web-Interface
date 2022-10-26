@@ -4,6 +4,7 @@ import { catchError, throwError } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
 import { Driver } from '../models/driver';
+import { ErrorHandleService } from './error-service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,35 +12,25 @@ import { Driver } from '../models/driver';
 export class DriverService {
   private url = "Driver";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private errorService: ErrorHandleService) { }
 
-  public getDrivers() : Observable<Driver[]> {
-    return this.http.get<Driver[]>(`${environment.apiUrl}/${this.url}`).pipe(catchError(this.handleError));
+  public getDrivers() : Observable<Driver[] | undefined> {
+    return this.http.get<Driver[]>(`${environment.apiUrl}/${this.url}`).pipe(catchError(this.errorService.handleError));
   }
 
-  public createDriver(driver: Driver) : Observable<Driver[]> {
-    return this.http.post<Driver[]>(`${environment.apiUrl}/${this.url}`, driver).pipe(catchError(this.handleError));
+  public getDriverByLicenseNo(license_no: string) : Observable<Driver | undefined> {
+    return this.http.get<Driver>(`${environment.apiUrl}/${this.url}/license/${license_no}`).pipe(catchError(this.errorService.handleError));
   }
 
-  public updateDriver(driver: Driver) : Observable<Driver[]> {
-    return this.http.put<Driver[]>(`${environment.apiUrl}/${this.url}`, driver).pipe(catchError(this.handleError));
+  public createDriver(driver: Driver) : Observable<Driver | undefined> {
+    return this.http.post<Driver>(`${environment.apiUrl}/${this.url}`, driver).pipe(catchError(this.errorService.handleError));
   }
 
-  public deleteDriver(driver: Driver) : Observable<Driver[]> {
-    return this.http.delete<Driver[]>(`${environment.apiUrl}/${this.url}/${driver.driver_id}`).pipe(catchError(this.handleError));
+  public updateDriver(driver: Driver) : Observable<Driver | undefined> {
+    return this.http.put<Driver>(`${environment.apiUrl}/${this.url}`, driver).pipe(catchError(this.errorService.handleError));
   }
 
-  handleError(error: HttpErrorResponse) {
-    let errorMessage = '';
-
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = error.error.message;
-    } else {
-      errorMessage = `Error Code: ${error.status}\nError Message: ${error.message}`; 
-    }
-    console.log(errorMessage);
-    return throwError((() => {
-      return errorMessage;
-    }))
+  public deleteDriver(driver: Driver) : Observable<Driver | undefined> {
+    return this.http.delete<Driver>(`${environment.apiUrl}/${this.url}/${driver.driver_id}`).pipe(catchError(this.errorService.handleError));
   }
 }

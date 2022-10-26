@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit, Pipe } from '@angular/core';
 import { Citation } from 'src/app/models/citation';
 import { CitationService } from 'src/app/services/citation.service';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
@@ -7,13 +7,14 @@ import { EditCitationComponent } from '../edit-citation/edit-citation.component'
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { catchError, finalize, of, tap } from 'rxjs';
 import { CitationsResponse } from 'src/app/DTO/citationsResponse';
+import { Unsubscriber } from 'src/app/services/unsubscriber';
 
 @Component({
   selector: 'app-view-citations',
   templateUrl: './view-citations.component.html',
   styleUrls: ['./view-citations.component.css'],
 })
-export class ViewCitationsComponent implements AfterViewInit, OnInit {
+export class ViewCitationsComponent extends Unsubscriber implements AfterViewInit, OnInit {
   citations: Citation[] = [];
   citationToEdit?: Citation;
   citationCount?: number;
@@ -36,6 +37,7 @@ export class ViewCitationsComponent implements AfterViewInit, OnInit {
   ];
 
   constructor(private citationService: CitationService, private dialog: MatDialog) {
+    super()
     this.paginator = new MatPaginator(new MatPaginatorIntl, ChangeDetectorRef.prototype)
   }
 
@@ -47,19 +49,15 @@ export class ViewCitationsComponent implements AfterViewInit, OnInit {
     this.paginator.page.pipe(tap(() => this.loadCitationsPage())).subscribe();
   }
 
-  ngOnDestroy() {
-    this.loadingSubject.complete();
-  }
-
   loadCitationsPage() {
     this.loadCitations(this.paginator.pageIndex, this.paginator.pageSize);
   }
 
+  // Retrieve citations from database. Display progress spinner until data is loaded
   loadCitations(pageNumber = 1, pageSize = 5) {
-    // Retrieve citations from database. Display progress spinner until data is loaded
-    console.log(this.paginator);
     this.loadingSubject.next(true);
-    this.citationService
+
+    this.addNewSubscription = this.citationService
       .getCitationsPaginator(pageNumber, pageSize)
       .pipe(catchError(() => of([])), finalize(() => this.loadingSubject.next(false)))
       .subscribe((result: CitationsResponse) => (
@@ -76,11 +74,16 @@ export class ViewCitationsComponent implements AfterViewInit, OnInit {
     dialogConfig.data = citation;
     dialogConfig.autoFocus = true;
     dialogConfig.disableClose = false;
-    const dialogRef = this.dialog.open(EditCitationComponent, dialogConfig).afterClosed().subscribe(result => {
-      // If citation was deleted after closing dialog, update list
-      if (result) {
-        this.loadCitationsPage();
-      }
-    });
+
+    const dialogRef = this.dialog
+      .open(EditCitationComponent, dialogConfig)
+      .afterClosed()
+      .subscribe(result => {
+        // If citation was deleted after closing dialog then refresh list
+        if (result) {
+          this.loadCitationsPage();
+        }
+      });
+    this.addNewSubscription = dialogRef;
   }
 }

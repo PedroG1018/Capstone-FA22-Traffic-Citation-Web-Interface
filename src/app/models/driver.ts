@@ -1,8 +1,10 @@
+import { formatDate } from "@angular/common";
+
 export class Driver {
     driver_id?: number;
     driver_name = "";
-    date_birth = Date;
-    sex = "";
+    date_birth = formatDate(new Date(), 'yyyy-MM-dd', 'en-US');
+    sex = '';
     hair = "";
     eyes = "";
     height = "";
@@ -13,5 +15,5 @@ export class Driver {
     state = "";
     zip?: number;
     license_no = "";
-    license_class = "";
+    license_class = '';
 }

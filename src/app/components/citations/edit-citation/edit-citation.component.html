@@ -12,8 +12,10 @@
 
     <mat-form-field>
         <mat-label>Time</mat-label>
-        <input matInput placeholder="Time" [(ngModel)]="citation.time" type="time"/>
+        <!-- One way binding (only html value is changed) for formatting timespan with pipe then on model change, update citation.time (changes actual value). Similar to 2 way binding but you can use pipe in between changes to a value -->
+        <input matInput [ngModel]="(citation.time | formatTimespan)" (ngModelChange)="citation.time = $event" type="time"/>
     </mat-form-field><br>
+    
 
     <mat-form-field>
         <mat-label>VIN</mat-label>
@@ -60,7 +62,11 @@
         <mat-label>Description</mat-label>
         <textarea matInput cols="50" placeholder="Description"[(ngModel)]="citation.desc"></textarea><br>
     </mat-form-field>
+
+    <!-- <ngb-timepicker matInput [(ngModel)]="citation.time" (ngModelChange)="citation.time = $event"></ngb-timepicker> -->
 </div>
+
+
 
 <div mat-dialog-actions *ngIf="citation">
     <button class="mat-raised-button mat-warn" (click)="deleteCitation(citation)" *ngIf="citation.citation_id">Delete</button>
