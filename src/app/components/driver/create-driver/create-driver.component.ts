@@ -19,6 +19,7 @@ export class CreateDriverComponent extends Unsubscriber implements OnInit {
   @Output() driverCreated = new EventEmitter<Driver>();
 
   createDriverNow: boolean;
+  existingDriverFound: boolean;
 
   matcher = new InputErrorStateMatcher(); // For form validation
 
@@ -42,6 +43,7 @@ export class CreateDriverComponent extends Unsubscriber implements OnInit {
   constructor(private driverService: DriverService, private dialog: MatDialog, private router: Router) {
     super()
     this.createDriverNow = false;
+    this.existingDriverFound = false;
     this.driver = new Driver();
   }
 
@@ -93,11 +95,20 @@ export class CreateDriverComponent extends Unsubscriber implements OnInit {
   }
 
   createDriver() {
-    this.updateDriverValues();
-    this.addNewSubscription = this.driverService.createDriver(this.driver).subscribe((result => {
-      // Pass driverID to create citation route
-      this.router.navigate(['/create-citation', result?.driver_id]);
-    }));
+
+    if (!this.existingDriverFound) {
+      this.updateDriverValues();
+      this.addNewSubscription = this.driverService.createDriver(this.driver).subscribe((result => {
+        // Pass driverID to create citation route
+        this.router.navigate(['/create-citation', result?.driver_id]);
+      }));
+    } else {
+      this.updateDriverValues();
+      this.addNewSubscription = this.driverService.updateDriver(this.driver).subscribe((result => {
+        this.router.navigate(['/create-citation', result?.driver_id]);
+      }));
+    }
+    
   }
 
   // If license number exists retrieves driver information and auto fills form
@@ -113,9 +124,11 @@ export class CreateDriverComponent extends Unsubscriber implements OnInit {
     .subscribe(result => {
       if (typeof(result) === 'string') {
         this.driverForm.patchValue({weight: null, zip: null, license_no: result})
+        this.existingDriverFound = false;
       } else if (typeof(result) === 'object') {
         this.driver = result;
         this.setDriverValues();
+        this.existingDriverFound = true;
       }
       this.createDriverNow = true; // Can now fill form
     });

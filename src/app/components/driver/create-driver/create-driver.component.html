@@ -1,6 +1,6 @@
 <h2 class="text-center" *ngIf="createDriverNow">Add Driver Information</h2>
 <div class="container" *ngIf="createDriverNow">
-    <form [formGroup]="driverForm" >
+    <form [formGroup]="driverForm" (ngSubmit)="onFormSubmit()">
         <mat-form-field>
             <mat-label>Driver License Number</mat-label>
             <input matInput formControlName="license_no" placeholder="Enter License Number" [errorStateMatcher]="matcher" autocomplete="off"/>
@@ -101,7 +101,7 @@
         </mat-form-field>
 
         <div mat-dialog-actions>
-            <button class="btn btn-primary" (click)="createDriver()" type="submit">Next</button>
+            <button class="btn btn-primary" type="submit">Next</button>
         </div>
     </form>
 
