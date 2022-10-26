@@ -53,10 +53,10 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
     this.loadCitations(this.paginator.pageIndex, this.paginator.pageSize);
   }
 
+  // Retrieve citations from database. Display progress spinner until data is loaded
   loadCitations(pageNumber = 1, pageSize = 5) {
-    // Retrieve citations from database. Display progress spinner until data is loaded
-    console.log(this.paginator);
     this.loadingSubject.next(true);
+
     this.addNewSubscription = this.citationService
       .getCitationsPaginator(pageNumber, pageSize)
       .pipe(catchError(() => of([])), finalize(() => this.loadingSubject.next(false)))
@@ -74,12 +74,16 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
     dialogConfig.data = citation;
     dialogConfig.autoFocus = true;
     dialogConfig.disableClose = false;
-    const dialogRef = this.dialog.open(EditCitationComponent, dialogConfig).afterClosed().subscribe(result => {
-      // If citation was deleted after closing dialog, update list
-      if (result) {
-        this.loadCitationsPage();
-      }
-    });
+
+    const dialogRef = this.dialog
+      .open(EditCitationComponent, dialogConfig)
+      .afterClosed()
+      .subscribe(result => {
+        // If citation was deleted after closing dialog then refresh list
+        if (result) {
+          this.loadCitationsPage();
+        }
+      });
     this.addNewSubscription = dialogRef;
   }
 }

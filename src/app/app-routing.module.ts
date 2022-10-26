@@ -17,7 +17,7 @@ import { DriverLicenseDialogComponent } from './components/driver/driver-license
 const routes: Routes = [
   { path: 'app', component: AppComponent },
   { path: 'home', component: HomeComponent, title: 'Traffic Citation Interface' },
-  { path: 'create-citation', component: CreateCitationComponent, title: 'Add Citation' },
+  { path: 'create-citation/:id', component: CreateCitationComponent, title: 'Add Citation' },
   { path: 'edit-citation', component: EditCitationComponent, title: 'Editing Citations' },
   { path: 'view-citations', component: ViewCitationsComponent, title: 'Viewing Citations' },
   { path: 'driver-dialog', component: DriverLicenseDialogComponent, title: 'Check for driver' },

@@ -28,12 +28,12 @@ export class EditCitationComponent extends Unsubscriber implements OnInit {
    
   // Call citation.service methods to perform CRUD operations here
   updateCitation(citation: Citation) {
-    this.addNewSubscription = this.citationService.updateCitation(citation).subscribe((citations: Citation[]) => this.citationsUpdated.emit(citations));
+    this.addNewSubscription = this.citationService.updateCitation(citation).subscribe((citations: Citation[] | undefined) => this.citationsUpdated.emit(citations));
     this.closeDialog();
   }
 
   deleteCitation(citation:Citation) {
-    this.addNewSubscription = this.citationService.deleteCitation(citation).subscribe((citations: Citation[]) => this.citationsUpdated.emit(citations));
+    this.addNewSubscription = this.citationService.deleteCitation(citation).subscribe((citations: Citation[] | undefined) => this.citationsUpdated.emit(citations));
     let deleted = true;
     this.dialogRef.close(deleted)
   }

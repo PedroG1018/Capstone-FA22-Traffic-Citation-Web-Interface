@@ -1,6 +1,6 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Citation } from 'src/app/models/citation';
 import { CitationWithViolations } from 'src/app/models/citation-with-violations';
 import { Violation } from 'src/app/models/violation';
@@ -21,6 +21,8 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
   @Output() citationsCreated = new EventEmitter<Citation[]>();
   @Output() citationsWithViolationsCreated = new EventEmitter<CitationWithViolations[]>();
 
+  driverId?: number;
+
   citations: Citation[] = [];
   citationsWithViolations: CitationWithViolations[] = [];
   
@@ -29,7 +31,7 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
 
   productForm: FormGroup;
 
-  constructor(private citationService: CitationService, private fb: FormBuilder) {
+  constructor(private citationService: CitationService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
     super()
     this.productForm = this.fb.group({
       name:'',
@@ -38,42 +40,27 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initNewCitation();
-    this.initNewViolation();
-    this.initNewCitationViolations();
-    this.initNewCitationWithViolations();
-  }
-
-  initNewCitation() {
+    // Get driverId from previously created driver
+    this.route.params.subscribe(params => {
+      this.driverId = params['id'];
+    });
+    
     this.citation = new Citation();
-  }
+    this.citation.driver_id = this.driverId;
 
-  initNewViolation() {
     this.violation = new Violation();
-  }
-
-  initNewCitationViolations() {
     this.citationViolations = [];
-  }
-
-  initNewCitationWithViolations() {
     this.citationWithViolations = new CitationWithViolations();
-  }
-
-  // original create citation method
-  createCitation(citation: Citation) {
-    this.addNewSubscription = this.citationService.createCitation(citation).subscribe((citations) => this.citationsCreated.emit(citations));
-    this.initNewCitation();
   }
 
   // new create citation method that includes violations
   createCitationWithViolations(citation: Citation, citationViolations: Violation[], citationWithViolations: CitationWithViolations) {
     citationWithViolations.citation = citation;
     citationWithViolations.violations = citationViolations;
-    this.addNewSubscription = this.citationService.createCitationWithViolations(citationWithViolations).subscribe((citationsWithViolations) => this.citationsWithViolationsCreated.emit(citationsWithViolations));
-    this.initNewCitation();
-    this.initNewViolation();
-    this.initNewCitationWithViolations();
+    this.addNewSubscription = this.citationService.createCitationWithViolations(citationWithViolations).subscribe(citationsWithViolations => {
+      this.citationsWithViolationsCreated.emit(citationsWithViolations);
+      this.router.navigate(['/home']);
+    });
   }
 
   violations() : FormArray {

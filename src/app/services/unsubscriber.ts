@@ -3,8 +3,8 @@ import { Subscription } from 'rxjs';
 
 /**
  * Unsubscribe from all subscriptions
- * Prevents memory leaks: when subscription is made in a component it must
- * be unsubscribed from when component is destroyed (when you change view)
+ * Prevents memory leaks: when a subscription is made in a component it must
+ * be unsubscribed from when the component is destroyed (when you change view)
  */
 
 @Injectable({

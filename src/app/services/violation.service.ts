@@ -13,11 +13,11 @@ export class ViolationService {
 
     constructor(private http: HttpClient, private errorService: ErrorHandleService) { }
 
-    public getViolations() : Observable<Violation[]> {
+    public getViolations() : Observable<Violation[] | undefined> {
         return this.http.get<Violation[]>(`${environment.apiUrl}/${this.url}`).pipe(catchError(this.errorService.handleError));
     }
 
-    public createViolation(violation: Violation) : Observable<Violation[]> {
+    public createViolation(violation: Violation) : Observable<Violation[] | undefined> {
         return this.http.post<Violation[]>(`${environment.apiUrl}/${this.url}`, violation).pipe(catchError(this.errorService.handleError));
     }
 }

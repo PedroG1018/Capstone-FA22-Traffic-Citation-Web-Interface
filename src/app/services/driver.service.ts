@@ -14,23 +14,23 @@ export class DriverService {
 
   constructor(private http: HttpClient, private errorService: ErrorHandleService) { }
 
-  public getDrivers() : Observable<Driver[]> {
+  public getDrivers() : Observable<Driver[] | undefined> {
     return this.http.get<Driver[]>(`${environment.apiUrl}/${this.url}`).pipe(catchError(this.errorService.handleError));
   }
 
-  public getDriverByLicenseNo(license_no: string) : Observable<any> {
-    return this.http.get<any>(`${environment.apiUrl}/${this.url}/license/${license_no}`).pipe(catchError(this.errorService.handleError));
+  public getDriverByLicenseNo(license_no: string) : Observable<Driver | undefined> {
+    return this.http.get<Driver>(`${environment.apiUrl}/${this.url}/license/${license_no}`).pipe(catchError(this.errorService.handleError));
   }
 
-  public createDriver(driver: Driver) : Observable<Driver[]> {
-    return this.http.post<Driver[]>(`${environment.apiUrl}/${this.url}`, driver).pipe(catchError(this.errorService.handleError));
+  public createDriver(driver: Driver) : Observable<Driver | undefined> {
+    return this.http.post<Driver>(`${environment.apiUrl}/${this.url}`, driver).pipe(catchError(this.errorService.handleError));
   }
 
-  public updateDriver(driver: Driver) : Observable<Driver[]> {
-    return this.http.put<Driver[]>(`${environment.apiUrl}/${this.url}`, driver).pipe(catchError(this.errorService.handleError));
+  public updateDriver(driver: Driver) : Observable<Driver | undefined> {
+    return this.http.put<Driver>(`${environment.apiUrl}/${this.url}`, driver).pipe(catchError(this.errorService.handleError));
   }
 
-  public deleteDriver(driver: Driver) : Observable<Driver[]> {
-    return this.http.delete<Driver[]>(`${environment.apiUrl}/${this.url}/${driver.driver_id}`).pipe(catchError(this.errorService.handleError));
+  public deleteDriver(driver: Driver) : Observable<Driver | undefined> {
+    return this.http.delete<Driver>(`${environment.apiUrl}/${this.url}/${driver.driver_id}`).pipe(catchError(this.errorService.handleError));
   }
 }

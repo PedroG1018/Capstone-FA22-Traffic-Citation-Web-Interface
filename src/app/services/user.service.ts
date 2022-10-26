@@ -14,19 +14,19 @@ export class UserService {
 
   constructor(private http: HttpClient, private errorService: ErrorHandleService) { }
 
-  public getUsers() : Observable<User[]> {
+  public getUsers() : Observable<User[] | undefined> {
     return this.http.get<User[]>(`${environment.apiUrl}/${this.url}`).pipe(catchError(this.errorService.handleError));
   }
 
-  public createUser(user: User) : Observable<User[]> {
+  public createUser(user: User) : Observable<User[] | undefined> {
     return this.http.post<User[]>(`${environment.apiUrl}/${this.url}`, user).pipe(catchError(this.errorService.handleError));
   }
 
-  public updateUser(user: User) : Observable<User[]> {
+  public updateUser(user: User) : Observable<User[] | undefined> {
     return this.http.put<User[]>(`${environment.apiUrl}/${this.url}`, user).pipe(catchError(this.errorService.handleError));
   }
 
-  public deleteUser(user: User) : Observable<User[]> {
+  public deleteUser(user: User) : Observable<User[] | undefined> {
     return this.http.delete<User[]>(`${environment.apiUrl}/${this.url}/${user.user_id}`).pipe(catchError(this.errorService.handleError));
   }
 }

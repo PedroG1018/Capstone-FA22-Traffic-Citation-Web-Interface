@@ -1,64 +1,63 @@
-<h2 class="text-center">Add Driver Information</h2>
+<h2 class="text-center" *ngIf="createDriverNow">Add Driver Information</h2>
 <div class="container" *ngIf="createDriverNow">
     <form [formGroup]="driverForm" (ngSubmit)="onFormSubmit()">
         <mat-form-field>
             <mat-label>Driver License Number</mat-label>
-            <input matInput [(ngModel)]="driver.driver_name" formControlName="license_no" placeholder="Enter License Number" [errorStateMatcher]="matcher" />
-            <mat-error *ngIf="driverForm.controls.license_no.hasError('required')"></mat-error>
-            <mat-error>Field <strong>Required </strong></mat-error>
+            <input matInput formControlName="license_no" placeholder="Enter License Number" [errorStateMatcher]="matcher" autocomplete="off"/>
+            <!-- <mat-error *ngIf="driverForm.controls.license_no.hasError('required')"></mat-error>
+            <mat-error>Field <strong>Required </strong></mat-error> -->
         </mat-form-field>
     
         <mat-form-field>
             <mat-label>License Class</mat-label>
-            <input matInput [(ngModel)]="driver.license_class" formControlName="license_class" placeholder="Enter License Class"
-                [errorStateMatcher]="matcher" />
-            <mat-error *ngIf="driverForm.controls.license_class.hasError('required')">Field <strong>Required</strong>
-            </mat-error>
+            <input matInput formControlName="license_class" placeholder="Enter License Class"
+                [errorStateMatcher]="matcher" autocomplete="off"/>
+            <!-- <mat-error *ngIf="driverForm.controls.license_class.hasError('required')">Field <strong>Required</strong>
+            </mat-error> -->
         </mat-form-field>
     
         <mat-form-field>
             <mat-label>Driver Name</mat-label>
-            <input matInput [(ngModel)]="driver.driver_name" formControlName="name" placeholder="Enter name" [errorStateMatcher]="matcher" />
-            <mat-error *ngIf="driverForm.controls.name.hasError('required')">Field <strong>Required</strong></mat-error>
+            <input matInput required formControlName="name" placeholder="Enter name" [errorStateMatcher]="matcher" autocomplete="off" />
+            <!-- <mat-error *ngIf="driverForm.controls.name.hasError('required')">Field <strong>Required</strong></mat-error> -->
         </mat-form-field>
     
         <mat-form-field>
             <mat-label>Date of Birth</mat-label>
-            <input matInput [(ngModel)]="driver.date_birth" formControlName="date_birth" placeholder="Enter DOB" type="date"
-                [errorStateMatcher]="matcher" />
+            <input matInput formControlName="date_birth" placeholder="Enter DOB" type="date"
+                [errorStateMatcher]="matcher" autocomplete="off" />
         </mat-form-field>
-    
-        <!-- <mat-form-field>
-            <mat-label>Sex</mat-label>
-            <mat-radio-group>
-                <mat-radio-button value="Male">M</mat-radio-button>
-                <mat-radio-button value="Female">F</mat-radio-button>
+
+        <div>
+            <label>Sex</label>
+            <mat-radio-group [formControl]="driverForm.controls.sex">
+                <mat-radio-button value="M">M</mat-radio-button>
+                <mat-radio-button value="F">F</mat-radio-button>
             </mat-radio-group>
-            <mat-error *ngIf="driverForm.controls.sex.hasError('required')">Field <strong>Required</strong></mat-error>
-        </mat-form-field> -->
-    
+        </div>
+        
         <mat-form-field>
             <mat-label> Hair Color </mat-label>
-            <input matInput [(ngModel)]="driver.hair" formControlName="hair" placeholder="Enter hair color" [errorStateMatcher]="matcher" />
-            <mat-error *ngIf="driverForm.controls.hair.hasError('required')">Field <strong>Required</strong></mat-error>
+            <input matInput required formControlName="hair" placeholder="Enter hair color" [errorStateMatcher]="matcher" autocomplete="off"/>
+            <!-- <mat-error *ngIf="driverForm.controls.hair.hasError('required')">Field <strong>Required</strong></mat-error> -->
         </mat-form-field>
     
         <mat-form-field>
             <mat-label>Eye Color</mat-label>
-            <input matInput [(ngModel)]="driver.eyes" formControlName="eyes" placeholder="Enter eye color" [errorStateMatcher]="matcher" />
-            <mat-error *ngIf="driverForm.controls.eyes.hasError('required')">Field <strong>Required</strong></mat-error>
+            <input matInput formControlName="eyes" placeholder="Enter eye color" [errorStateMatcher]="matcher" autocomplete="off"/>
+            <!-- <mat-error *ngIf="driverForm.controls.eyes.hasError('required')">Field <strong>Required</strong></mat-error> -->
         </mat-form-field>
     
         <mat-form-field>
             <mat-label>Height</mat-label>
-            <input matInput [(ngModel)]="driver.height" formControlName="height" placeholder="Enter height" [errorStateMatcher]="matcher" />
+            <input matInput formControlName="height" placeholder="Enter height" [errorStateMatcher]="matcher" autocomplete="off"/>
         </mat-form-field>
     
         <mat-form-field>
             <mat-label>Weight</mat-label>
-            <input matInput [(ngModel)]="driver.weight" formControlName="weight" placeholder="Enter weight" [errorStateMatcher]="matcher" />
-            <mat-error *ngIf="driverForm.controls.weight.hasError('required')">
-                Field <strong>Required </strong></mat-error>
+            <input matInput formControlName="weight" placeholder="Enter weight" [errorStateMatcher]="matcher" maxlength="3" autocomplete="off"/>
+            <!-- <mat-error *ngIf="driverForm.controls.weight.hasError('required')">
+                Field <strong>Required </strong></mat-error> -->
             <mat-error *ngIf="driverForm.controls.weight.hasError('pattern')">
                 Error: Only digits allowed
             </mat-error>
@@ -66,43 +65,44 @@
     
         <mat-form-field>
             <mat-label>Race</mat-label>
-            <input matInput [(ngModel)]="driver.weight" formControlName="race" placeholder="Enter race" [errorStateMatcher]="matcher" />
-            <mat-error *ngIf="driverForm.controls.race.hasError('required')"></mat-error>
+            <input matInput formControlName="race" placeholder="Enter race" [errorStateMatcher]="matcher" autocomplete="off"/>
+            <!-- <mat-error *ngIf="driverForm.controls.race.hasError('required')"></mat-error> -->
         </mat-form-field>
     
         <mat-form-field>
             <mat-label>Address</mat-label>
-            <input matInput [(ngModel)]="driver.address" formControlName="address" placeholder="Enter address" [errorStateMatcher]="matcher" />
-            <mat-error *ngIf="driverForm.controls.address.hasError('required')"></mat-error>
+            <input matInput formControlName="address" placeholder="Enter address" [errorStateMatcher]="matcher" autocomplete="off"/>
+            <!-- <mat-error *ngIf="driverForm.controls.address.hasError('required')"></mat-error> -->
         </mat-form-field>
     
         <mat-form-field>
             <mat-label>City</mat-label>
-            <input matInput [(ngModel)]="driver.city" formControlName="city" placeholder="Enter city" [errorStateMatcher]="matcher" />
-            <mat-error *ngIf="driverForm.controls.city.hasError('required')"></mat-error>
+            <input matInput formControlName="city" placeholder="Enter city" [errorStateMatcher]="matcher" autocomplete="off"/>
+            <!-- <mat-error *ngIf="driverForm.controls.city.hasError('required')"></mat-error> -->
         </mat-form-field>
     
         <mat-form-field>
             <mat-label>State</mat-label>
-            <mat-select [(ngModel)]="driver.state" placeholder="Select" [errorStateMatcher]="matcher">
-                <mat-option value="California">CA</mat-option>
-                <mat-option value="Nevada">NV</mat-option>
+            <mat-select placeholder="Select" formControlName="state" [errorStateMatcher]="matcher">
+                <mat-option value="CA">CA</mat-option>
             </mat-select>
         </mat-form-field>
     
         <mat-form-field>
             <mat-label>Zip</mat-label>
-            <input matInput [(ngModel)]="driver.zip" formControlName="zip" placeholder="Enter zip code" [errorStateMatcher]="matcher" />
-            <mat-error *ngIf="
+            <input matInput formControlName="zip" placeholder="Enter zip code" [errorStateMatcher]="matcher" maxlength="5" autocomplete="off"/>
+            <!-- <mat-error *ngIf="
             driverForm.controls.zip.hasError('required') &&
             !driverForm.controls.zip.pristine"> Field <strong>required</strong>
-            </mat-error>
+            </mat-error> -->
             <mat-error *ngIf="driverForm.controls.zip.hasError('pattern')">
                 Error: Only digits allowed
             </mat-error>
         </mat-form-field>
-    
-        <button class="btn btn-primary" type="submit" onclick="createDriver()">Next</button>
+
+        <div mat-dialog-actions>
+            <button class="btn btn-primary" type="submit">Next</button>
+        </div>
     </form>
 
 </div>
