@@ -2,7 +2,9 @@ import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { duration } from 'moment';
 import { InputErrorStateMatcher } from 'src/app/error-state-matching';
 import { Driver } from 'src/app/models/driver';
 import { DriverService } from 'src/app/services/driver.service';
@@ -40,7 +42,7 @@ export class CreateDriverComponent extends Unsubscriber implements OnInit {
     license_class: new FormControl('', [Validators.required]),
   })
 
-  constructor(private driverService: DriverService, private dialog: MatDialog, private router: Router) {
+  constructor(private driverService: DriverService, private dialog: MatDialog, private router: Router, private _snackBar: MatSnackBar) {
     super()
     this.createDriverNow = false;
     this.existingDriverFound = false;
@@ -125,10 +127,12 @@ export class CreateDriverComponent extends Unsubscriber implements OnInit {
       if (typeof(result) === 'string') {
         this.driverForm.patchValue({weight: null, zip: null, license_no: result})
         this.existingDriverFound = false;
+        this._snackBar.open("Driver not found. Enter Manually.", '', { duration: 3000 });
       } else if (typeof(result) === 'object') {
         this.driver = result;
         this.setDriverValues();
         this.existingDriverFound = true;
+        this._snackBar.open("Existing driver found!", '', { duration: 2800 });
       }
       this.createDriverNow = true; // Can now fill form
     });

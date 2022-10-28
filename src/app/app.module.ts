@@ -20,6 +20,7 @@ import { environment as env } from '../environments/environment';
 import { auth0 as auth0} from '../environments/auth0.prod';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 //Components
 import { AppComponent } from './app.component';
@@ -75,6 +76,7 @@ import { DriverLicenseDialogComponent } from './components/driver/driver-license
     MatProgressSpinnerModule,
     MatDialogModule,
     NgbModule,
+    MatSnackBarModule
   ],
   providers: [
     {provide: MatDialogRef, useValue: {}}, CitationService, 

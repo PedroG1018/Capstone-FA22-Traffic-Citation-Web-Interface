@@ -4,22 +4,22 @@
         <mat-form-field>
             <mat-label>Driver License Number</mat-label>
             <input matInput formControlName="license_no" placeholder="Enter License Number" [errorStateMatcher]="matcher" autocomplete="off"/>
-            <!-- <mat-error *ngIf="driverForm.controls.license_no.hasError('required')"></mat-error>
-            <mat-error>Field <strong>Required </strong></mat-error> -->
+            <mat-error *ngIf="driverForm.controls.license_no.hasError('required')"></mat-error>
+            <mat-error>Field <strong>Required </strong></mat-error>
         </mat-form-field>
     
         <mat-form-field>
             <mat-label>License Class</mat-label>
             <input matInput formControlName="license_class" placeholder="Enter License Class"
                 [errorStateMatcher]="matcher" autocomplete="off"/>
-            <!-- <mat-error *ngIf="driverForm.controls.license_class.hasError('required')">Field <strong>Required</strong>
-            </mat-error> -->
+            <mat-error *ngIf="driverForm.controls.license_class.hasError('required')">Field <strong>Required</strong>
+            </mat-error>
         </mat-form-field>
     
         <mat-form-field>
             <mat-label>Driver Name</mat-label>
             <input matInput required formControlName="name" placeholder="Enter name" [errorStateMatcher]="matcher" autocomplete="off" />
-            <!-- <mat-error *ngIf="driverForm.controls.name.hasError('required')">Field <strong>Required</strong></mat-error> -->
+            <mat-error *ngIf="driverForm.controls.name.hasError('required')">Field <strong>Required</strong></mat-error>
         </mat-form-field>
     
         <mat-form-field>
@@ -39,13 +39,13 @@
         <mat-form-field>
             <mat-label> Hair Color </mat-label>
             <input matInput required formControlName="hair" placeholder="Enter hair color" [errorStateMatcher]="matcher" autocomplete="off"/>
-            <!-- <mat-error *ngIf="driverForm.controls.hair.hasError('required')">Field <strong>Required</strong></mat-error> -->
+            <mat-error *ngIf="driverForm.controls.hair.hasError('required')">Field <strong>Required</strong></mat-error>
         </mat-form-field>
     
         <mat-form-field>
             <mat-label>Eye Color</mat-label>
             <input matInput formControlName="eyes" placeholder="Enter eye color" [errorStateMatcher]="matcher" autocomplete="off"/>
-            <!-- <mat-error *ngIf="driverForm.controls.eyes.hasError('required')">Field <strong>Required</strong></mat-error> -->
+            <mat-error *ngIf="driverForm.controls.eyes.hasError('required')">Field <strong>Required</strong></mat-error>
         </mat-form-field>
     
         <mat-form-field>
