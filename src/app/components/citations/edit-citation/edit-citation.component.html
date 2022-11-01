@@ -69,7 +69,7 @@
 
 
 <div mat-dialog-actions *ngIf="citation">
-    <button class="mat-raised-button mat-warn" (click)="deleteCitation(citation)" *ngIf="citation.citation_id">Delete</button>
-    <button class="mat-raised-button"(click)="closeDialog()">Close</button>
-    <button class="mat-raised-button mat-primary" (click)="updateCitation(citation)" *ngIf="citation.citation_id">Save</button>
+    <button mat-fab color="warn" aria-label="Delete icon button" (click)="deleteCitation(citation)" *ngIf="citation.citation_id"><mat-icon>delete</mat-icon> </button>
+    <button mat-raised-button color="basic"(click)="closeDialog()">Close</button>
+    <button mat-raised-button color="primary" (click)="updateCitation(citation)" *ngIf="citation.citation_id">Save</button>
 </div>
