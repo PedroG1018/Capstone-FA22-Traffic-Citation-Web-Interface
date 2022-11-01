@@ -117,9 +117,12 @@ export class CreateDriverComponent extends Unsubscriber implements OnInit {
   // If no driver is found fills license number only
   openDialog() {
     const dialogConfig = new MatDialogConfig();
-    
+
     dialogConfig.autoFocus = true;
     dialogConfig.disableClose = false;
+    dialogConfig.width = '350px';
+    dialogConfig.height = '350px';
+
     const dialogRef = this.dialog
     .open(DriverLicenseDialogComponent, dialogConfig)
     .afterClosed()
@@ -135,6 +138,7 @@ export class CreateDriverComponent extends Unsubscriber implements OnInit {
         this._snackBar.open("Existing driver found!", '', { duration: 2800 });
       }
       this.createDriverNow = true; // Can now fill form
+      
     });
     this.addNewSubscription = dialogRef;
   }
