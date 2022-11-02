@@ -1,10 +1,12 @@
 <div class="main-container p-4" *ngIf="createDriverNow">
     <form [formGroup]="driverForm" (ngSubmit)="onFormSubmit()">
         <mat-card tabindex="0" class="example-card">
-            <mat-card-title>
-                <h2 class="text-center" *ngIf="createDriverNow">Driver Information</h2>
-            </mat-card-title>
-        
+            <mat-card-header>
+                <mat-card-title>
+                    <h2 *ngIf="createDriverNow">Driver Information</h2>
+                </mat-card-title>
+            </mat-card-header>
+            
             <mat-card-content>
                 <mat-form-field hintLabel="">
                     <mat-label>Driver License Number</mat-label>
