@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Citation } from 'src/app/models/citation';
 import { CitationWithViolations } from 'src/app/models/citation-with-violations';
@@ -84,7 +85,7 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
 
   productForm: FormGroup;
 
-  constructor(private citationService: CitationService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
+  constructor(private citationService: CitationService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private _snackBar: MatSnackBar) {
     super()
     this.productForm = this.fb.group({
       name:'',
@@ -111,7 +112,8 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
     citationWithViolations.violations = citationViolations;
     this.addNewSubscription = this.citationService.createCitationWithViolations(citationWithViolations).subscribe(citationsWithViolations => {
       this.citationsWithViolationsCreated.emit(citationsWithViolations);
-      this.router.navigate(['/home']);
+      this._snackBar.open("Successfully Created Traffic Citation", '', { duration: 2800 });
+      this.router.navigate(['/view-citations']);
     });
   }
 

@@ -16,7 +16,7 @@ export class DriverLicenseDialogComponent extends Unsubscriber implements OnInit
 
   licenseForm = new FormGroup({
     // California License numbers start with 1 Alpha + 7 numeric, TODO: Finish regex pattern
-    license_no: new FormControl('', [Validators.pattern('^[A-Z]+[0-9]*$'), Validators.maxLength(8), Validators.minLength(8)]),
+    license_no: new FormControl('', [Validators.required, Validators.pattern('^[A-Z]+[0-9]*$')]),
   })
 
   constructor(

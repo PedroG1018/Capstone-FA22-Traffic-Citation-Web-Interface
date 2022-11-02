@@ -14,12 +14,16 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog'
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog'
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment as env } from '../environments/environment';
 import { auth0 as auth0} from '../environments/auth0.prod';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button'
+import { MatIconModule } from '@angular/material/icon'
+import { MatCardModule } from '@angular/material/card' 
 
 //Components
 import { AppComponent } from './app.component';
@@ -75,11 +79,21 @@ import { DriverLicenseDialogComponent } from './components/driver/driver-license
     MatProgressSpinnerModule,
     MatDialogModule,
     NgbModule,
+    MatSnackBarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule
   ],
   providers: [
     {provide: MatDialogRef, useValue: {}}, CitationService, 
     {provide: MAT_DIALOG_DATA, useValue:{}}, // Pass data between dialogs
     {provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: {color: 'primary'}}, // Change default radio btn color
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {
+      panelClass: 'mat-dialog-override',
+      hasBackdrop: true,
+      disableClose: true
+     }
+    },
     {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}, // Used to check for valid input
   ],
   bootstrap: [AppComponent],
