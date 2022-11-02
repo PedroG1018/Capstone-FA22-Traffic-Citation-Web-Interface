@@ -14,12 +14,65 @@ import { Unsubscriber } from 'src/app/services/unsubscriber';
 })
 
 export class CreateCitationComponent extends Unsubscriber implements OnInit {
-  @Input() citation?: Citation;
-  @Input() violation?: Violation;
-  @Input() citationViolations?: Violation[]
-  @Input() citationWithViolations?: CitationWithViolations;
+  @Input() citation?: Citation; // citation model
+  @Input() citationViolations?: Violation[] // array of violation models
+  @Input() citationWithViolations?: CitationWithViolations; // model combining citation and violation(s) info
   @Output() citationsCreated = new EventEmitter<Citation[]>();
   @Output() citationsWithViolationsCreated = new EventEmitter<CitationWithViolations[]>();
+
+  // array of all US states used for state drop-down menu
+  states: string[] = [
+    'Alabama',
+    'Alaska',
+    'Arizona',
+    'Arkansas',
+    'California',
+    'Colorado',
+    'Connecticut',
+    'Delaware',
+    'Florida',
+    'Georgia',
+    'Hawaii',
+    'Idaho',
+    'Illinois',
+    'Indiana',
+    'Iowa',
+    'Kansas',
+    'Kentucky',
+    'Louisiana',
+    'Maine',
+    'Maryland',
+    'Massachusetts',
+    'Michigan',
+    'Minnesota',
+    'Mississippi',
+    'Missouri',
+    'Montana',
+    'Nebraska',
+    'Nevada',
+    'New Hampshire',
+    'New Jersey',
+    'New Mexico',
+    'New York',
+    'North Carolina',
+    'North Dakota',
+    'Ohio',
+    'Oklahoma',
+    'Oregon',
+    'Pennsylvania',
+    'Rhode Island',
+    'South Carolina',
+    'South Dakota',
+    'Tennessee',
+    'Texas',
+    'Utah',
+    'Vermont',
+    'Virginia',
+    'Washington',
+    'West Virginia',
+    'Wisconsin',
+    'Wyoming',
+  ];
 
   driverId?: number;
 
@@ -48,7 +101,6 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
     this.citation = new Citation();
     this.citation.driver_id = this.driverId;
 
-    this.violation = new Violation();
     this.citationViolations = [];
     this.citationWithViolations = new CitationWithViolations();
   }
@@ -67,6 +119,7 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
     return this.productForm.get("violations") as FormArray;
   }
 
+  // creates an empty violation
   newViolation() : FormGroup {
     return this.fb.group({
       group:'',
@@ -76,11 +129,13 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
     })
   }
 
+  // adds a new violation to the form and citationViolations array
   addViolation() {
     this.violations().push(this.newViolation());
     this.citationViolations?.push(new Violation());
   }
 
+  // removes a violation from the form and from the citationViolations array
   removeViolation(i: number) {
     this.violations().removeAt(i);
     this.citationViolations?.splice(i, 1);
