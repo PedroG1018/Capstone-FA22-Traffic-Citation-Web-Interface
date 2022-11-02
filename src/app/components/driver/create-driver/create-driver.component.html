@@ -1,10 +1,10 @@
-<div class="form-container" *ngIf="createDriverNow">
+<div class="main-container p-4" *ngIf="createDriverNow">
     <form [formGroup]="driverForm" (ngSubmit)="onFormSubmit()">
-        <mat-card tabindex="0">
+        <mat-card tabindex="0" class="example-card">
             <mat-card-title>
                 <h2 class="text-center" *ngIf="createDriverNow">Driver Information</h2>
             </mat-card-title>
-
+        
             <mat-card-content>
                 <mat-form-field hintLabel="">
                     <mat-label>Driver License Number</mat-label>
@@ -35,15 +35,6 @@
                     <mat-label>Date of Birth</mat-label>
                     <input matInput formControlName="date_birth" placeholder="Enter DOB" type="date" autocomplete="off" />
                 </mat-form-field>
-        
-                <div>
-                    <label>Sex</label>
-                    <mat-radio-group [formControl]="driverForm.controls.sex" aria-label="Select an option">
-                        <mat-radio-button value="M">M</mat-radio-button>
-                        <mat-radio-button value="F">F</mat-radio-button>
-                    </mat-radio-group>
-                    <mat-error *ngIf="driverForm.controls.sex.hasError('required')"><strong>Required</strong></mat-error>
-                </div>
         
                 <mat-form-field>
                     <mat-label> Hair Color </mat-label>
@@ -110,9 +101,18 @@
                     </mat-error>
                 </mat-form-field>
 
+                <div>
+                    <label>Sex</label>
+                    <mat-radio-group [formControl]="driverForm.controls.sex" aria-label="Select an option">
+                        <mat-radio-button value="M">M</mat-radio-button>
+                        <mat-radio-button value="F">F</mat-radio-button>
+                    </mat-radio-group>
+                    <mat-error *ngIf="driverForm.controls.sex.hasError('required')"><strong>Required</strong></mat-error>
+                </div>
+
             </mat-card-content>
 
-            <mat-card-actions>
+            <mat-card-actions class="p-4">
                 <button mat-raised-button color="primary" type="submit">Next</button>
             </mat-card-actions>
         </mat-card>  

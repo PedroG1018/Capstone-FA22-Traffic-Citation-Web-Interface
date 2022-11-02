@@ -6,13 +6,21 @@ mat-form-field {
     margin-right: 12px;
 }
 
-.form-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
 .mat-card-actions {
+  display: flex;
   justify-content: flex-end;
 }
+
+.mat-card {
+  width: 55%;
+  margin: 0 auto;
+}
+
+.mat-card-content {
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* ::ng-deep .mat-form-field .mat-form-field-infix {
+  width: 200px;
+} */
