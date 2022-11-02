@@ -1,6 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -14,7 +15,11 @@ import { DriverLicenseDialogComponent } from '../driver-license-dialog/driver-li
 @Component({
   selector: 'app-create-driver',
   templateUrl: './create-driver.component.html',
-  styleUrls: ['./create-driver.component.css']
+  styleUrls: ['./create-driver.component.css'],
+  providers: [
+    // Children of app component use error state matcher
+    { provide: ErrorStateMatcher, useClass: InputErrorStateMatcher }
+  ]
 })
 export class CreateDriverComponent extends Unsubscriber implements OnInit {
   @Input() driver: Driver;
@@ -23,12 +28,13 @@ export class CreateDriverComponent extends Unsubscriber implements OnInit {
   createDriverNow: boolean;
   existingDriverFound: boolean;
 
-  matcher = new InputErrorStateMatcher(); // For form validation
+  // Default age of driver is set to 18 years
+  defaultDate = formatDate(new Date().setFullYear(new Date().getFullYear() - 18), 'yyyy-MM-dd', 'en-US');
 
   driverForm = new FormGroup({
     name: new FormControl('' [Validators.required, Validators.name]),
-    date_birth: new FormControl(formatDate(new Date(), 'yyyy-MM-dd', 'en-US')),
-    sex: new FormControl('', [Validators.required]),
+    date_birth: new FormControl(this.defaultDate),
+    sex: new FormControl('F', [Validators.required]),
     hair: new FormControl('', [Validators.required]),
     eyes: new FormControl('', [Validators.required]),
     height: new FormControl('', [Validators.required]),
@@ -39,7 +45,7 @@ export class CreateDriverComponent extends Unsubscriber implements OnInit {
     state: new FormControl('',[Validators.required]),
     zip: new FormControl(<number|undefined>(0), [Validators.required, Validators.pattern('^[0-9]*$')]),
     license_no: new FormControl('', [Validators.required, Validators.pattern('^[A-Z]+[0-9]*$'), Validators.maxLength(8), Validators.minLength(8)]),
-    license_class: new FormControl('', [Validators.required]),
+    license_class: new FormControl('C', [Validators.required]),
   })
 
   constructor(private driverService: DriverService, private dialog: MatDialog, private router: Router, private _snackBar: MatSnackBar) {
@@ -51,6 +57,13 @@ export class CreateDriverComponent extends Unsubscriber implements OnInit {
 
   ngOnInit(): void {
     this.openDialog();
+  }
+
+  reloadDialog() {
+    const currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
   }
 
   onFormSubmit(): void {
@@ -119,7 +132,10 @@ export class CreateDriverComponent extends Unsubscriber implements OnInit {
     const dialogConfig = new MatDialogConfig();
     
     dialogConfig.autoFocus = true;
-    dialogConfig.disableClose = false;
+    dialogConfig.disableClose = true;
+    dialogConfig.width = '350px';
+    dialogConfig.height = '250px';
+
     const dialogRef = this.dialog
     .open(DriverLicenseDialogComponent, dialogConfig)
     .afterClosed()

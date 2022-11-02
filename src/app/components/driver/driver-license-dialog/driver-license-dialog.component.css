@@ -1,0 +1,16 @@
+.mat-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mat-dialog-actions {
+    justify-content: flex-end;
+}

@@ -21,5 +21,15 @@ mat-form-field {
 
 .fault-radio-buttons {
     justify-content: right;
+}
 
+.icon-delete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mat-fab .mat-button-wrapper {
+    display: flex !important;
+    justify-content: center !important;
 }

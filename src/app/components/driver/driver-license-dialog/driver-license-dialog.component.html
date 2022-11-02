@@ -1,14 +1,32 @@
-<h2 mat-dialog-title>Check for existing driver</h2>
-<div class="container">
-    <form [formGroup]="licenseForm" (ngSubmit)="onFormSubmit()">
-        <mat-form-field>
-            <mat-label>License Number</mat-label>
-            <input matInput formControlName="license_no" placeholder="Enter License Number" [errorStateMatcher]="matcher" maxlength="8">
-            <mat-error *ngIf="licenseForm.controls.license_no.hasError('pattern')">Incorrect format must start with letter</mat-error>
-            <mat-error *ngIf="licenseForm.controls.license_no.hasError('maxlength') || licenseForm.controls.license_no.hasError('minlength') && !licenseForm.controls.license_no.hasError('pattern')"> License must be 8 characters long</mat-error>
-        </mat-form-field>
-        <div mat-dialog-actions>
-            <button mat-raised-button color="primary">Next</button>
-        </div>
-    </form>
-</div>
+<form [formGroup]="licenseForm" (ngSubmit)="onFormSubmit()">
+  <div mat-dialog-title class="title">
+    <h2>Check for existing driver</h2>
+    <button mat-icon-button mat-dialog-close aria-label="close dialog">
+      <mat-icon class="close-icon">close</mat-icon>
+    </button>
+  </div>
+
+  <div mat-dialog-content>
+    <mat-form-field class="mat-form" appearance="outline">
+      <mat-label>License Number</mat-label>
+      <input
+        #input
+        matInput
+        autocomplete="off"
+        oninput="this.value = this.value.toUpperCase()"
+        formControlName="license_no"
+        placeholder="Enter License Number"
+        [errorStateMatcher]="matcher"
+        maxlength="8"
+      />
+      <mat-hint align="end"> {{ input.value.length || 0 }}/8 </mat-hint>
+      <mat-error *ngIf="licenseForm.controls.license_no.hasError('pattern')"
+        >Must start with letter followed by seven numbers</mat-error>
+      <mat-error *ngIf="licenseForm.controls.license_no.hasError('required')">License Number Required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-raised-button color="primary">Next</button>
+  </div>
+</form>
