@@ -1,3 +1,5 @@
+<button  mat-raised-button color="primary" *ngIf="createDriverNow" (click)="autoFillForm()">Dev Button - Autofill Form</button>
+
 <div class="main-container p-4" *ngIf="createDriverNow">
     <form [formGroup]="driverForm" (ngSubmit)="onFormSubmit()">
         <mat-card tabindex="0" class="example-card">
@@ -9,7 +11,7 @@
             
             <mat-card-content>
                 <mat-form-field hintLabel="">
-                    <mat-label>Driver License Number</mat-label>
+                    <mat-label>License Number</mat-label>
                     <input matInput #input formControlName="license_no" placeholder="Enter License Number" autocomplete="off" 
                     oninput="this.value = this.value.toUpperCase()" maxlength="8"/>
                     <mat-hint align="end"> {{ input.value.length || 0 }}/8 </mat-hint>
@@ -28,7 +30,7 @@
                 </mat-form-field>
         
                 <mat-form-field>
-                    <mat-label>Driver Name</mat-label>
+                    <mat-label>Name</mat-label>
                     <input matInput required formControlName="name" placeholder="Enter name" autocomplete="off" />
                     <mat-error *ngIf="driverForm.controls.name.hasError('required')"><strong>Required</strong></mat-error>
                 </mat-form-field>

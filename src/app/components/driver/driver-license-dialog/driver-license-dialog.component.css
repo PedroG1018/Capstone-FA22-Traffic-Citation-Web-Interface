@@ -8,8 +8,34 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    text-align: center;
+}
+
+.close-btn {
+    float: right;
+    margin: -70px -57px -20px 20px;
+}
+
+.close-btn:hover {
+    color: black;
+    background-color: red;
+}
+
+.mat-dialog-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mat-dialog-content {
+    margin: -25px 0 0 0;
 }
 
 .mat-dialog-actions {
-    justify-content: flex-end;
+    display: flex;
+    justify-content: center;
+}
+
+.mat-dialog-actions button {
+    width: 85px;
 }

@@ -40,6 +40,7 @@ import { LoginComponent } from './components/login/login.component';
 import { CitationService } from './services/citation.service';
 import { FormatTimeSpan } from './components/citations/view-citations/formatTimespan';
 import { DriverLicenseDialogComponent } from './components/driver/driver-license-dialog/driver-license-dialog.component';
+import { InputErrorStateMatcher } from './error-state-matching';
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ import { DriverLicenseDialogComponent } from './components/driver/driver-license
       disableClose: true
      }
     },
-    {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}, // Used to check for valid input
+    // {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}, // Used to check for valid input
+    { provide: ErrorStateMatcher, useClass: InputErrorStateMatcher },
   ],
   bootstrap: [AppComponent],
 })
