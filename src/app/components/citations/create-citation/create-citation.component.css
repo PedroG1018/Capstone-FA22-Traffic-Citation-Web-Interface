@@ -29,5 +29,16 @@ mat-form-field {
 
 .mat-card-actions {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
 }
+
+tr {
+    display: flex;
+    justify-content: center;
+}
+
+.table-container {
+    display: flex; 
+    justify-content: center;
+}
+

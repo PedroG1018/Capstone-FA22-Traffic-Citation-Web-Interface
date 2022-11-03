@@ -17,3 +17,4 @@ export class Driver {
     license_no = "";
     license_class = '';
 }
+

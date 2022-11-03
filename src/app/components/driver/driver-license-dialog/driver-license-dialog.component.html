@@ -1,7 +1,7 @@
 <form [formGroup]="licenseForm" (ngSubmit)="onFormSubmit()">
-  <div mat-dialog-title class="title">
-    <h2>Check for existing driver</h2>
-    <button mat-icon-button mat-dialog-close aria-label="close dialog">
+  <div mat-dialog-title>
+    <h2 class="title">Check for existing driver</h2>
+    <button class="close-btn" mat-icon-button mat-dialog-close aria-label="close dialog">
       <mat-icon class="close-icon">close</mat-icon>
     </button>
   </div>
@@ -27,6 +27,6 @@
   </div>
 
   <div mat-dialog-actions>
-    <button mat-raised-button color="primary">Next</button>
+    <button mat-raised-button color="primary">Submit</button>
   </div>
 </form>

@@ -19,12 +19,114 @@
 
                 <mat-form-field>
                     <mat-label>Date</mat-label>
-                    <input matInput required [(ngModel)]="citation.date" type="date" name="Date"/>
+                    <input matInput required [(ngModel)]="citation.date" type="date" name="Date" />
                 </mat-form-field>
 
                 <mat-form-field>
                     <mat-label>Time</mat-label>
-                    <input matInput required [ngModel]="(citation.time)" (ngModelChange)="citation.time = $event" type="time" name="Time"/>
+                    <input matInput required [ngModel]="(citation.time)" (ngModelChange)="citation.time = $event"
+                        type="time" name="Time" />
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label for="desc">Description</mat-label>
+                    <input matInput required [(ngModel)]="citation.desc" type="text" name="desc"
+                        placeholder="Description" />
+
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label for="violation_loc">Location</mat-label>
+                    <input matInput required [(ngModel)]="citation.violation_loc" type="text" name="violation_loc"
+                        placeholder="Location" />
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label for="vin">Vehicle License Number or VIN</mat-label>
+                    <input matInput required [(ngModel)]="citation.vin" type="text" name="vin"
+                        placeholder="Veh. Lic. No. or VIN" />
+                </mat-form-field>
+
+                <br>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>State</mat-label>
+                    <mat-select [(ngModel)]="citation.vin_state" name="vin_state">
+                        <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <form [formGroup]="productForm">
+                    <ng-container formArrayName="violations"
+                        *ngFor="let quantity of violations().controls; let i=index">
+                        <br><span class="text-center">Violation {{ i+1 }}</span><br>
+                        <div class="table-container">
+                            <tbody>
+                                <tr [formGroupName]="i">
+                                    <td class="mt-1 mb-3">
+                                        <button (click)="removeViolation(i)" class="btn btn-danger">Remove</button>
+                                    </td>
+                                </tr>
+                                <tr [formGroupName]="i">
+                                    <td>
+                                        <mat-form-field>
+                                            <mat-label>Group</mat-label>
+                                            <input matInput required [(ngModel)]="citationViolations[i].group"
+                                                type="text" formControlName="group" placeholder="Group">
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <mat-form-field>
+                                            <mat-label>Code</mat-label>
+                                            <input matInput required [(ngModel)]="citationViolations[i].code"
+                                                type="text" formControlName="code" placeholder="Code">
+                                        </mat-form-field>
+                                    </td>
+                                </tr>
+                                <tr [formGroupName]="i">
+                                    <td>
+                                        <mat-form-field>
+                                            <mat-label>Degree</mat-label>
+                                            <input matInput required [(ngModel)]="citationViolations[i].degree"
+                                                type="text" formControlName="degree" placeholder="Degree">
+                                        </mat-form-field>
+
+                                    </td>
+                                    <td>
+                                        <mat-form-field>
+                                            <mat-label>Description</mat-label>
+                                            <input matInput required [(ngModel)]="citationViolations[i].desc"
+                                                type="text" formControlName="desc" placeholder="Desc">
+                                        </mat-form-field>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </div>
+
+                    </ng-container>
+                    <br><button mat-raised-button color="primary" (click)="addViolation()">Add
+                        Violation</button><br><br>
+                </form>
+
+                <mat-form-field>
+                    <!-- Can probably prepopulate this from the officer's account information -->
+                    <mat-label for="officer_name">Arresting Officer Name</mat-label>
+                    <input matInput required [(ngModel)]="citation.officer_name" type="text" name="officer_name"
+                        placeholder="Name" />
+                </mat-form-field>
+
+                <mat-form-field>
+                    <!-- Can probably prepopulate this from the officer's account information -->
+                    <mat-label for="officer_badge">Badge No.</mat-label>
+                    <input matInput required [(ngModel)]="citation.officer_badge" type="text" name="officer_badge"
+                        placeholder="Badge #" />
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Signed Date</mat-label>
+                    <input matInput required [(ngModel)]="citation.sign_date" class="form-control" type="date"
+                        name="sign_date" />
                 </mat-form-field>
 
                 <div class="form-group">
@@ -35,100 +137,14 @@
                         <mat-radio-button [value]="false">No</mat-radio-button>
                     </mat-radio-group>
                 </div>
-                <mat-form-field>
-                    <mat-label for="desc">Description</mat-label>
-                    <input matInput required [(ngModel)]="citation.desc" type="text" name="desc" placeholder="Description"/>
-                    
-                </mat-form-field>
-
-                <mat-form-field>
-                    <mat-label for="violation_loc">Location</mat-label>
-                    <input matInput required [(ngModel)]="citation.violation_loc" type="text" name="violation_loc" placeholder="Location"/>
-                </mat-form-field>
-
-                <mat-form-field>
-                    <mat-label for="vin">Vehicle License Number or VIN</mat-label>
-                    <input matInput required [(ngModel)]="citation.vin" type="text" name="vin" placeholder="Veh. Lic. No. or VIN"/>
-                </mat-form-field>
-
-                <!-- Will have to be removed-->
-                <mat-form-field>
-                    <mat-label for="code_section">Code</mat-label>
-                    <input matInput required [(ngModel)]="citation.code_section" type="text" name="code_section" placeholder="Code"/>
-                </mat-form-field>
-
-                <br>
-                
-                <mat-form-field appearance="fill">
-                    <mat-label>State</mat-label>
-                    <mat-select [(ngModel)]="citation.vin_state" name="vin_state">
-                        <mat-option *ngFor = "let state of states" [value]="state">{{state}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-                <form [formGroup]="productForm">
-                    <button mat-raised-button color="primary" (click)="addViolation()">Add Violation</button>
-                    <table formArrayName="violations">
-                        <tr *ngFor="let quantity of violations().controls; let i=index" [formGroupName]="i">
-                            <td>
-                                <mat-form-field>
-                                    <mat-label>Group</mat-label>
-                                    <input matInput required [(ngModel)]="citationViolations[i].group" type="text" formControlName="group" placeholder="Group">
-                                </mat-form-field>
-                            </td>
-                            <td>
-                                <mat-form-field>
-                                    <mat-label>Code</mat-label>
-                                    <input matInput required [(ngModel)]="citationViolations[i].code" type="text" formControlName="code" placeholder="Code">
-                                </mat-form-field>
-                            </td>
-                            <td>
-                                <mat-form-field>
-                                    <mat-label>Degree</mat-label>
-                                    <input matInput required [(ngModel)]="citationViolations[i].degree" type="text" formControlName="degree" placeholder="Degree">
-                                </mat-form-field>
-                                
-                            </td>
-                            <td>
-                                <mat-form-field>
-                                    <mat-label>Description</mat-label>
-                                    <input matInput required [(ngModel)]="citationViolations[i].desc" type="text" formControlName="desc" placeholder="Desc">
-                                </mat-form-field>
-                            </td>
-                            <td>
-                                <button (click)="removeViolation(i)" class="btn btn-danger">Remove</button>
-                            </td>
-                        </tr>
-                    </table>
-                </form>
-                
-
-                <mat-form-field>
-                    <!-- Can probably prepopulate this from the officer's account information -->
-                    <mat-label for="officer_name">Arresting Officer Name</mat-label>
-                    <input matInput required [(ngModel)]="citation.officer_name" type="text" name="officer_name" placeholder="Name"/>
-                </mat-form-field>
-                
-                <mat-form-field>
-                    <!-- Can probably prepopulate this from the officer's account information -->
-                    <mat-label for="officer_badge">Badge No.</mat-label>
-                    <input matInput required [(ngModel)]="citation.officer_badge" type="text" name="officer_badge" placeholder="Badge #"/>
-                </mat-form-field>
-                
-                <mat-form-field>
-                    <mat-label>Signed Date</mat-label>
-                    <input matInput required [(ngModel)]="citation.sign_date" class="form-control" type="date" name="sign_date"/>
-                </mat-form-field>
-
-                <br>
-
-                <button mat-raised-button color="primary" (click)="createCitationWithViolations(citation, citationViolations, citationWithViolations)" *ngIf="!citation.citation_id" type="submit">Submit</button><br><br>
             </mat-card-content>
+
+            <mat-card-actions class="p-4">
+                <button mat-raised-button color="primary"
+                    (click)="createCitationWithViolations(citation, citationViolations, citationWithViolations)"
+                    *ngIf="!citation.citation_id" type="submit">Submit</button>
+            </mat-card-actions>
         </mat-card>
     </form>
 
 </div>
-
-
-<!-- TODO: Show dialog showing citation created successfully
-            Backend should send back response message that will also be store in the citations table -->

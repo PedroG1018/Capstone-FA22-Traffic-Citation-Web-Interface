@@ -16,10 +16,7 @@ import { DriverLicenseDialogComponent } from '../driver-license-dialog/driver-li
   selector: 'app-create-driver',
   templateUrl: './create-driver.component.html',
   styleUrls: ['./create-driver.component.css'],
-  providers: [
-    // Children of app component use error state matcher
-    { provide: ErrorStateMatcher, useClass: InputErrorStateMatcher }
-  ]
+  providers: []
 })
 export class CreateDriverComponent extends Unsubscriber implements OnInit {
   @Input() driver: Driver;
@@ -57,6 +54,23 @@ export class CreateDriverComponent extends Unsubscriber implements OnInit {
 
   ngOnInit(): void {
     this.openDialog();
+  }
+
+  autoFillForm(): void {
+    this.driverForm.controls.name.setValue('Otter');
+    this.driverForm.controls.date_birth.setValue(this.defaultDate);
+    this.driverForm.controls.sex.setValue('F');
+    this.driverForm.controls.hair.setValue('Black');
+    this.driverForm.controls.eyes.setValue('Green');
+    this.driverForm.controls.height.setValue("3'00\"");
+    this.driverForm.controls.weight.setValue(90);
+    this.driverForm.controls.race.setValue("N/A");
+    this.driverForm.controls.address.setValue("100 ST.");
+    this.driverForm.controls.city.setValue("Seaside");
+    this.driverForm.controls.state.setValue("CA");
+    this.driverForm.controls.zip.setValue(99999);
+    this.driverForm.controls.license_no.setValue("D1234567");
+    this.driverForm.controls.license_class.setValue('C');
   }
 
   reloadDialog() {
@@ -133,8 +147,8 @@ export class CreateDriverComponent extends Unsubscriber implements OnInit {
     
     dialogConfig.autoFocus = true;
     dialogConfig.disableClose = true;
-    dialogConfig.width = '350px';
-    dialogConfig.height = '250px';
+    dialogConfig.width = '335px';
+    dialogConfig.height = 'auto';
 
     const dialogRef = this.dialog
     .open(DriverLicenseDialogComponent, dialogConfig)

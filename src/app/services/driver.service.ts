@@ -18,6 +18,10 @@ export class DriverService {
     return this.http.get<Driver[]>(`${environment.apiUrl}/${this.url}`).pipe(catchError(this.errorService.handleError));
   }
 
+  public getDriverById(id: number) : Observable<Driver | undefined> {
+    return this.http.get<Driver>(`${environment.apiUrl}/${this.url}/${id}`).pipe(catchError(this.errorService.handleError));
+  }
+
   public getDriverByLicenseNo(license_no: string) : Observable<Driver | undefined> {
     return this.http.get<Driver>(`${environment.apiUrl}/${this.url}/license/${license_no}`).pipe(catchError(this.errorService.handleError));
   }

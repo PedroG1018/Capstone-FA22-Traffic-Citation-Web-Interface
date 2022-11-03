@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit, Pipe } from '@angular/core';
 import { Citation } from 'src/app/models/citation';
+import { Driver } from 'src/app/models/driver';
 import { CitationService } from 'src/app/services/citation.service';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -15,7 +16,12 @@ import { Unsubscriber } from 'src/app/services/unsubscriber';
   styleUrls: ['./view-citations.component.css'],
 })
 export class ViewCitationsComponent extends Unsubscriber implements AfterViewInit, OnInit {
+  // Citations displayed per page
   citations: Citation[] = [];
+  // Drivers linked to displayed citations with matching driver_id
+  drivers: Driver[] = [];
+  // Driver linked to current citation of table row
+  driverForRow?: Driver;
   citationToEdit?: Citation;
   citationCount?: number;
 
@@ -30,8 +36,8 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
     'sign_date',
     'time',
     'violation_loc',
-    'vin',
-    'code_section',
+    'driver_name',
+    'license_no',
     'officer_name',
     'officer_badge',
   ];
@@ -63,8 +69,16 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
       .subscribe((result: CitationsResponse) => (
         console.log(result),
         this.citations = result.citations,
+        this.drivers = result.drivers,
         this.citationCount = result.totalCitationsCount
         ));
+  }
+
+  // Match the citation that's displayed in mat-table row to the driver by driver id
+  findDriverOfCitation(citation: Citation) {
+    const driver = this.drivers.find((element) => element.driver_id == citation.driver_id);
+
+    this.driverForRow = driver || new Driver();
   }
 
   
