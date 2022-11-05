@@ -4,9 +4,6 @@
 const domain = require('auth_config.json').domain;
 const clientId = require('auth_config.json').clientId;
 const apiUrl = require('auth_config.json').apiUrl;
-const refreshToken = require('auth_config.json').refreshToken;
-const cacheLocation = require('auth_config.json').cacheLocation;
-
 
 export const environment = {
   production: false,
