@@ -1,1 +1,1 @@
-<button mat-raised-button color="primary" (click)="loginWithRedirect()">Login</button>
+<button mat-raised-button *ngIf="(auth.isAuthenticated$ | async) === false" color="primary" (click)="loginWithRedirect()">Login</button>

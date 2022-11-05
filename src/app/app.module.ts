@@ -15,15 +15,16 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog'
-import { AuthModule } from '@auth0/auth0-angular';
-import { environment as env } from '../environments/environment';
-import { auth0 as auth0} from '../environments/auth0.prod';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
 import { MatCardModule } from '@angular/material/card' 
+
+//Auth0
+import { AuthModule } from '@auth0/auth0-angular';
+import { environment as env } from '../environments/environment';
 
 //Components
 import { AppComponent } from './app.component';
@@ -41,6 +42,7 @@ import { CitationService } from './services/citation.service';
 import { FormatTimeSpan } from './components/citations/view-citations/formatTimespan';
 import { DriverLicenseDialogComponent } from './components/driver/driver-license-dialog/driver-license-dialog.component';
 import { InputErrorStateMatcher } from './error-state-matching';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -55,12 +57,11 @@ import { InputErrorStateMatcher } from './error-state-matching';
     EditDriverComponent,
     FormatTimeSpan,
     DriverLicenseDialogComponent,
+    ProfileComponent,
   ],
   imports: [
     AuthModule.forRoot({
-      domain: auth0.auth.domain,
-      clientId: auth0.auth.clientId,
-      redirectUri: window.location.origin,
+      ...env.auth,
     }),
     BrowserModule,
     AppRoutingModule,
