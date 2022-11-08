@@ -6,6 +6,7 @@ import { Citation } from 'src/app/models/citation';
 import { CitationWithViolations } from 'src/app/models/citation-with-violations';
 import { Violation } from 'src/app/models/violation';
 import { CitationService } from 'src/app/services/citation.service';
+import { SessionService } from 'src/app/services/session.service';
 import { Unsubscriber } from 'src/app/services/unsubscriber';
 
 @Component({
@@ -85,7 +86,7 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
 
   productForm: FormGroup;
 
-  constructor(private citationService: CitationService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private _snackBar: MatSnackBar) {
+  constructor(private citationService: CitationService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private _snackBar: MatSnackBar, private session: SessionService) {
     super()
     this.productForm = this.fb.group({
       name:'',
@@ -114,7 +115,11 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
       this._snackBar.open("Successfully Created Traffic Citation", '', { duration: 2800 });
       console.log(result);
       
-      this.router.navigate(['/view-citation-summary', result?.citation_id]);
+      if (result) {
+        this.session.changeCitation(result);
+        this.session.changeViolations(citationViolations);
+        this.router.navigate(['/view-citation-summary', result?.citation_id]);
+      }
     });
   }
 
