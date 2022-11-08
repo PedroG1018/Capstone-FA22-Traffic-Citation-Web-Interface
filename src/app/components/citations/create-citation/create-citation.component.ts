@@ -110,10 +110,11 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
   createCitationWithViolations(citation: Citation, citationViolations: Violation[], citationWithViolations: CitationWithViolations) {
     citationWithViolations.citation = citation;
     citationWithViolations.violations = citationViolations;
-    this.addNewSubscription = this.citationService.createCitationWithViolations(citationWithViolations).subscribe(citationsWithViolations => {
-      this.citationsWithViolationsCreated.emit(citationsWithViolations);
+    this.addNewSubscription = this.citationService.createCitationWithViolations(citationWithViolations).subscribe(result => {
       this._snackBar.open("Successfully Created Traffic Citation", '', { duration: 2800 });
-      this.router.navigate(['/view-citations']);
+      console.log(result);
+      
+      this.router.navigate(['/view-citation-summary', result?.citation_id]);
     });
   }
 

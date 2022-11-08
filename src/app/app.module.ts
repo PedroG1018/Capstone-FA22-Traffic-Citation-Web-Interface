@@ -20,7 +20,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
-import { MatCardModule } from '@angular/material/card' 
+import { MatCardModule } from '@angular/material/card'
+import { MatTabsModule } from '@angular/material/tabs';
+
 
 //Auth0
 import { AuthModule } from '@auth0/auth0-angular';
@@ -43,6 +45,7 @@ import { FormatTimeSpan } from './components/citations/view-citations/formatTime
 import { DriverLicenseDialogComponent } from './components/driver/driver-license-dialog/driver-license-dialog.component';
 import { InputErrorStateMatcher } from './error-state-matching';
 import { ProfileComponent } from './components/profile/profile.component';
+import { ViewCitationSummaryComponent } from './components/citations/view-citation-summary/view-citation-summary.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +61,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     FormatTimeSpan,
     DriverLicenseDialogComponent,
     ProfileComponent,
+    ViewCitationSummaryComponent,
   ],
   imports: [
     AuthModule.forRoot({
@@ -84,7 +88,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     MatSnackBarModule,
     MatButtonModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    MatTabsModule
   ],
   providers: [
     {provide: MatDialogRef, useValue: {}}, CitationService, 

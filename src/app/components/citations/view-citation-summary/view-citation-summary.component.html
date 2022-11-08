@@ -1,0 +1,72 @@
+<div [class.mat-elevation-z5]="true" class="summary-container">
+    <mat-tab-group dynamicHeight mat-align-tabs="start" animationDuration="500ms" [selectedIndex]="0">
+
+        <mat-tab>
+            <!-- Label -->
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">description</mat-icon>
+                Citation
+            </ng-template>
+            Type:
+            {{ citation?.type }}<br>
+            <span *ngIf="violations && violations.length > 0">Violation Group:{{ violations[0].group}}</span>
+            <!-- Content -->
+    
+        </mat-tab>
+    
+        <mat-tab>
+            <!-- Label -->
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">person</mat-icon>
+                Driver
+            </ng-template>
+    
+            <!-- Content -->
+    
+        </mat-tab>
+    
+        <mat-tab>
+            <!-- Label -->
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">local_police</mat-icon>
+                Officer
+            </ng-template>
+    
+            <!-- Content -->
+    
+        </mat-tab>
+        
+      </mat-tab-group>
+
+
+</div>
+
+<!-- <mat-card>
+    <mat-tab-group dynamicHeight mat-align-tabs="center" animationDuration="2000ms">
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+                Citation
+            </ng-template>
+        
+        </mat-tab>
+    
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+                Driver
+            </ng-template>
+        
+        </mat-tab>
+    
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+                Officer
+            </ng-template>
+        
+        </mat-tab>
+        
+      </mat-tab-group>
+</mat-card> -->

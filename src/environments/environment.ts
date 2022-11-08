@@ -7,8 +7,8 @@ const apiUrl = require('auth_config.json').apiUrl;
 
 export const environment = {
   production: false,
-  apiUrl: "https://traffic-citation-backend.herokuapp.com/api",
-  //apiUrl: "https://localhost:7190/api"
+  //apiUrl: "https://traffic-citation-backend.herokuapp.com/api",
+  apiUrl: "https://localhost:7190/api",
   auth: {
     domain,
     clientId,

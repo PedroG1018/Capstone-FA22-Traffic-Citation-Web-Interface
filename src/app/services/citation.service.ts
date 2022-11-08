@@ -20,7 +20,11 @@ export class CitationService {
     return this.http.get<Citation[]>(`${environment.apiUrl}/${this.url}`).pipe(catchError(this.errorService.handleError));
   }
 
-  public getCitationsPaginator(pageNumber: number,pageSize: number) : Observable<any> {
+  public getCitationById(citation_id: number) : Observable<Citation | undefined> {
+    return this.http.get<Citation>(`${environment.apiUrl}/${this.url}/${citation_id}`).pipe(catchError(this.errorService.handleError));
+  }
+
+  public getCitationsPaginator(pageNumber: number, pageSize: number) : Observable<any> {
     return this.http.get<any>(`${environment.apiUrl}/${this.url}/${pageNumber}/${pageSize}`).pipe(catchError(this.errorService.handleError));
   }
 
@@ -29,8 +33,8 @@ export class CitationService {
   }
 
   // creates a citation with 1 or more violations
-  public createCitationWithViolations(citation: CitationWithViolations) : Observable<CitationWithViolations[] | undefined> {
-    return this.http.post<CitationWithViolations[]>(`${environment.apiUrl}/${this.newUrl}`, citation).pipe(catchError(this.errorService.handleError));
+  public createCitationWithViolations(citation: CitationWithViolations) : Observable<Citation | undefined> {
+    return this.http.post<Citation>(`${environment.apiUrl}/${this.newUrl}`, citation).pipe(catchError(this.errorService.handleError));
   }
 
   public updateCitation(citation: Citation) : Observable<Citation[] | undefined> {
