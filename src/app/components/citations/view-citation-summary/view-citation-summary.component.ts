@@ -24,8 +24,6 @@ export class ViewCitationSummaryComponent
   driver?: Driver;
 
   constructor(
-    private violationService: ViolationService,
-    private driverService: DriverService,
     private session: SessionService
   ) {
     super();
@@ -33,24 +31,7 @@ export class ViewCitationSummaryComponent
 
   ngOnInit(): void {
     this.addNewSubscription = this.session.currentCitation.subscribe(
-      (citation) => {
-        this.citation = citation;
-        // Retrieve all violations belonging to Citation
-        // this.addNewSubscription = this.violationService
-        //   .getViolationsByCitationId(citation?.citation_id!)
-        //   .subscribe((result) => {
-        //     this.violations = result;
-            
-        //   });
-
-        // // Retrieve citation driver
-        // this.addNewSubscription = this.driverService
-        //   .getDriverById(citation?.driver_id!)
-        //   .subscribe((result) => {
-        //     this.driver = result;
-            
-        //   });
-      }
+      (citation) => (this.citation = citation)
     );
 
     this.addNewSubscription = this.session.currentViolations.subscribe(
