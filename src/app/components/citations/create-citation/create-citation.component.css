@@ -16,9 +16,9 @@ mat-form-field {
 }
 
 .mat-card {
-    width: 70%;
+    width: 50%;
     margin: 0 auto;
-    padding: 0;
+    padding: 0 0 25px 0;
 }
 
 .mat-card-content {

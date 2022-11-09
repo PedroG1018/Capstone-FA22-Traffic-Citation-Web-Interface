@@ -1,9 +1,5 @@
-<div [class.mat-elevation-z5]="true" class="summary-container text-center p-2">
-    <button routerLink="/create-citation" routerLinkActive="active" mat-raised-button color="primary">Create Another</button>
-</div>
-
 <div [class.mat-elevation-z5]="true" class="summary-container">
-    <mat-tab-group dynamicHeight mat-align-tabs="start" animationDuration="500ms" [selectedIndex]="0">
+    <mat-tab-group mat-align-tabs="start" animationDuration="0ms" [selectedIndex]="0">
         <mat-tab>
             <!-- Label -->
             <ng-template mat-tab-label>
@@ -12,96 +8,92 @@
             </ng-template>
 
             <div>
-                <mat-card class="mt-1">
-                    <mat-card-content>
-                        <mat-form-field>
-                            <mat-label>Type</mat-label>
-                            <input matInput type="text" readonly [value]="citation?.type">
-                        </mat-form-field>
-        
-                        <mat-form-field>
-                            <mat-label>Date</mat-label>
-                            <input matInput type="date" readonly [value]="citation?.date"/>
-                        </mat-form-field>
-        
-                        <mat-form-field>
-                            <mat-label>Time</mat-label>
-                            <input matInput type="time" readonly [value]="(citation?.time)"/>
-                        </mat-form-field>
-        
-                        <mat-form-field>
-                            <mat-label>Description</mat-label>
-                            <textarea matInput rows="5" type="text" readonly [value]="citation?.desc"></textarea>
-                        </mat-form-field>
-        
-                        <mat-form-field>
-                            <mat-label>Location</mat-label>
-                            <input matInput type="text" readonly [value]="citation?.violation_loc"/>
-                        </mat-form-field>
-        
-                        <mat-form-field>
-                            <mat-label for="vin">Vehicle License Number or VIN</mat-label>
-                            <input matInput type="text" readonly [value]="citation?.vin"/>
-                        </mat-form-field>
-        
-                        <br>
-        
-                        <mat-form-field appearance="fill">
-                            <mat-label>State</mat-label>
-                            <input matInput type="text" readonly [value]="citation?.vin_state">
-                        </mat-form-field>
-        
-                        <ng-container
-                            *ngFor="let quantity of violations; let i=index">
-                            <br><span class="text-center">Violation {{ i+1 }}</span><br>
-                            <div class="table-container">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <mat-form-field *ngIf="violations">
-                                                <mat-label>Group</mat-label>
-                                                <input matInput type="text" readonly [value]="violations[i].group">
-                                            </mat-form-field>
-                                        </td>
-                                        <td>
-                                            <mat-form-field *ngIf="violations">
-                                                <mat-label>Code</mat-label>
-                                                <input matInput type="text" readonly [value]="violations[i].code">
-                                            </mat-form-field>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <mat-form-field *ngIf="violations">
-                                                <mat-label>Degree</mat-label>
-                                                <input matInput type="text" readonly [value]="violations[i].degree">
-                                            </mat-form-field>
-                                        </td>
-                                        <td>
-                                            <mat-form-field *ngIf="violations">
-                                                <mat-label>Description</mat-label>
-                                                <input matInput type="text" readonly [value]="violations[i].desc">
-                                            </mat-form-field>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </div>
-                        </ng-container>                        
- 
-                        <mat-form-field>
-                            <mat-label>Signed Date</mat-label>
-                            <input matInput type="date" readonly [value]="citation?.sign_date"/>
-                        </mat-form-field>
-        
-                        <div class="form-group">
-                            <label for="owner_fault">Owner's Fault?</label><br>
-                            <mat-radio-group [value]="citation?.owner_fault" name="owner_fault">
-                                <mat-radio-button [value]="true">Yes</mat-radio-button>
-                                <mat-radio-button [value]="false">No</mat-radio-button>
-                            </mat-radio-group>
-                        </div>
-                    </mat-card-content>
-                </mat-card>
+                <mat-form-field>
+                    <mat-label>Type</mat-label>
+                    <input matInput type="text" readonly [value]="citation?.type">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Date</mat-label>
+                    <input matInput type="date" readonly [value]="citation?.date"/>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Time</mat-label>
+                    <input matInput type="time" readonly [value]="(citation?.time)"/>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Description</mat-label>
+                    <textarea matInput rows="5" type="text" readonly [value]="citation?.desc"></textarea>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Location</mat-label>
+                    <input matInput type="text" readonly [value]="citation?.violation_loc"/>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label for="vin">Vehicle License Number or VIN</mat-label>
+                    <input matInput type="text" readonly [value]="citation?.vin"/>
+                </mat-form-field>
+
+                <br>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>State</mat-label>
+                    <input matInput type="text" readonly [value]="citation?.vin_state">
+                </mat-form-field>
+
+                <ng-container
+                    *ngFor="let quantity of violations; let i=index">
+                    <br><span class="text-center">Violation {{ i+1 }}</span><br>
+                    <div class="table-container">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <mat-form-field *ngIf="violations">
+                                        <mat-label>Group</mat-label>
+                                        <input matInput type="text" readonly [value]="violations[i].group">
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field *ngIf="violations">
+                                        <mat-label>Code</mat-label>
+                                        <input matInput type="text" readonly [value]="violations[i].code">
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-form-field *ngIf="violations">
+                                        <mat-label>Degree</mat-label>
+                                        <input matInput type="text" readonly [value]="violations[i].degree">
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field *ngIf="violations">
+                                        <mat-label>Description</mat-label>
+                                        <input matInput type="text" readonly [value]="violations[i].desc">
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </div>
+                </ng-container>                        
+
+                <mat-form-field>
+                    <mat-label>Signed Date</mat-label>
+                    <input matInput type="date" readonly [value]="citation?.sign_date"/>
+                </mat-form-field>
+
+                <div class="form-group">
+                    <label for="owner_fault">Owner's Fault?</label><br>
+                    <mat-radio-group [value]="citation?.owner_fault" name="owner_fault">
+                        <mat-radio-button [value]="true">Yes</mat-radio-button>
+                        <mat-radio-button [value]="false">No</mat-radio-button>
+                    </mat-radio-group>
+                </div>
             </div>
     
         </mat-tab>
@@ -112,8 +104,70 @@
                 <mat-icon class="example-tab-icon">person</mat-icon>
                 Driver
             </ng-template>
-    
-            <!-- Content -->
+
+            <div>
+                <mat-form-field>
+                    <mat-label>Name</mat-label>
+                    <input matInput type="text" readonly [value]="driver?.driver_name"/>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Date of Birth</mat-label>
+                    <input matInput type="date" readonly [value]="driver?.date_birth"/>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Sex</mat-label>
+                    <input matInput type="text" readonly [value]="driver?.sex"/>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Hair Color</mat-label>
+                    <input matInput type="text" readonly [value]="driver?.hair"/>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Eye Color</mat-label>
+                    <input matInput type="text" readonly [value]="driver?.eyes"/>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Height</mat-label>
+                    <input matInput type="text" readonly [value]="driver?.height"/>
+                </mat-form-field>
+
+                <br>
+
+                <mat-form-field>
+                    <mat-label>Address</mat-label>
+                    <input matInput type="text" readonly [value]="driver?.address"/>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>City</mat-label>
+                    <input matInput type="text" readonly [value]="driver?.city"/>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>State</mat-label>
+                    <input matInput type="text" readonly [value]="driver?.state"/>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Zip</mat-label>
+                    <input matInput type="text" readonly [value]="driver?.zip"/>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>License Number</mat-label>
+                    <input matInput type="text" readonly [value]="driver?.license_no"/>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>License Class</mat-label>
+                    <input matInput type="text" readonly [value]="driver?.license_class"/>
+                </mat-form-field>
+            </div>
     
         </mat-tab>
     

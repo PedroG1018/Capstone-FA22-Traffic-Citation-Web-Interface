@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@ang
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { toJSDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar';
 import { Citation } from 'src/app/models/citation';
 import { CitationWithViolations } from 'src/app/models/citation-with-violations';
 import { Driver } from 'src/app/models/driver';
@@ -28,6 +29,7 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
   @Output() citationsWithViolationsCreated = new EventEmitter<CitationWithViolations[]>();
 
   existingDriverFound: boolean;
+  citationCreated: boolean;
 
   citations?: Citation[] = [];
   citationsWithViolations?: CitationWithViolations[] = [];
@@ -175,7 +177,10 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
   constructor(private citationService: CitationService, private driverService: DriverService, private route: ActivatedRoute, private router: Router, private _snackBar: MatSnackBar, private _formBuilder: FormBuilder, private dialog: MatDialog) {
     super()
     this.existingDriverFound = false;
+    this.citationCreated = false;
     this.driver = new Driver();
+
+    sessionStorage.clear();
   }
 
   ngOnInit(): void {
@@ -226,7 +231,7 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
           sessionStorage.setItem('citation', JSON.stringify(result));
           sessionStorage.setItem('violations', JSON.stringify(this.citationViolations));
   
-          this.router.navigate(['/view-citation-summary']);
+          this.citationCreated = true;
         }
       });
     }

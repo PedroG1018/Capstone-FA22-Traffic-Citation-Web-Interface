@@ -246,7 +246,7 @@
                         </div>
                     </mat-card-content>
         
-                    <mat-card-actions class="p-4">
+                    <mat-card-actions>
                         <button mat-button matStepperPrevious>Back</button>
                         <button mat-button matStepperNext>Next</button>
                     </mat-card-actions>
@@ -284,7 +284,7 @@
                         </mat-form-field>
                     </mat-card-content>
         
-                    <mat-card-actions class="p-4">
+                    <mat-card-actions>
                         <button mat-button matStepperPrevious>Back</button>
                         <button mat-button matStepperNext>Next</button>
                     </mat-card-actions>
@@ -295,21 +295,34 @@
 
     <mat-step *ngIf="citation">
         <ng-template matStepLabel>Done</ng-template>
-        <div class="main-container p-4">
+        <div class="main-container">
             <mat-card>
+                <mat-card-actions>
+                    
+                </mat-card-actions>
+
                 <mat-card-header>
                     <mat-card-title>
                         <h2>Submit Citation</h2>
                     </mat-card-title>
                 </mat-card-header>
 
-                <mat-card-actions>
-                    <button mat-button matStepperPrevious>Back</button>
-                    <button mat-raised-button color="primary"
+                <mat-card-content>
+                    <!-- <button mat-button matStepperPrevious>Back</button> -->
+                    <div class="mb-3">
+                        <button mat-raised-button color="primary"
                                     (click)="onFormSubmit()"
-                                    *ngIf="!citation.citation_id" type="submit">Submit</button>
-                    <button mat-button>Reset Forms</button>
-                </mat-card-actions>
+                                    *ngIf="!citation.citation_id && !citationCreated" type="submit">Submit</button>
+                    
+                        <button *ngIf="citationCreated" routerLink="/create-citation" routerLinkActive="active" mat-raised-button color="primary">Create Another</button>
+
+                    </div>
+                    
+                    
+                    <app-view-citation-summary>
+
+                    </app-view-citation-summary>
+                </mat-card-content>
             </mat-card>
         </div>
     </mat-step>
