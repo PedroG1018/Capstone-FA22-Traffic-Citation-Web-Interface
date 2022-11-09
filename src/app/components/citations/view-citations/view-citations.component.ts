@@ -44,7 +44,7 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
 
   constructor(private citationService: CitationService, private dialog: MatDialog) {
     super()
-    this.paginator = new MatPaginator(new MatPaginatorIntl, ChangeDetectorRef.prototype)
+    this.paginator = new MatPaginator(new MatPaginatorIntl, ChangeDetectorRef.prototype);
   }
 
   ngOnInit(): void {
@@ -56,12 +56,14 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
   }
 
   loadCitationsPage() {
-    this.loadCitations(this.paginator.pageIndex, this.paginator.pageSize);
+    this.loadCitations(this.paginator.pageIndex + 1, this.paginator.pageSize);
   }
 
   // Retrieve citations from database. Display progress spinner until data is loaded
   loadCitations(pageNumber = 1, pageSize = 5) {
     this.loadingSubject.next(true);
+    console.log("Paginator page index " + this.paginator.pageIndex);
+    console.log("Function page index " + pageNumber);
 
     this.addNewSubscription = this.citationService
       .getCitationsPaginator(pageNumber, pageSize)
