@@ -62,8 +62,8 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
   // Retrieve citations from database. Display progress spinner until data is loaded
   loadCitations(pageNumber = 1, pageSize = 5) {
     this.loadingSubject.next(true);
-    console.log("Paginator page index " + this.paginator.pageIndex);
-    console.log("Function page index " + pageNumber);
+    // console.log("Paginator page index " + this.paginator.pageIndex);
+    // console.log("Function page index " + pageNumber);
 
     this.addNewSubscription = this.citationService
       .getCitationsPaginator(pageNumber, pageSize)

@@ -195,6 +195,7 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
         .createDriver(this.driver)
         .subscribe((result) => {
           if (result) {
+            this.driver = result;
             sessionStorage.setItem('driver', JSON.stringify(result));
           }
         });
@@ -203,6 +204,7 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
         .updateDriver(this.driver)
         .subscribe((result) => {
           if (result) {
+            this.driver = result;
             sessionStorage.setItem('driver', JSON.stringify(result));
           }
         });
@@ -220,6 +222,7 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
         console.log(result);
         
         if (result) {
+          this.citation = result;
           sessionStorage.setItem('citation', JSON.stringify(result));
           sessionStorage.setItem('violations', JSON.stringify(this.citationViolations));
   
