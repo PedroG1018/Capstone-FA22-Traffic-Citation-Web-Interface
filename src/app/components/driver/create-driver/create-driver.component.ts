@@ -164,7 +164,7 @@ export class CreateDriverComponent extends Unsubscriber implements OnInit {
         .updateDriver(this.driver)
         .subscribe((result) => {
           if (result) {
-            this.session.changeDriver(result);
+            sessionStorage.setItem('driver', JSON.stringify(result));
             this.router.navigate(['/create-citation', result?.driver_id]);
           }
           

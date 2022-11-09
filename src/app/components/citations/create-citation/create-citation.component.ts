@@ -116,9 +116,10 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
       console.log(result);
       
       if (result) {
-        this.session.changeCitation(result);
-        this.session.changeViolations(citationViolations);
-        this.router.navigate(['/view-citation-summary', result?.citation_id]);
+        sessionStorage.setItem('citation', JSON.stringify(result));
+        sessionStorage.setItem('violations', JSON.stringify(citationViolations));
+
+        this.router.navigate(['/view-citation-summary']);
       }
     });
   }

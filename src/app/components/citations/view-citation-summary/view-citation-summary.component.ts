@@ -1,13 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Citation } from 'src/app/models/citation';
 import { Driver } from 'src/app/models/driver';
 import { Violation } from 'src/app/models/violation';
-import { CitationService } from 'src/app/services/citation.service';
-import { DriverService } from 'src/app/services/driver.service';
-import { SessionService } from 'src/app/services/session.service';
 import { Unsubscriber } from 'src/app/services/unsubscriber';
-import { ViolationService } from 'src/app/services/violation.service';
 
 @Component({
   selector: 'app-view-citation-summary',
@@ -18,32 +13,17 @@ export class ViewCitationSummaryComponent
   extends Unsubscriber
   implements OnInit, OnDestroy
 {
-  citationId: number = 0;
   citation?: Citation;
   violations?: Violation[];
   driver?: Driver;
 
-  constructor(
-    private session: SessionService
-  ) {
+  // TODO: Use local storage instead of session to store data in browser cache
+
+  constructor() {
     super();
   }
 
   ngOnInit(): void {
-    this.addNewSubscription = this.session.currentCitation.subscribe(
-      (citation) => (this.citation = citation)
-    );
-
-    this.addNewSubscription = this.session.currentViolations.subscribe(
-      (violations) => (this.violations = violations)
-    );
-
-    this.addNewSubscription = this.session.currentDriver.subscribe(
-      (driver) => (this.driver = driver)
-    );
-
-    // Retrieve citation, violations, and driver from session storage
-    // Used if page refreshes
     this.retrieveSessionValues();
   }
 
@@ -51,8 +31,7 @@ export class ViewCitationSummaryComponent
     // Parse JSON string from session storage as Citation
     if (sessionStorage.getItem('citation')) {
       this.citation = JSON.parse(
-        sessionStorage.getItem('citation') || '{}'
-      ) as Citation;
+        sessionStorage.getItem('citation') || '{}') as Citation;
     }
 
     if (sessionStorage.getItem('violations')) {
