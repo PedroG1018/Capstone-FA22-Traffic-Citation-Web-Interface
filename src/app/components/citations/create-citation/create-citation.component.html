@@ -13,7 +13,7 @@
                 <mat-card-content>
                     <mat-form-field hintLabel="">
                         <mat-label>License Number</mat-label>
-                        <input matInput [(ngModel)]="driver.license_no" #input formControlName="license_no" placeholder="Enter License Number" autocomplete="off" 
+                        <input matInput (ngModelChange)="findDriverByLicense($event)" [(ngModel)]="driver.license_no" #input formControlName="license_no" placeholder="Enter License Number" autocomplete="off" 
                         oninput="this.value = this.value.toUpperCase()" maxlength="8"/>
                         <mat-hint align="end"> {{ input.value.length || 0 }}/8 </mat-hint>
                         <mat-error *ngIf="driverFormGroup.controls.license_no.hasError('required')"><strong>Required</strong></mat-error>
@@ -255,7 +255,7 @@
         </form>
     </mat-step>
     
-    <mat-step>
+    <mat-step [stepControl]="officerFormGroup">
         <ng-template matStepLabel="">Officer Information</ng-template>
         <form [formGroup]="officerFormGroup">
             <div class="main-container p-4" *ngIf="citation">
