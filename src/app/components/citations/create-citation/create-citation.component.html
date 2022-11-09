@@ -3,7 +3,7 @@
         <button  mat-raised-button color="primary" (click)="autoFillForm()">Dev Button - Autofill Form</button>
         <form [formGroup]="driverFormGroup">
             <ng-template matStepLabel="">Fill out driver's information</ng-template>
-            <mat-card tabindex="0" class="example-card">
+            <mat-card class="example-card">
                 <mat-card-header>
                     <mat-card-title>
                         <h2>Driver Information</h2>
@@ -297,10 +297,6 @@
         <ng-template matStepLabel>Done</ng-template>
         <div class="main-container">
             <mat-card>
-                <mat-card-actions>
-                    
-                </mat-card-actions>
-
                 <mat-card-header>
                     <mat-card-title>
                         <h2>Submit Citation</h2>
@@ -319,7 +315,7 @@
                     </div>
                     
                     
-                    <app-view-citation-summary>
+                    <app-view-citation-summary [citation]="citation" [violations]="citationViolations" [driver]="driver">
 
                     </app-view-citation-summary>
                 </mat-card-content>
