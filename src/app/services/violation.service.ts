@@ -17,6 +17,10 @@ export class ViolationService {
         return this.http.get<Violation[]>(`${environment.apiUrl}/${this.url}`).pipe(catchError(this.errorService.handleError));
     }
 
+    public getViolationsByCitationId(citation_id: number) : Observable<Violation[] | undefined> {
+        return this.http.get<Violation[]>(`${environment.apiUrl}/${this.url}/${citation_id}`).pipe(catchError(this.errorService.handleError));
+    }
+
     public createViolation(violation: Violation) : Observable<Violation[] | undefined> {
         return this.http.post<Violation[]>(`${environment.apiUrl}/${this.url}`, violation).pipe(catchError(this.errorService.handleError));
     }

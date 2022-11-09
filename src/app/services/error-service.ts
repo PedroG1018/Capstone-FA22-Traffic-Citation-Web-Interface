@@ -19,6 +19,8 @@ export class ErrorHandleService {
     if (error.status === 404) {
       // Not found so return undefined
       return of(undefined);
+    } else if(error.status === 400) {
+      return of(undefined);
     } else if (error.error instanceof ErrorEvent) {
       // Frontend error
       errorMessage = error.error.message;

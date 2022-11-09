@@ -1,0 +1,45 @@
+.summary-container {
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 10px;
+  max-width: 900px;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+
+mat-form-field {
+  margin-right: 12px;
+}
+
+.mat-card-header {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0 0 0;
+  background-color: #2D4373;
+  color: white;
+  margin-bottom: 25px;
+}
+
+.mat-card {
+  width: 90%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.mat-card-content {
+  margin: 0 auto;
+  text-align: center;
+  padding: 5px;
+}
+
+.mat-card-actions {
+  display: flex;
+  justify-content: center;
+}
+
+tr {
+  display: flex;
+  justify-content: center;
+}

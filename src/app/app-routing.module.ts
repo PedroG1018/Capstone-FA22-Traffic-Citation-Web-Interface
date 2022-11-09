@@ -12,12 +12,16 @@ import { LoginComponent } from './components/login/login.component';
 import { CreateDriverComponent } from './components/driver/create-driver/create-driver.component';
 import { EditDriverComponent } from './components/driver/edit-driver/edit-driver.component';
 import { DriverLicenseDialogComponent } from './components/driver/driver-license-dialog/driver-license-dialog.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { ViewCitationSummaryComponent } from './components/citations/view-citation-summary/view-citation-summary.component';
 
 // Define all routes in Routes array
 const routes: Routes = [
   { path: 'app', component: AppComponent },
   { path: 'home', component: HomeComponent, title: 'Traffic Citation Interface' },
-  { path: 'create-citation/:id', component: CreateCitationComponent, title: 'Add Citation' },
+  { path: 'profile', component: ProfileComponent, title: 'Profile'},
+  { path: 'create-citation', component: CreateCitationComponent, title: 'Add Citation' },
+  { path: 'view-citation-summary', component: ViewCitationSummaryComponent, title: 'Viewing Citation Summary' },
   { path: 'edit-citation', component: EditCitationComponent, title: 'Editing Citations' },
   { path: 'view-citations', component: ViewCitationsComponent, title: 'Viewing Citations' },
   { path: 'driver-dialog', component: DriverLicenseDialogComponent, title: 'Check for driver' },

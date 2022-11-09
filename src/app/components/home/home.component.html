@@ -1,4 +1,6 @@
  <body>
+  <button mat-raised-button *ngIf="(auth.isAuthenticated$ | async)" color="warn" (click)="logout()">Logout</button>
+
     <style>
         body {
           background-image: url('../assets/monterey-ca-court.3a03c085123fa5682f13.jpg');

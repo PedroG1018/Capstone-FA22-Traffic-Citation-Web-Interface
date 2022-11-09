@@ -1,32 +1,10 @@
-<form [formGroup]="licenseForm" (ngSubmit)="onFormSubmit()">
+<form>
   <div mat-dialog-title>
-    <h2 class="title">Check for existing driver</h2>
-    <button class="close-btn" mat-icon-button mat-dialog-close aria-label="close dialog">
-      <mat-icon class="close-icon">close</mat-icon>
-    </button>
+    <h2 class="title">Existing driver found. Autofill Form?</h2>
   </div>
-
-  <div mat-dialog-content>
-    <mat-form-field class="mat-form" appearance="outline">
-      <mat-label>License Number</mat-label>
-      <input
-        #input
-        matInput
-        autocomplete="off"
-        oninput="this.value = this.value.toUpperCase()"
-        formControlName="license_no"
-        placeholder="Enter License Number"
-        [errorStateMatcher]="matcher"
-        maxlength="8"
-      />
-      <mat-hint align="end"> {{ input.value.length || 0 }}/8 </mat-hint>
-      <mat-error *ngIf="licenseForm.controls.license_no.hasError('pattern')"
-        >Must start with letter followed by seven numbers</mat-error>
-      <mat-error *ngIf="licenseForm.controls.license_no.hasError('required')">License Number Required</mat-error>
-    </mat-form-field>
-  </div>
-
+  
   <div mat-dialog-actions>
-    <button mat-raised-button color="primary">Submit</button>
+    <button mat-raised-button color="primary" (click)="onConfirm()">Yes</button>
+    <button mat-raised-button color="warn" (click)="onDismiss()">No</button>
   </div>
 </form>
