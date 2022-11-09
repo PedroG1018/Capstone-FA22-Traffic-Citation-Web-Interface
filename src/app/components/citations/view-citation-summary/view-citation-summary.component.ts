@@ -11,7 +11,7 @@ import { Unsubscriber } from 'src/app/services/unsubscriber';
 })
 export class ViewCitationSummaryComponent
   extends Unsubscriber
-  implements OnInit, OnDestroy
+  implements OnInit
 {
   citation?: Citation;
   violations?: Violation[];

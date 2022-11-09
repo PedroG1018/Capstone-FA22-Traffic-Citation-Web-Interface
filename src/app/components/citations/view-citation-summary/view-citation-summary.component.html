@@ -1,7 +1,5 @@
-<div [class.mat-elevation-z5]="true" class="summary-container">
-    <h1 class="text-center p-2">Citation Created</h1>
-    <button mat-raised-button color="primary">Create Another</button>
-    <button mat-raised-button color="accent">View Citations</button>
+<div [class.mat-elevation-z5]="true" class="summary-container text-center p-2">
+    <button routerLink="/create-citation" routerLinkActive="active" mat-raised-button color="primary">Create Another</button>
 </div>
 
 <div [class.mat-elevation-z5]="true" class="summary-container">
@@ -14,18 +12,12 @@
             </ng-template>
 
             <div>
-                <mat-card tabindex="0" class="example-card">
-                    <mat-card-header>
-                        <mat-card-title>
-                            <h2>Citation</h2>
-                        </mat-card-title>
-                    </mat-card-header>
-        
+                <mat-card class="mt-1">
                     <mat-card-content>
-                        <div>
+                        <mat-form-field>
                             <mat-label>Type</mat-label>
                             <input matInput type="text" readonly [value]="citation?.type">
-                        </div>
+                        </mat-form-field>
         
                         <mat-form-field>
                             <mat-label>Date</mat-label>
@@ -59,7 +51,7 @@
                             <input matInput type="text" readonly [value]="citation?.vin_state">
                         </mat-form-field>
         
-                        <ng-container formArrayName="violations"
+                        <ng-container
                             *ngFor="let quantity of violations; let i=index">
                             <br><span class="text-center">Violation {{ i+1 }}</span><br>
                             <div class="table-container">
@@ -126,13 +118,10 @@
         </mat-tab>
     
         <mat-tab>
-            <!-- Label -->
             <ng-template mat-tab-label>
                 <mat-icon class="example-tab-icon">local_police</mat-icon>
                 Officer
             </ng-template>
-    
-            <!-- Content -->
             <form>
                 <mat-form-field>
                     <!-- Can probably prepopulate this from the officer's account information -->
@@ -147,38 +136,5 @@
                 </mat-form-field>
             </form>
         </mat-tab>
-        
       </mat-tab-group>
-
-
 </div>
-
-<!-- <mat-card>
-    <mat-tab-group dynamicHeight mat-align-tabs="center" animationDuration="2000ms">
-
-        <mat-tab>
-            <ng-template mat-tab-label>
-                <mat-icon class="example-tab-icon">thumb_up</mat-icon>
-                Citation
-            </ng-template>
-        
-        </mat-tab>
-    
-        <mat-tab>
-            <ng-template mat-tab-label>
-                <mat-icon class="example-tab-icon">thumb_up</mat-icon>
-                Driver
-            </ng-template>
-        
-        </mat-tab>
-    
-        <mat-tab>
-            <ng-template mat-tab-label>
-                <mat-icon class="example-tab-icon">thumb_up</mat-icon>
-                Officer
-            </ng-template>
-        
-        </mat-tab>
-        
-      </mat-tab-group>
-</mat-card> -->

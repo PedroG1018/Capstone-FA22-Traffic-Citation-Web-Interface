@@ -1,12 +1,14 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Citation } from 'src/app/models/citation';
 import { CitationWithViolations } from 'src/app/models/citation-with-violations';
+import { Driver } from 'src/app/models/driver';
 import { Violation } from 'src/app/models/violation';
 import { CitationService } from 'src/app/services/citation.service';
-import { SessionService } from 'src/app/services/session.service';
+import { DriverService } from 'src/app/services/driver.service';
 import { Unsubscriber } from 'src/app/services/unsubscriber';
 
 @Component({
@@ -16,11 +18,20 @@ import { Unsubscriber } from 'src/app/services/unsubscriber';
 })
 
 export class CreateCitationComponent extends Unsubscriber implements OnInit {
+  @Input() driver: Driver;
   @Input() citation?: Citation; // citation model
   @Input() citationViolations?: Violation[] // array of violation models
   @Input() citationWithViolations?: CitationWithViolations; // model combining citation and violation(s) info
   @Output() citationsCreated = new EventEmitter<Citation[]>();
   @Output() citationsWithViolationsCreated = new EventEmitter<CitationWithViolations[]>();
+
+  existingDriverFound: boolean;
+
+  citations?: Citation[] = [];
+  citationsWithViolations?: CitationWithViolations[] = [];
+  
+  date = new FormControl(new Date());
+  serializedDate = new FormControl(new Date().toISOString()); 
 
   // array of all US states used for state drop-down menu
   states: string[] = [
@@ -76,61 +87,131 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
     'Wyoming',
   ];
 
-  driverId?: number;
+  // productForm = this._formBuilder.group({
+  //   name:'',
+  //   violations: this._formBuilder.array([]),
+  // });
 
-  citations: Citation[] = [];
-  citationsWithViolations: CitationWithViolations[] = [];
-  
-  date = new FormControl(new Date());
-  serializedDate = new FormControl(new Date().toISOString()); 
+  // Default age of driver is set to 18 years
+  defaultDate = formatDate(
+    new Date().setFullYear(new Date().getFullYear() - 18),
+    'yyyy-MM-dd',
+    'en-US'
+  );
 
-  productForm: FormGroup;
+  // FormsGroups to use for stepper
+  driverFormGroup = this._formBuilder.group({
+    name: ['', Validators.required, Validators.name],
+    date_birth: [this.defaultDate],
+    sex: ['F', Validators.required],
+    hair: ['', Validators.required],
+    eyes: ['', Validators.required],
+    height: ['', Validators.required],
+    weight: [<number | undefined>0, [
+      Validators.required,
+      Validators.pattern('^[0-9]*$')
+    ]],
+    race: ['', Validators.required],
+    address: ['', Validators.required],
+    city: ['', Validators.required],
+    state: ['', Validators.required],
+    zip: [<number | undefined>0, [
+      Validators.required,
+      Validators.pattern('^[0-9]*$')
+    ]],
+    license_no: ['', [
+      Validators.required,
+      Validators.pattern('^[A-Z]+[0-9]*$'),
+      Validators.maxLength(8),
+      Validators.minLength(8)
+    ]],
+    license_class: ['C', Validators.required]
 
-  constructor(private citationService: CitationService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private _snackBar: MatSnackBar, private session: SessionService) {
+  });
+
+  currentDate = formatDate(new Date(), 'yyyy-MM-dd','en-US');
+
+  citationFormGroup = this._formBuilder.group({
+    type: ['', Validators.required],
+    date: [this.currentDate],
+    time: ['', Validators.required],
+    owner_fault: [true],
+    desc: [''],
+    violation_loc: ['', Validators.required],
+    vin: ['', Validators.required],
+    vin_state: [''],
+    violations: this._formBuilder.array([]),
+  });
+
+  officerFormGroup = this._formBuilder.group({
+    officer_name: [''],
+    officer_badge: [''],
+    sign_date: ['']
+  });
+
+  constructor(private citationService: CitationService, private driverService: DriverService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private _snackBar: MatSnackBar, private _formBuilder: FormBuilder) {
     super()
-    this.productForm = this.fb.group({
-      name:'',
-      violations: this.fb.array([]),
-    }); 
+    this.existingDriverFound = false;
+    this.driver = new Driver();
   }
 
   ngOnInit(): void {
-    // Get driverId from previously created driver
-    this.route.params.subscribe(params => {
-      this.driverId = params['id'];
-    });
-    
     this.citation = new Citation();
-    this.citation.driver_id = this.driverId;
-
     this.citationViolations = [];
     this.citationWithViolations = new CitationWithViolations();
   }
 
-  // new create citation method that includes violations
-  createCitationWithViolations(citation: Citation, citationViolations: Violation[], citationWithViolations: CitationWithViolations) {
-    citationWithViolations.citation = citation;
-    citationWithViolations.violations = citationViolations;
-    this.addNewSubscription = this.citationService.createCitationWithViolations(citationWithViolations).subscribe(result => {
-      this._snackBar.open("Successfully Created Traffic Citation", '', { duration: 2800 });
-      console.log(result);
-      
-      if (result) {
-        sessionStorage.setItem('citation', JSON.stringify(result));
-        sessionStorage.setItem('violations', JSON.stringify(citationViolations));
+  onFormSubmit(): void {
+    this.saveCitationWithViolations();
+    this.saveDriver();
+  }
 
-        this.router.navigate(['/view-citation-summary']);
-      }
-    });
+  saveDriver() {
+    if (!this.existingDriverFound) {
+      this.addNewSubscription = this.driverService
+        .createDriver(this.driver)
+        .subscribe((result) => {
+          if (result) {
+            sessionStorage.setItem('driver', JSON.stringify(result));
+          }
+        });
+    } else {
+      this.addNewSubscription = this.driverService
+        .updateDriver(this.driver)
+        .subscribe((result) => {
+          if (result) {
+            sessionStorage.setItem('driver', JSON.stringify(result));
+          }
+        });
+    }
+  }
+
+  saveCitationWithViolations() {
+    if (this.citationWithViolations) {
+      this.citationWithViolations.citation = this.citation;
+      this.citationWithViolations.violations = this.citationViolations;
+
+      this.addNewSubscription = this.citationService.createCitationWithViolations(this.citationWithViolations).subscribe(result => {
+        this._snackBar.open("Successfully Created Traffic Citation", '', { duration: 2800 });
+        console.log(result);
+        
+        if (result) {
+          sessionStorage.setItem('citation', JSON.stringify(result));
+          sessionStorage.setItem('violations', JSON.stringify(this.citationViolations));
+  
+          this.router.navigate(['/view-citation-summary']);
+        }
+      });
+    }
   }
 
   violations() : FormArray {
-    return this.productForm.get("violations") as FormArray;
+    return this.citationFormGroup.get("violations") as FormArray;
   }
 
   // creates an empty violation
   newViolation() : FormGroup {
-    return this.fb.group({
+    return this._formBuilder.group({
       group:'',
       code:'',
       degree:'',
@@ -148,5 +229,22 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
   removeViolation(i: number) {
     this.violations().removeAt(i);
     this.citationViolations?.splice(i, 1);
+  }
+
+  autoFillForm(): void {
+    this.driver.driver_name = 'Otter';
+    this.driver.date_birth = this.defaultDate;
+    this.driver.sex = 'F';
+    this.driver.hair = 'Black';
+    this.driver.eyes = 'Green';
+    this.driver.height = '3\'00"';
+    this.driver.weight = 90;
+    this.driver.race = 'N/A';
+    this.driver.address = '100 ST.';
+    this.driver.city = 'Seaside';
+    this.driver.state = 'CA';
+    this.driver.zip = 99999;
+    this.driver.license_no = 'D1234567';
+    this.driver.license_class = 'C';
   }
 }
