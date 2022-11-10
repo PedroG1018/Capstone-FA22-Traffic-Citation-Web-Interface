@@ -7,42 +7,59 @@
                 Citation
             </ng-template>
 
+            <div class="container">
+                <table class="table table-stripped">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Location</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngIf="citation">
+                            <td>{{ citation.type }}</td>
+                            <td>{{ citation.date }}</td>
+                            <td>{{ citation.time }}</td>
+                            <td>{{ citation.violation_loc }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
             <div>
                 <mat-form-field>
                     <mat-label>Type</mat-label>
-                    <input matInput type="text" readonly [value]="citation?.type">
+                    <input [disabled]="true" matInput type="text" [value]="citation?.type">
                 </mat-form-field>
 
                 <mat-form-field>
                     <mat-label>Date</mat-label>
-                    <input matInput type="date" readonly [value]="citation?.date"/>
+                    <input [disabled]="true"  matInput type="date" readonly [value]="citation?.date"/>
                 </mat-form-field>
 
                 <mat-form-field>
                     <mat-label>Time</mat-label>
-                    <input matInput type="time" readonly [value]="(citation?.time)"/>
-                </mat-form-field>
-
-                <mat-form-field>
-                    <mat-label>Description</mat-label>
-                    <textarea matInput rows="5" type="text" readonly [value]="citation?.desc"></textarea>
+                    <input [disabled]="true" matInput type="time" readonly [value]="(citation?.time)"/>
                 </mat-form-field>
 
                 <mat-form-field>
                     <mat-label>Location</mat-label>
-                    <input matInput type="text" readonly [value]="citation?.violation_loc"/>
+                    <input [disabled]="true" matInput type="text" readonly [value]="citation?.violation_loc"/>
                 </mat-form-field>
 
                 <mat-form-field>
                     <mat-label for="vin">Vehicle License Number or VIN</mat-label>
-                    <input matInput type="text" readonly [value]="citation?.vin"/>
+                    <input [disabled]="true" matInput type="text" readonly [value]="citation?.vin"/>
                 </mat-form-field>
 
                 <br>
 
                 <mat-form-field appearance="fill">
                     <mat-label>State</mat-label>
-                    <input matInput type="text" readonly [value]="citation?.vin_state">
+                    <input [disabled]="true" matInput type="text" readonly [value]="citation?.vin_state">
                 </mat-form-field>
 
                 <ng-container
@@ -54,13 +71,13 @@
                                 <td>
                                     <mat-form-field *ngIf="violations">
                                         <mat-label>Group</mat-label>
-                                        <input matInput type="text" readonly [value]="violations[i].group">
+                                        <input [disabled]="true" matInput type="text" readonly [value]="violations[i].group">
                                     </mat-form-field>
                                 </td>
                                 <td>
                                     <mat-form-field *ngIf="violations">
                                         <mat-label>Code</mat-label>
-                                        <input matInput type="text" readonly [value]="violations[i].code">
+                                        <input [disabled]="true" matInput type="text" readonly [value]="violations[i].code">
                                     </mat-form-field>
                                 </td>
                             </tr>
@@ -68,13 +85,13 @@
                                 <td>
                                     <mat-form-field *ngIf="violations">
                                         <mat-label>Degree</mat-label>
-                                        <input matInput type="text" readonly [value]="violations[i].degree">
+                                        <input [disabled]="true" matInput type="text" readonly [value]="violations[i].degree">
                                     </mat-form-field>
                                 </td>
                                 <td>
                                     <mat-form-field *ngIf="violations">
                                         <mat-label>Description</mat-label>
-                                        <input matInput type="text" readonly [value]="violations[i].desc">
+                                        <input [disabled]="true" matInput type="text" readonly [value]="violations[i].desc">
                                     </mat-form-field>
                                 </td>
                             </tr>
@@ -82,18 +99,15 @@
                     </div>
                 </ng-container>                        
 
-                <mat-form-field>
-                    <mat-label>Signed Date</mat-label>
-                    <input matInput type="date" readonly [value]="citation?.sign_date"/>
-                </mat-form-field>
-
                 <div class="form-group">
                     <label for="owner_fault">Owner's Fault?</label><br>
-                    <mat-radio-group [value]="citation?.owner_fault" name="owner_fault">
-                        <mat-radio-button [value]="true">Yes</mat-radio-button>
-                        <mat-radio-button [value]="false">No</mat-radio-button>
-                    </mat-radio-group>
+                    {{ citation?.owner_fault ? 'Yes' : 'No' }}
                 </div>
+
+                <mat-form-field>
+                    <mat-label>Description</mat-label>
+                    <textarea [disabled]="true" matInput rows="5" type="text" readonly [value]="citation?.desc"></textarea>
+                </mat-form-field>
             </div>
     
         </mat-tab>

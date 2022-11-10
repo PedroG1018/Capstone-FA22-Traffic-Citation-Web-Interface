@@ -10,13 +10,13 @@ mat-form-field {
     display: flex;
     justify-content: center;
     padding: 20px 0 0 0;
-    background-color: #2D4373;
+    background-color: #283593;
     color: white;
     margin-bottom: 25px;
 }
 
 .mat-card-title {
-    background-color: #2D4373;
+    background-color: #283593;
 }
 
 .mat-card {
