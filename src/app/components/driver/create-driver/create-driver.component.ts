@@ -1,17 +1,13 @@
 import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { duration } from 'moment';
-import { InputErrorStateMatcher } from 'src/app/error-state-matching';
 import { Driver } from 'src/app/models/driver';
 import { DriverService } from 'src/app/services/driver.service';
 import { SessionService } from 'src/app/services/session.service';
 import { Unsubscriber } from 'src/app/services/unsubscriber';
-import { DriverLicenseDialogComponent } from '../driver-license-dialog/driver-license-dialog.component';
 
 @Component({
   selector: 'app-create-driver',
@@ -75,7 +71,6 @@ export class CreateDriverComponent extends Unsubscriber implements OnInit {
   }
 
   ngOnInit(): void {
-    this.openDialog();
   }
 
   autoFillForm(): void {
@@ -166,44 +161,8 @@ export class CreateDriverComponent extends Unsubscriber implements OnInit {
           if (result) {
             sessionStorage.setItem('driver', JSON.stringify(result));
             this.router.navigate(['/create-citation', result?.driver_id]);
-          }
-          
+          } 
         });
     }
-  }
-
-  // If license number exists retrieves driver information and auto fills form
-  // If no driver is found fills license number only
-  openDialog() {
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.autoFocus = true;
-    dialogConfig.disableClose = true;
-    dialogConfig.width = '335px';
-    dialogConfig.height = 'auto';
-
-    const dialogRef = this.dialog
-      .open(DriverLicenseDialogComponent, dialogConfig)
-      .afterClosed()
-      .subscribe((result) => {
-        if (typeof result === 'string') {
-          this.driverForm.patchValue({
-            weight: null,
-            zip: null,
-            license_no: result,
-          });
-          this.existingDriverFound = false;
-          this._snackBar.open('Driver not found. Enter Manually.', '', {
-            duration: 3000,
-          });
-        } else if (typeof result === 'object') {
-          this.driver = result;
-          this.setDriverValues();
-          this.existingDriverFound = true;
-          this._snackBar.open('Existing driver found!', '', { duration: 2800 });
-        }
-        this.createDriverNow = true; // Can now fill form
-      });
-    this.addNewSubscription = dialogRef;
   }
 }

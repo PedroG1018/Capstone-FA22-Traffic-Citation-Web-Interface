@@ -23,20 +23,4 @@ export class ViewCitationSummaryComponent
 
   ngOnInit(): void {
   }
-
-  // retrieveSessionValues() {
-  //   // Parse JSON string from session storage as Citation
-  //   if (sessionStorage.getItem('citation')) {
-  //     this.citation = JSON.parse(
-  //       sessionStorage.getItem('citation') || '{}') as Citation;
-  //   }
-
-  //   if (sessionStorage.getItem('violations')) {
-  //     this.violations = JSON.parse(sessionStorage.getItem('violations') || '{}') as Violation[];
-  //   }
-
-  //   if (sessionStorage.getItem('driver')) {
-  //     this.driver = JSON.parse(sessionStorage.getItem('driver') || '{}') as Driver;
-  //   }
-  // }
 }

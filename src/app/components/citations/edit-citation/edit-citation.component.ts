@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class EditCitationComponent extends Unsubscriber implements OnInit {
   @Input() citation?: Citation;
-  @Output() citationsUpdated = new EventEmitter<Citation[]>();
+  @Output() citationUpdated = new EventEmitter<Citation>();
 
   // Used injection token to access data stored in dialog
   constructor(
@@ -30,16 +30,16 @@ export class EditCitationComponent extends Unsubscriber implements OnInit {
    
   // Call citation.service methods to perform CRUD operations here
   updateCitation(citation: Citation) {
-    this.addNewSubscription = this.citationService.updateCitation(citation).subscribe((citations: Citation[] | undefined) => { 
+    this.addNewSubscription = this.citationService.updateCitation(citation).subscribe((citation: Citation | undefined) => { 
       this._snackBar.open("Traffic Citation Updated", '', { duration: 1500 });
-      this.citationsUpdated.emit(citations);
+      this.citationUpdated.emit(citation);
       this.closeDialog();
     });
   }
 
   deleteCitation(citation:Citation) {
-    this.addNewSubscription = this.citationService.deleteCitation(citation).subscribe((citations: Citation[] | undefined) => {
-      this.citationsUpdated.emit(citations);
+    this.addNewSubscription = this.citationService.deleteCitation(citation).subscribe((citation: Citation | undefined) => {
+      this.citationUpdated.emit(citation);
       this._snackBar.open("Traffic Citation Deleted", '', { duration: 1500 });
       let deleted = true;
       this.dialogRef.close(deleted)

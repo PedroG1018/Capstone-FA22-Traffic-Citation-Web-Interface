@@ -4,7 +4,6 @@ import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@ang
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { toJSDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar';
 import { Citation } from 'src/app/models/citation';
 import { CitationWithViolations } from 'src/app/models/citation-with-violations';
 import { Driver } from 'src/app/models/driver';
@@ -124,34 +123,7 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
       Validators.maxLength(8),
       Validators.minLength(8),
     ]),
-    license_class: new FormControl('C', [Validators.required]),
-
-    // name: ['', Validators.required, Validators.name],
-    // date_birth: [this.defaultDate],
-    // sex: ['F', Validators.required],
-    // hair: ['', Validators.required],
-    // eyes: ['', Validators.required],
-    // height: ['', Validators.required],
-    // weight: [<number | undefined>0, [
-    //   Validators.required,
-    //   Validators.pattern('^[0-9]*$')
-    // ]],
-    // race: ['', Validators.required],
-    // address: ['', Validators.required],
-    // city: ['', Validators.required],
-    // state: ['', Validators.required],
-    // zip: [<number | undefined>0, [
-    //   Validators.required,
-    //   Validators.pattern('^[0-9]*$')
-    // ]],
-    // license_no: ['', [
-    //   Validators.required,
-    //   Validators.pattern('^[A-Z]+[0-9]*$'),
-    //   Validators.maxLength(8),
-    //   Validators.minLength(8)
-    // ]],
-    // license_class: ['C', Validators.required]
-
+    license_class: new FormControl('C', [Validators.required])
   });
 
   currentDate = formatDate(new Date(), 'yyyy-MM-dd','en-US');

@@ -3,6 +3,7 @@
   margin: 0 auto;
   margin-top: 10px;
   max-width: 900px;
+  min-height: 50%;
 }
 
 .mat-radio-button ~ .mat-radio-button {
@@ -20,12 +21,6 @@ mat-form-field {
   background-color: #2D4373;
   color: white;
   margin-bottom: 25px;
-}
-
-.mat-card {
-  width: 90%;
-  margin: 0 auto;
-  padding: 0;
 }
 
 .mat-card-content {
