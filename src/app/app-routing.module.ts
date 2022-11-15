@@ -9,7 +9,7 @@ import { ViewCitationsComponent } from './components/citations/view-citations/vi
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
-import { CreateDriverComponent } from './components/driver/create-driver/create-driver.component';
+import { DriverFormComponent } from './components/driver/driver-form/driver-form.component';
 import { EditDriverComponent } from './components/driver/edit-driver/edit-driver.component';
 import { DriverLicenseDialogComponent } from './components/driver/driver-license-dialog/driver-license-dialog.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -20,12 +20,12 @@ const routes: Routes = [
   { path: 'app', component: AppComponent },
   { path: 'home', component: HomeComponent, title: 'Traffic Citation Interface' },
   { path: 'profile', component: ProfileComponent, title: 'Profile'},
-  { path: 'create-citation', component: CreateCitationComponent, title: 'Add Citation' },
+  { path: 'create-citation', component: CreateCitationComponent, title: 'Creating Citation' },
   { path: 'view-citation-summary', component: ViewCitationSummaryComponent, title: 'Viewing Citation Summary' },
   { path: 'edit-citation', component: EditCitationComponent, title: 'Editing Citations' },
   { path: 'view-citations', component: ViewCitationsComponent, title: 'Viewing Citations' },
   { path: 'driver-dialog', component: DriverLicenseDialogComponent, title: 'Check for driver' },
-  { path: 'create-driver', component: CreateDriverComponent, title: 'Add Driver Information' },
+  { path: 'driver-form', component: DriverFormComponent, title: 'Driver Information' },
   { path: 'edit-driver', component: EditDriverComponent, title: 'Editing Driver'},
   { path: 'login', component: LoginComponent, title: 'Login' },
   { path: '', redirectTo: 'home', pathMatch: 'full' }, // TODO: Change to login page

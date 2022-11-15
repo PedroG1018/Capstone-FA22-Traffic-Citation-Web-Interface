@@ -23,7 +23,6 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ],
@@ -64,6 +63,11 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "ssl": true,
+            "sslCert": "./ssl/server.crt",
+            "sslKey": "./ssl/server.key"
+          },
           "configurations": {
             "production": {
               "browserTarget": "traffic-citation-ui:build:production"

@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit, Pipe } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+} from '@angular/core';
 import { Citation } from 'src/app/models/citation';
 import { Driver } from 'src/app/models/driver';
 import { CitationService } from 'src/app/services/citation.service';
@@ -15,7 +21,10 @@ import { Unsubscriber } from 'src/app/services/unsubscriber';
   templateUrl: './view-citations.component.html',
   styleUrls: ['./view-citations.component.css'],
 })
-export class ViewCitationsComponent extends Unsubscriber implements AfterViewInit, OnInit {
+export class ViewCitationsComponent
+  extends Unsubscriber
+  implements AfterViewInit, OnInit
+{
   // Citations displayed per page
   citations: Citation[] = [];
   // Drivers linked to displayed citations with matching driver_id
@@ -42,13 +51,17 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
     'officer_badge',
   ];
 
-  constructor(private citationService: CitationService, private dialog: MatDialog) {
-    super()
-    this.paginator = new MatPaginator(new MatPaginatorIntl, ChangeDetectorRef.prototype);
+  constructor(
+    private citationService: CitationService, private dialog: MatDialog) {
+    super();
+    this.paginator = new MatPaginator(
+      new MatPaginatorIntl(),
+      ChangeDetectorRef.prototype
+    );
   }
 
   ngOnInit(): void {
-    this.loadCitations(1,5);
+    this.loadCitations(1, 5);
   }
 
   ngAfterViewInit() {
@@ -60,33 +73,36 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
   }
 
   // Retrieve citations from database. Display progress spinner until data is loaded
-  loadCitations(pageNumber = 1, pageSize = 5) {
+  loadCitations(pageNumber: number, pageSize: number) {
     this.loadingSubject.next(true);
-    // console.log("Paginator page index " + this.paginator.pageIndex);
-    // console.log("Function page index " + pageNumber);
-
+    
     this.addNewSubscription = this.citationService
       .getCitationsPaginator(pageNumber, pageSize)
-      .pipe(catchError(() => of([])), finalize(() => this.loadingSubject.next(false)))
-      .subscribe((result: CitationsResponse) => (
-        console.log(result),
-        this.citations = result.citations,
-        this.drivers = result.drivers,
-        this.citationCount = result.totalCitationsCount
-        ));
+      .pipe(
+        catchError(() => of([])),
+        finalize(() => this.loadingSubject.next(false))
+      )
+      .subscribe(
+        (result: CitationsResponse) => (
+          (this.citations = result.citations),
+          (this.drivers = result.drivers),
+          (this.citationCount = result.totalCitationsCount)
+        )
+      );
   }
 
   // Match the citation that's displayed in mat-table row to the driver by driver id
   findDriverOfCitation(citation: Citation) {
-    const driver = this.drivers.find((element) => element.driver_id == citation.driver_id);
+    const driver = this.drivers.find(
+      (element) => element.driver_id == citation.driver_id
+    );
 
     this.driverForRow = driver || new Driver();
   }
 
-  
-  openDialog(citation : Citation) {
+  openDialog(citation: Citation) {
     const dialogConfig = new MatDialogConfig();
-    
+
     dialogConfig.data = citation;
     dialogConfig.autoFocus = true;
     dialogConfig.disableClose = false;
@@ -94,9 +110,9 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
     const dialogRef = this.dialog
       .open(EditCitationComponent, dialogConfig)
       .afterClosed()
-      .subscribe(result => {
+      .subscribe((isDeleted) => {
         // If citation was deleted after closing dialog then refresh list
-        if (result) {
+        if (isDeleted) {
           this.loadCitationsPage();
         }
       });

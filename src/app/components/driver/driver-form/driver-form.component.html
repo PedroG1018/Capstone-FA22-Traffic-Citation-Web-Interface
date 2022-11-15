@@ -1,0 +1,122 @@
+<button mat-raised-button color="primary" (click)="autoFillForm()">Dev Button - Autofill
+    Form</button>
+
+<div class="main-container p-4">
+    <form [formGroup]="driverForm">
+        <mat-form-field hintLabel="">
+            <mat-label>License Number</mat-label>
+            <input matInput (ngModelChange)="findDriverByLicense($event)" #input formControlName="license_no"
+                placeholder="Enter License Number" autocomplete="off" oninput="this.value = this.value.toUpperCase()"
+                maxlength="8" />
+            <mat-hint align="end"> {{ input.value.length || 0 }}/8 </mat-hint>
+            <mat-error *ngIf="driverForm.controls.license_no.hasError('required')"><strong>Required</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>License Class</mat-label>
+            <mat-select placeholder="Select" formControlName="license_class">
+                <mat-option value="C">C</mat-option>
+                <mat-option value="A">A</mat-option>
+                <mat-option value="B">B</mat-option>
+            </mat-select>
+            <mat-error *ngIf="driverForm.controls.license_class.hasError('required')"><strong>Required</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput required formControlName="name" placeholder="Enter name" autocomplete="off" />
+            <mat-error *ngIf="driverForm.controls.name.hasError('required')"><strong>Required</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Date of Birth</mat-label>
+            <input matInput formControlName="date_birth" placeholder="Enter DOB" type="date" autocomplete="off" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label> Hair Color </mat-label>
+            <input matInput required formControlName="hair" placeholder="Enter hair color" autocomplete="off" />
+            <mat-error *ngIf="driverForm.controls.hair.hasError('required')"><strong>Required</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Eye Color</mat-label>
+            <input matInput formControlName="eyes" placeholder="Enter eye color" autocomplete="off" />
+            <mat-error *ngIf="driverForm.controls.eyes.hasError('required')"><strong>Required</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Height</mat-label>
+            <span matSuffix>ft</span>
+            <input matInput formControlName="height" placeholder="Enter height" autocomplete="off" />
+            <mat-error *ngIf="driverForm.controls.height.hasError('required')"><strong>Required</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Weight</mat-label>
+            <span matSuffix>lb</span>
+            <input matInput formControlName="weight" placeholder="Enter weight" maxlength="3" autocomplete="off" />
+            <mat-error *ngIf="driverForm.controls.weight.hasError('required')"><strong>Required</strong>
+            </mat-error>
+            <mat-error *ngIf="driverForm.controls.weight.hasError('pattern')">
+                Error: Only digits allowed
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Race</mat-label>
+            <input matInput formControlName="race" placeholder="Enter race" autocomplete="off" />
+            <mat-error *ngIf="driverForm.controls.race.hasError('required')"><strong>Required</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address" placeholder="Enter address" autocomplete="off" />
+            <mat-error *ngIf="driverForm.controls.address.hasError('required')"><strong>Required</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>City</mat-label>
+            <input matInput formControlName="city" placeholder="Enter city" autocomplete="off" />
+            <mat-error *ngIf="driverForm.controls.city.hasError('required')"><strong>Required</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>State</mat-label>
+            <mat-select placeholder="Select" formControlName="state">
+                <mat-option value="CA">CA</mat-option>
+            </mat-select>
+            <mat-error *ngIf="driverForm.controls.state.hasError('required')"><strong>Required</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Zip</mat-label>
+            <input matInput formControlName="zip" placeholder="Enter zip code" maxlength="5" autocomplete="off" />
+            <mat-error *ngIf="driverForm.controls.zip.hasError('required')"><strong>Required</strong>
+            </mat-error>
+            <mat-error *ngIf="driverForm.controls.zip.hasError('pattern')">
+                Error: Only digits allowed
+            </mat-error>
+        </mat-form-field>
+
+        <div>
+            <label>Sex</label>
+            <mat-radio-group [formControl]="driverForm.controls.sex" aria-label="Select an option">
+                <mat-radio-button value="M">M</mat-radio-button>
+                <mat-radio-button value="F">F</mat-radio-button>
+            </mat-radio-group>
+            <mat-error *ngIf="driverForm.controls.sex.hasError('required')"><strong>Required</strong>
+            </mat-error>
+        </div>
+    </form>
+</div>

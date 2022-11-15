@@ -7,14 +7,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio'
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { ErrorStateMatcher, MatNativeDateModule, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
+import { ErrorStateMatcher, MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select'
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog'
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog'
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -31,7 +31,7 @@ import { environment as env } from '../environments/environment';
 
 //Components
 import { AppComponent } from './app.component';
-import { CreateDriverComponent } from './components/driver/create-driver/create-driver.component';
+import { DriverFormComponent } from './components/driver/driver-form/driver-form.component';
 import { EditDriverComponent } from './components/driver/edit-driver/edit-driver.component';
 import { CreateCitationComponent } from './components/citations/create-citation/create-citation.component';
 import { EditCitationComponent } from './components/citations/edit-citation/edit-citation.component';
@@ -57,7 +57,7 @@ import { ViewCitationSummaryComponent } from './components/citations/view-citati
     PageNotFoundComponent,
     HomeComponent,
     LoginComponent,
-    CreateDriverComponent,
+    DriverFormComponent,
     EditDriverComponent,
     FormatTimeSpan,
     DriverLicenseDialogComponent,
@@ -94,18 +94,18 @@ import { ViewCitationSummaryComponent } from './components/citations/view-citati
     MatStepperModule
   ],
   providers: [
-    {provide: MatDialogRef, useValue: {}}, CitationService, 
-    {provide: MAT_DIALOG_DATA, useValue:{}}, // Pass data between dialogs
-    {provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: {color: 'primary'}}, // Change default radio btn color
-    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {
-      panelClass: 'mat-dialog-override',
-      hasBackdrop: true,
-      disableClose: true
-     }
+    { provide: MatDialogRef, useValue: {} }, CitationService,
+    { provide: MAT_DIALOG_DATA, useValue: {} }, // Pass data between dialogs
+    { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'primary' } }, // Change default radio btn color
+    {
+      provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {
+        panelClass: 'mat-dialog-override',
+        hasBackdrop: true,
+        disableClose: true
+      }
     },
-    // {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}, // Used to check for valid input
     { provide: ErrorStateMatcher, useClass: InputErrorStateMatcher },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

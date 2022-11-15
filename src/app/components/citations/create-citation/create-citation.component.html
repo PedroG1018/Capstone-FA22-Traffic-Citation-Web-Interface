@@ -10,111 +10,11 @@
                             <h2>Driver Information</h2>
                         </mat-card-title>
                     </mat-card-header>
-                    
+    
                     <mat-card-content>
-                        <mat-form-field hintLabel="">
-                            <mat-label>License Number</mat-label>
-                            <input matInput (ngModelChange)="findDriverByLicense($event)" [(ngModel)]="driver.license_no" #input formControlName="license_no" placeholder="Enter License Number" autocomplete="off" 
-                            oninput="this.value = this.value.toUpperCase()" maxlength="8"/>
-                            <mat-hint align="end"> {{ input.value.length || 0 }}/8 </mat-hint>
-                            <mat-error *ngIf="driverFormGroup.controls.license_no.hasError('required')"><strong>Required</strong></mat-error>
-                        </mat-form-field>
-                
-                        <mat-form-field>
-                            <mat-label>License Class</mat-label>
-                            <mat-select [(ngModel)]="driver.license_class" placeholder="Select" formControlName="license_class">
-                                <mat-option value="C">C</mat-option>
-                                <mat-option value="A">A</mat-option>
-                                <mat-option value="B">B</mat-option>
-                            </mat-select>
-                            <mat-error *ngIf="driverFormGroup.controls.license_class.hasError('required')"><strong>Required</strong>
-                            </mat-error>
-                        </mat-form-field>
-                
-                        <mat-form-field>
-                            <mat-label>Name</mat-label>
-                            <input matInput [(ngModel)]="driver.driver_name" required formControlName="name" placeholder="Enter name" autocomplete="off" />
-                            <mat-error *ngIf="driverFormGroup.controls.name.hasError('required')"><strong>Required</strong></mat-error>
-                        </mat-form-field>
-                
-                        <mat-form-field>
-                            <mat-label>Date of Birth</mat-label>
-                            <input matInput [(ngModel)]="driver.date_birth" formControlName="date_birth" placeholder="Enter DOB" type="date" autocomplete="off" />
-                        </mat-form-field>
-                
-                        <mat-form-field>
-                            <mat-label> Hair Color </mat-label>
-                            <input matInput required [(ngModel)]="driver.hair" formControlName="hair" placeholder="Enter hair color" autocomplete="off" />
-                            <mat-error *ngIf="driverFormGroup.controls.hair.hasError('required')"><strong>Required</strong></mat-error>
-                        </mat-form-field>
-                
-                        <mat-form-field>
-                            <mat-label>Eye Color</mat-label>
-                            <input matInput [(ngModel)]="driver.eyes" formControlName="eyes" placeholder="Enter eye color" autocomplete="off" />
-                            <mat-error *ngIf="driverFormGroup.controls.eyes.hasError('required')"><strong>Required</strong></mat-error>
-                        </mat-form-field>
-                
-                        <mat-form-field>
-                            <mat-label>Height</mat-label>
-                            <span matSuffix>ft</span>
-                            <input matInput [(ngModel)]="driver.height" formControlName="height" placeholder="Enter height" autocomplete="off" />
-                            <mat-error *ngIf="driverFormGroup.controls.height.hasError('required')"><strong>Required</strong></mat-error>
-                        </mat-form-field>
-                
-                        <mat-form-field>
-                            <mat-label>Weight</mat-label>
-                            <span matSuffix>lb</span>
-                            <input matInput [(ngModel)]="driver.weight" formControlName="weight" placeholder="Enter weight" maxlength="3" autocomplete="off" />
-                            <mat-error *ngIf="driverFormGroup.controls.weight.hasError('required')"><strong>Required</strong></mat-error>
-                            <mat-error *ngIf="driverFormGroup.controls.weight.hasError('pattern')">
-                                Error: Only digits allowed
-                            </mat-error>
-                        </mat-form-field>
-                
-                        <mat-form-field>
-                            <mat-label>Race</mat-label>
-                            <input matInput [(ngModel)]="driver.race" formControlName="race" placeholder="Enter race" autocomplete="off" />
-                            <mat-error *ngIf="driverFormGroup.controls.race.hasError('required')"><strong>Required</strong></mat-error>
-                        </mat-form-field>
-                
-                        <mat-form-field>
-                            <mat-label>Address</mat-label>
-                            <input matInput [(ngModel)]="driver.address" formControlName="address" placeholder="Enter address" autocomplete="off" />
-                            <mat-error *ngIf="driverFormGroup.controls.address.hasError('required')"><strong>Required</strong></mat-error>
-                        </mat-form-field>
-                
-                        <mat-form-field>
-                            <mat-label>City</mat-label>
-                            <input matInput [(ngModel)]="driver.city" formControlName="city" placeholder="Enter city" autocomplete="off" />
-                            <mat-error *ngIf="driverFormGroup.controls.city.hasError('required')"><strong>Required</strong></mat-error>
-                        </mat-form-field>
-                
-                        <mat-form-field>
-                            <mat-label>State</mat-label>
-                            <mat-select [(ngModel)]="driver.state" placeholder="Select" formControlName="state">
-                                <mat-option value="CA">CA</mat-option>
-                            </mat-select>
-                            <mat-error *ngIf="driverFormGroup.controls.state.hasError('required')"><strong>Required</strong></mat-error>
-                        </mat-form-field>
-                
-                        <mat-form-field>
-                            <mat-label>Zip</mat-label>
-                            <input matInput [(ngModel)]="driver.zip" formControlName="zip" placeholder="Enter zip code" maxlength="5" autocomplete="off" />
-                            <mat-error *ngIf="driverFormGroup.controls.zip.hasError('required')"><strong>Required</strong>
-                            </mat-error>
-                            <mat-error *ngIf="driverFormGroup.controls.zip.hasError('pattern')">
-                                Error: Only digits allowed
-                            </mat-error>
-                        </mat-form-field>
-        
-                        <div>
-                            <label>Sex</label>
-                            <mat-radio-group [(ngModel)]="driver.sex" formControlName="sex" aria-label="Select an option">
-                                <mat-radio-button [checked]="true" value="M">M</mat-radio-button>
-                                <mat-radio-button value="F">F</mat-radio-button>
-                            </mat-radio-group>
-                            <mat-error *ngIf="driverFormGroup.controls.sex.hasError('required')"><strong>Required</strong></mat-error>
-                        </div>
+                        <app-driver-form (driverEmitted)="getDriverData($event)" (driverFormEmitted)="getDriverForm($event)">
+                        
+                        </app-driver-form>
                     </mat-card-content>
     
                     <mat-card-actions>
@@ -122,8 +22,156 @@
                         <button mat-raised-button color="primary" matStepperNext>Next</button>
                     </mat-card-actions>
                 </mat-card>
-            </div>  
-    </form>
+
+                
+                
+                <!-- <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title>
+                            <h2>Driver Information</h2>
+                        </mat-card-title>
+                    </mat-card-header>
+
+                    <mat-card-content>
+                        <mat-form-field hintLabel="">
+                            <mat-label>License Number</mat-label>
+                            <input matInput (ngModelChange)="findDriverByLicense($event)"
+                                [(ngModel)]="driver.license_no" #input formControlName="license_no"
+                                placeholder="Enter License Number" autocomplete="off"
+                                oninput="this.value = this.value.toUpperCase()" maxlength="8" />
+                            <mat-hint align="end"> {{ input.value.length || 0 }}/8 </mat-hint>
+                            <mat-error *ngIf="driverFormGroup.controls.license_no.hasError('required')">
+                                <strong>Required</strong></mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>License Class</mat-label>
+                            <mat-select [(ngModel)]="driver.license_class" placeholder="Select"
+                                formControlName="license_class">
+                                <mat-option value="C">C</mat-option>
+                                <mat-option value="A">A</mat-option>
+                                <mat-option value="B">B</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="driverFormGroup.controls.license_class.hasError('required')">
+                                <strong>Required</strong>
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Name</mat-label>
+                            <input matInput [(ngModel)]="driver.driver_name" required formControlName="name"
+                                placeholder="Enter name" autocomplete="off" />
+                            <mat-error *ngIf="driverFormGroup.controls.name.hasError('required')">
+                                <strong>Required</strong></mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Date of Birth</mat-label>
+                            <input matInput [(ngModel)]="driver.date_birth" formControlName="date_birth"
+                                placeholder="Enter DOB" type="date" autocomplete="off" />
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label> Hair Color </mat-label>
+                            <input matInput required [(ngModel)]="driver.hair" formControlName="hair"
+                                placeholder="Enter hair color" autocomplete="off" />
+                            <mat-error *ngIf="driverFormGroup.controls.hair.hasError('required')">
+                                <strong>Required</strong></mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Eye Color</mat-label>
+                            <input matInput [(ngModel)]="driver.eyes" formControlName="eyes"
+                                placeholder="Enter eye color" autocomplete="off" />
+                            <mat-error *ngIf="driverFormGroup.controls.eyes.hasError('required')">
+                                <strong>Required</strong></mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Height</mat-label>
+                            <span matSuffix>ft</span>
+                            <input matInput [(ngModel)]="driver.height" formControlName="height"
+                                placeholder="Enter height" autocomplete="off" />
+                            <mat-error *ngIf="driverFormGroup.controls.height.hasError('required')">
+                                <strong>Required</strong></mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Weight</mat-label>
+                            <span matSuffix>lb</span>
+                            <input matInput [(ngModel)]="driver.weight" formControlName="weight"
+                                placeholder="Enter weight" maxlength="3" autocomplete="off" />
+                            <mat-error *ngIf="driverFormGroup.controls.weight.hasError('required')">
+                                <strong>Required</strong></mat-error>
+                            <mat-error *ngIf="driverFormGroup.controls.weight.hasError('pattern')">
+                                Error: Only digits allowed
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Race</mat-label>
+                            <input matInput [(ngModel)]="driver.race" formControlName="race" placeholder="Enter race"
+                                autocomplete="off" />
+                            <mat-error *ngIf="driverFormGroup.controls.race.hasError('required')">
+                                <strong>Required</strong></mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Address</mat-label>
+                            <input matInput [(ngModel)]="driver.address" formControlName="address"
+                                placeholder="Enter address" autocomplete="off" />
+                            <mat-error *ngIf="driverFormGroup.controls.address.hasError('required')">
+                                <strong>Required</strong></mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>City</mat-label>
+                            <input matInput [(ngModel)]="driver.city" formControlName="city" placeholder="Enter city"
+                                autocomplete="off" />
+                            <mat-error *ngIf="driverFormGroup.controls.city.hasError('required')">
+                                <strong>Required</strong></mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>State</mat-label>
+                            <mat-select [(ngModel)]="driver.state" placeholder="Select" formControlName="state">
+                                <mat-option value="CA">CA</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="driverFormGroup.controls.state.hasError('required')">
+                                <strong>Required</strong></mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Zip</mat-label>
+                            <input matInput [(ngModel)]="driver.zip" formControlName="zip" placeholder="Enter zip code"
+                                maxlength="5" autocomplete="off" />
+                            <mat-error *ngIf="driverFormGroup.controls.zip.hasError('required')">
+                                <strong>Required</strong>
+                            </mat-error>
+                            <mat-error *ngIf="driverFormGroup.controls.zip.hasError('pattern')">
+                                Error: Only digits allowed
+                            </mat-error>
+                        </mat-form-field>
+
+                        <div>
+                            <label>Sex</label>
+                            <mat-radio-group [(ngModel)]="driver.sex" formControlName="sex"
+                                aria-label="Select an option">
+                                <mat-radio-button [checked]="true" value="M">M</mat-radio-button>
+                                <mat-radio-button value="F">F</mat-radio-button>
+                            </mat-radio-group>
+                            <mat-error *ngIf="driverFormGroup.controls.sex.hasError('required')">
+                                <strong>Required</strong></mat-error>
+                        </div>
+                    </mat-card-content>
+
+                    <mat-card-actions>
+                        <button mat-raised-button color="primary" matStepperPrevious>Back</button>
+                        <button mat-raised-button color="primary" matStepperNext>Next</button>
+                    </mat-card-actions>
+                </mat-card> -->
+            </div>
+        </form>
     </mat-step>
 
     <mat-step [stepControl]="citationFormGroup">
@@ -136,7 +184,7 @@
                             <h2>Citation</h2>
                         </mat-card-title>
                     </mat-card-header>
-        
+
                     <mat-card-content>
                         <div>
                             <mat-radio-group formControlName="type" [(ngModel)]="citation.type">
@@ -146,46 +194,47 @@
                             </mat-radio-group>
                             <br><br>
                         </div>
-        
+
                         <mat-form-field>
                             <mat-label>Date</mat-label>
-                            <input matInput required formControlName="date" [(ngModel)]="citation.date" type="date"/>
+                            <input matInput required formControlName="date" [(ngModel)]="citation.date" type="date" />
                         </mat-form-field>
-        
+
                         <mat-form-field>
                             <mat-label>Time</mat-label>
-                            <input matInput required formControlName="time" [ngModel]="(citation.time)" (ngModelChange)="citation.time = $event"
-                                type="time" name="Time" />
+                            <input matInput required formControlName="time" [ngModel]="(citation.time)"
+                                (ngModelChange)="citation.time = $event" type="time" name="Time" />
                         </mat-form-field>
-        
+
                         <mat-form-field>
                             <mat-label for="desc">Description</mat-label>
-                            <input matInput required formControlName="desc" [(ngModel)]="citation.desc" type="text" name="desc"
-                                placeholder="Description" />
-        
+                            <input matInput required formControlName="desc" [(ngModel)]="citation.desc" type="text"
+                                name="desc" placeholder="Description" />
+
                         </mat-form-field>
-        
+
                         <mat-form-field>
                             <mat-label for="violation_loc">Location</mat-label>
-                            <input matInput required formControlName="violation_loc" [(ngModel)]="citation.violation_loc" type="text" name="violation_loc"
+                            <input matInput required formControlName="violation_loc"
+                                [(ngModel)]="citation.violation_loc" type="text" name="violation_loc"
                                 placeholder="Location" />
                         </mat-form-field>
-        
+
                         <mat-form-field>
                             <mat-label for="vin">Vehicle License Number or VIN</mat-label>
-                            <input matInput required formControlName="vin" [(ngModel)]="citation.vin" type="text" name="vin"
-                                placeholder="Veh. Lic. No. or VIN" />
+                            <input matInput required formControlName="vin" [(ngModel)]="citation.vin" type="text"
+                                name="vin" placeholder="Veh. Lic. No. or VIN" />
                         </mat-form-field>
-        
+
                         <br>
-        
+
                         <mat-form-field appearance="fill">
                             <mat-label>State</mat-label>
                             <mat-select formControlName="vin_state" [(ngModel)]="citation.vin_state" name="vin_state">
                                 <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
                             </mat-select>
                         </mat-form-field>
-        
+
                         <form [formGroup]="citationFormGroup">
                             <ng-container formArrayName="violations"
                                 *ngFor="let quantity of violations().controls; let i=index">
@@ -194,7 +243,8 @@
                                     <tbody>
                                         <tr [formGroupName]="i">
                                             <td class="mt-1 mb-3">
-                                                <button (click)="removeViolation(i)" class="btn btn-danger">Remove</button>
+                                                <button (click)="removeViolation(i)"
+                                                    class="btn btn-danger">Remove</button>
                                             </td>
                                         </tr>
                                         <tr [formGroupName]="i">
@@ -220,7 +270,7 @@
                                                     <input matInput required [(ngModel)]="citationViolations[i].degree"
                                                         type="text" formControlName="degree" placeholder="Degree">
                                                 </mat-form-field>
-        
+
                                             </td>
                                             <td>
                                                 <mat-form-field>
@@ -231,14 +281,14 @@
                                             </td>
                                         </tr>
                                     </tbody>
-        
+
                                 </div>
-        
+
                             </ng-container>
                             <br><button mat-raised-button color="primary" (click)="addViolation()">Add
                                 Violation</button><br><br>
                         </form>
-        
+
                         <div class="form-group">
                             <label>Owner's Fault?</label><br>
                             <mat-radio-group formControlName="owner_fault" [(ngModel)]="citation.owner_fault">
@@ -247,7 +297,7 @@
                             </mat-radio-group>
                         </div>
                     </mat-card-content>
-        
+
                     <mat-card-actions>
                         <button mat-raised-button color="primary" matStepperPrevious>Back</button>
                         <button mat-raised-button color="primary" matStepperNext>Next</button>
@@ -256,7 +306,7 @@
             </div>
         </form>
     </mat-step>
-    
+
     <mat-step [stepControl]="officerFormGroup">
         <ng-template matStepLabel="">Officer Information</ng-template>
         <form [formGroup]="officerFormGroup">
@@ -267,25 +317,27 @@
                             <h2>Officer Information</h2>
                         </mat-card-title>
                     </mat-card-header>
-        
+
                     <mat-card-content>
                         <mat-form-field>
                             <mat-label>Arresting Officer Name</mat-label>
-                            <input matInput required formControlName="officer_name" [(ngModel)]="citation.officer_name" type="text" placeholder="Name" />
+                            <input matInput required formControlName="officer_name" [(ngModel)]="citation.officer_name"
+                                type="text" placeholder="Name" />
                         </mat-form-field>
-            
+
                         <mat-form-field>
                             <mat-label>Badge No.</mat-label>
-                            <input matInput required formControlName="officer_badge" [(ngModel)]="citation.officer_badge" type="text"
-                                placeholder="Badge #" />
+                            <input matInput required formControlName="officer_badge"
+                                [(ngModel)]="citation.officer_badge" type="text" placeholder="Badge #" />
                         </mat-form-field>
-            
+
                         <mat-form-field>
                             <mat-label>Signed Date</mat-label>
-                            <input matInput required formControlName="sign_date" [(ngModel)]="citation.sign_date" class="form-control" type="date"/>
+                            <input matInput required formControlName="sign_date" [(ngModel)]="citation.sign_date"
+                                class="form-control" type="date" />
                         </mat-form-field>
                     </mat-card-content>
-        
+
                     <mat-card-actions>
                         <button mat-raised-button color="primary" matStepperPrevious>Back</button>
                         <button mat-raised-button color="primary" matStepperNext>Next</button>
@@ -307,17 +359,18 @@
 
                 <mat-card-content>
 
-                <app-view-citation-summary [citation]="citation" [violations]="citationViolations" [driver]="driver">
-                </app-view-citation-summary>
+                    <app-view-citation-summary [citation]="citation" [violations]="citationViolations"
+                        [driver]="driver">
+                    </app-view-citation-summary>
                 </mat-card-content>
 
                 <mat-card-actions class="mb-2 mt-3">
                     <button mat-raised-button color="primary" matStepperPrevious>Back</button>
-                    <button mat-raised-button color="primary"
-                                (click)="onFormSubmit()"
-                                *ngIf="!citation.citation_id && !citationCreated" type="submit">Submit</button>
-                
-                    <button *ngIf="citationCreated" routerLink="/create-citation" routerLinkActive="active" mat-raised-button color="primary">Create Another</button>
+                    <button mat-raised-button color="primary" (click)="onFormSubmit()"
+                        *ngIf="!citation.citation_id && !citationCreated" type="submit">Submit</button>
+
+                    <button *ngIf="citationCreated" routerLink="/create-citation" routerLinkActive="active"
+                        mat-raised-button color="primary">Create Another</button>
                 </mat-card-actions>
             </mat-card>
         </div>

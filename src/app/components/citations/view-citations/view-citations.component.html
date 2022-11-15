@@ -5,61 +5,68 @@
 <div class="citation-container mat-elevation-z8" [hidden]="loading$ | async">
   <div class="table-container text-center">
     <mat-table [dataSource]="citations">
-
-      <!-- Type Column -->
+      
       <ng-container matColumnDef="type">
         <mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
         <!-- Used span to call method that finds driver linked to this citation -->
-        <mat-cell *matCellDef="let citation"><span *ngIf="findDriverOfCitation(citation)"></span> {{ citation.type }} </mat-cell>
+        <mat-cell *matCellDef="let citation"><span *ngIf="findDriverOfCitation(citation)"></span>
+          {{ citation.type }}
+        </mat-cell>
       </ng-container>
-  
+
       <ng-container matColumnDef="sign_date">
         <mat-header-cell *matHeaderCellDef> Signed Date </mat-header-cell>
-        <mat-cell *matCellDef="let citation"> {{ citation.sign_date }} </mat-cell>
+        <mat-cell *matCellDef="let citation">
+          {{ citation.sign_date }}
+        </mat-cell>
       </ng-container>
-  
-      <!-- Time Column -->
+
       <ng-container matColumnDef="time">
         <mat-header-cell *matHeaderCellDef> Time </mat-header-cell>
-        <mat-cell *matCellDef="let citation"> {{ citation.time | formatTimespan }} </mat-cell>
+        <mat-cell *matCellDef="let citation">
+          {{ citation.time | formatTimespan }}
+        </mat-cell>
       </ng-container>
-  
+
       <ng-container matColumnDef="violation_loc">
-        <mat-header-cell *matHeaderCellDef> Violation Location </mat-header-cell>
-        <mat-cell *matCellDef="let citation"> {{ citation.violation_loc }} </mat-cell>
+        <mat-header-cell *matHeaderCellDef>
+          Violation Location
+        </mat-header-cell>
+        <mat-cell *matCellDef="let citation">
+          {{ citation.violation_loc }}
+        </mat-cell>
       </ng-container>
-  
+
       <ng-container matColumnDef="driver_name">
         <mat-header-cell *matHeaderCellDef> Driver Name </mat-header-cell>
         <mat-cell *matCellDef="let citation"><span> {{ driverForRow?.driver_name }} </span></mat-cell>
       </ng-container>
-  
+
       <ng-container matColumnDef="license_no">
         <mat-header-cell *matHeaderCellDef> License Number </mat-header-cell>
         <mat-cell *matCellDef="let citation"><span> {{ driverForRow?.license_no }} </span></mat-cell>
       </ng-container>
-  
+
       <ng-container matColumnDef="officer_name">
         <mat-header-cell *matHeaderCellDef> Officer Name </mat-header-cell>
-        <mat-cell *matCellDef="let citation"> {{ citation.officer_name }} </mat-cell>
+        <mat-cell *matCellDef="let citation">
+          {{ citation.officer_name }}
+        </mat-cell>
       </ng-container>
-  
+
       <ng-container matColumnDef="officer_badge">
         <mat-header-cell *matHeaderCellDef> Officer Badge </mat-header-cell>
-        <mat-cell *matCellDef="let citation"> {{ citation.officer_badge }} </mat-cell>
+        <mat-cell *matCellDef="let citation">
+          {{ citation.officer_badge }}
+        </mat-cell>
       </ng-container>
-  
+
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openDialog(row)"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns" (click)="openDialog(row)"></mat-row>
     </mat-table>
-  
-    <mat-paginator #paginator
-                   [length]="citationCount"
-                   [pageSize]="5"
-                   [pageSizeOptions]="[3, 5, 10, 20, 30, 40]"
-                   [showFirstLastButtons]="true"
-                   [hidden]="loading$ | async"
-                   >
+
+    <mat-paginator #paginator [length]="citationCount" [pageSize]="5" [pageSizeOptions]="[3, 5, 10, 20, 30, 40]"
+      [showFirstLastButtons]="true" [hidden]="loading$ | async">
     </mat-paginator>
   </div>
 </div>
