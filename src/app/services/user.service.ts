@@ -6,6 +6,8 @@ import { environment } from 'src/environments/environment';
 import { User } from '../models/user';
 import { ErrorHandleService } from './error-service';
 
+// TODO: DELETE
+
 @Injectable({
   providedIn: 'root'
 })

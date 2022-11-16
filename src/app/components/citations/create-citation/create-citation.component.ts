@@ -1,10 +1,9 @@
 import { formatDate } from '@angular/common';
-import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output, AfterViewInit, ElementRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { toJSDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar';
 import { Citation } from 'src/app/models/citation';
 import { CitationWithViolations } from 'src/app/models/citation-with-violations';
 import { Driver } from 'src/app/models/driver';
@@ -25,17 +24,21 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
   @Input() citation?: Citation; // citation model
   @Input() citationViolations?: Violation[] // array of violation models
   @Input() citationWithViolations?: CitationWithViolations; // model combining citation and violation(s) info
+
+  @Input() driverFormGroupEmitted = new EventEmitter<FormGroup>();
   @Output() citationsCreated = new EventEmitter<Citation[]>();
   @Output() citationsWithViolationsCreated = new EventEmitter<CitationWithViolations[]>();
 
   existingDriverFound: boolean;
   citationCreated: boolean;
 
+  //driverFormGroup: FormGroup = new FormGroup({});
+
   citations?: Citation[] = [];
   citationsWithViolations?: CitationWithViolations[] = [];
-  
+
   date = new FormControl(new Date());
-  serializedDate = new FormControl(new Date().toISOString()); 
+  serializedDate = new FormControl(new Date().toISOString());
 
   // array of all US states used for state drop-down menu
   states: string[] = [
@@ -124,37 +127,10 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
       Validators.maxLength(8),
       Validators.minLength(8),
     ]),
-    license_class: new FormControl('C', [Validators.required]),
-
-    // name: ['', Validators.required, Validators.name],
-    // date_birth: [this.defaultDate],
-    // sex: ['F', Validators.required],
-    // hair: ['', Validators.required],
-    // eyes: ['', Validators.required],
-    // height: ['', Validators.required],
-    // weight: [<number | undefined>0, [
-    //   Validators.required,
-    //   Validators.pattern('^[0-9]*$')
-    // ]],
-    // race: ['', Validators.required],
-    // address: ['', Validators.required],
-    // city: ['', Validators.required],
-    // state: ['', Validators.required],
-    // zip: [<number | undefined>0, [
-    //   Validators.required,
-    //   Validators.pattern('^[0-9]*$')
-    // ]],
-    // license_no: ['', [
-    //   Validators.required,
-    //   Validators.pattern('^[A-Z]+[0-9]*$'),
-    //   Validators.maxLength(8),
-    //   Validators.minLength(8)
-    // ]],
-    // license_class: ['C', Validators.required]
-
+    license_class: new FormControl('C', [Validators.required])
   });
 
-  currentDate = formatDate(new Date(), 'yyyy-MM-dd','en-US');
+  currentDate = formatDate(new Date(), 'yyyy-MM-dd', 'en-US');
 
   citationFormGroup = this._formBuilder.group({
     type: ['', Validators.required],
@@ -188,6 +164,14 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
     this.citationViolations = [];
     this.citationWithViolations = new CitationWithViolations();
   }
+
+  // getDriverData($event) {
+  //   this.driver = $event;
+  // }
+
+  // getDriverForm($event) {
+  //   this.driverFormGroup = $event;
+  // }
 
   onFormSubmit(): void {
     this.saveDriver();
@@ -225,28 +209,28 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
       this.addNewSubscription = this.citationService.createCitationWithViolations(this.citationWithViolations).subscribe(result => {
         this._snackBar.open("Successfully Created Traffic Citation", '', { duration: 2800 });
         console.log(result);
-        
+
         if (result) {
           this.citation = result;
           sessionStorage.setItem('citation', JSON.stringify(result));
           sessionStorage.setItem('violations', JSON.stringify(this.citationViolations));
-  
+
           this.citationCreated = true;
         }
       });
     }
   }
 
-  violations() : FormArray {
+  violations(): FormArray {
     return this.citationFormGroup.get("violations") as FormArray;
   }
 
   // creates an empty violation
-  newViolation() : FormGroup {
+  newViolation(): FormGroup {
     return this._formBuilder.group({
-      group:'',
-      code:'',
-      degree:'',
+      group: '',
+      code: '',
+      degree: '',
       desc: '',
     })
   }
@@ -280,7 +264,7 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
     this.driver.license_class = 'C';
   }
 
-  // If driver license number exists ask to autofill form
+  //If driver license number exists ask to autofill form
   findDriverByLicense(event: string) {
     this.addNewSubscription = this.driverService.getDriverByLicenseNo(event).subscribe(result => {
       if (typeof result === 'object') {

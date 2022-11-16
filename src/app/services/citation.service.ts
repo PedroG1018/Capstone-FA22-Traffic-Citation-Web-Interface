@@ -28,8 +28,8 @@ export class CitationService {
     return this.http.get<any>(`${environment.apiUrl}/${this.url}/${pageNumber}/${pageSize}`).pipe(catchError(this.errorService.handleError));
   }
 
-  public createCitation(citation: Citation) : Observable<Citation[] | undefined> {
-    return this.http.post<Citation[]>(`${environment.apiUrl}/${this.url}`, citation).pipe(catchError(this.errorService.handleError));
+  public createCitation(citation: Citation) : Observable<Citation | undefined> {
+    return this.http.post<Citation>(`${environment.apiUrl}/${this.url}`, citation).pipe(catchError(this.errorService.handleError));
   }
 
   // creates a citation with 1 or more violations
@@ -37,11 +37,11 @@ export class CitationService {
     return this.http.post<Citation>(`${environment.apiUrl}/${this.newUrl}`, citation).pipe(catchError(this.errorService.handleError));
   }
 
-  public updateCitation(citation: Citation) : Observable<Citation[] | undefined> {
-    return this.http.put<Citation[]>(`${environment.apiUrl}/${this.url}`, citation).pipe(catchError(this.errorService.handleError));
+  public updateCitation(citation: Citation) : Observable<Citation | undefined> {
+    return this.http.put<Citation>(`${environment.apiUrl}/${this.url}`, citation).pipe(catchError(this.errorService.handleError));
   }
 
-  public deleteCitation(citation: Citation) : Observable<Citation[] | undefined> {
-    return this.http.delete<Citation[]>(`${environment.apiUrl}/${this.url}/${citation.citation_id}`).pipe(catchError(this.errorService.handleError));
+  public deleteCitation(citation: Citation) : Observable<Citation | undefined> {
+    return this.http.delete<Citation>(`${environment.apiUrl}/${this.url}/${citation.citation_id}`).pipe(catchError(this.errorService.handleError));
   }
 }

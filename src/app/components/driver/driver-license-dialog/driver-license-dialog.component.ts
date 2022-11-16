@@ -5,7 +5,7 @@ import { toJSDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar';
 import { InputErrorStateMatcher } from 'src/app/error-state-matching';
 import { DriverService } from 'src/app/services/driver.service';
 import { Unsubscriber } from 'src/app/services/unsubscriber';
-import { CreateDriverComponent } from '../create-driver/create-driver.component';
+import { DriverFormComponent } from '../driver-form/driver-form.component';
 
 @Component({
   selector: 'app-driver-license-dialog',
@@ -13,7 +13,7 @@ import { CreateDriverComponent } from '../create-driver/create-driver.component'
   styleUrls: ['./driver-license-dialog.component.css'],
 })
 export class DriverLicenseDialogComponent {
-  constructor(private dialogRef: MatDialogRef<CreateDriverComponent>) { }
+  constructor(private dialogRef: MatDialogRef<DriverFormComponent>) { }
 
   onConfirm() {
     this.dialogRef.close(true);

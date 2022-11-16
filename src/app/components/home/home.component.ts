@@ -15,6 +15,10 @@ export class HomeComponent implements OnInit {
     window.scrollTo(0, 0)
   }
 
+  login(): void {
+    this.auth.loginWithRedirect();
+  }
+
   // Move later, for testing login
   logout(): void {
     this.auth.logout({ returnTo: this.doc.location.origin });

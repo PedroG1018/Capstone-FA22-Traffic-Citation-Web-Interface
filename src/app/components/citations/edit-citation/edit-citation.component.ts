@@ -11,35 +11,30 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './edit-citation.component.html',
   styleUrls: ['./edit-citation.component.css']
 })
-export class EditCitationComponent extends Unsubscriber implements OnInit {
+export class EditCitationComponent extends Unsubscriber {
   @Input() citation?: Citation;
-  @Output() citationsUpdated = new EventEmitter<Citation[]>();
+  @Output() citationUpdated = new EventEmitter<Citation>();
 
-  // Used injection token to access data stored in dialog
   constructor(
-    private citationService: CitationService, 
+    private citationService: CitationService,
     private dialogRef: MatDialogRef<ViewCitationsComponent>, @Inject(MAT_DIALOG_DATA) data,
     private _snackBar: MatSnackBar,
-    ) {
+  ) {
     super()
     this.citation = data;
   }
 
-  ngOnInit(): void {
-  }
-   
-  // Call citation.service methods to perform CRUD operations here
   updateCitation(citation: Citation) {
-    this.addNewSubscription = this.citationService.updateCitation(citation).subscribe((citations: Citation[] | undefined) => { 
+    this.addNewSubscription = this.citationService.updateCitation(citation).subscribe((citation: Citation | undefined) => {
       this._snackBar.open("Traffic Citation Updated", '', { duration: 1500 });
-      this.citationsUpdated.emit(citations);
+      this.citationUpdated.emit(citation);
       this.closeDialog();
     });
   }
 
-  deleteCitation(citation:Citation) {
-    this.addNewSubscription = this.citationService.deleteCitation(citation).subscribe((citations: Citation[] | undefined) => {
-      this.citationsUpdated.emit(citations);
+  deleteCitation(citation: Citation) {
+    this.addNewSubscription = this.citationService.deleteCitation(citation).subscribe((citation: Citation | undefined) => {
+      this.citationUpdated.emit(citation);
       this._snackBar.open("Traffic Citation Deleted", '', { duration: 1500 });
       let deleted = true;
       this.dialogRef.close(deleted)

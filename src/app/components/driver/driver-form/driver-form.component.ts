@@ -1,29 +1,24 @@
 import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
-import { duration } from 'moment';
-import { InputErrorStateMatcher } from 'src/app/error-state-matching';
 import { Driver } from 'src/app/models/driver';
 import { DriverService } from 'src/app/services/driver.service';
-import { SessionService } from 'src/app/services/session.service';
 import { Unsubscriber } from 'src/app/services/unsubscriber';
 import { DriverLicenseDialogComponent } from '../driver-license-dialog/driver-license-dialog.component';
 
 @Component({
-  selector: 'app-create-driver',
-  templateUrl: './create-driver.component.html',
-  styleUrls: ['./create-driver.component.css'],
+  selector: 'app-driver-form',
+  templateUrl: './driver-form.component.html',
+  styleUrls: ['./driver-form.component.css'],
   providers: [],
 })
-export class CreateDriverComponent extends Unsubscriber implements OnInit {
+export class DriverFormComponent extends Unsubscriber implements OnInit {
   @Input() driver: Driver;
-  @Output() driverCreated = new EventEmitter<Driver>();
+  @Output() driverEmitted = new EventEmitter<Driver>();
+  @Output() driverFormEmitted = new EventEmitter<FormGroup>();
 
-  createDriverNow: boolean;
   existingDriverFound: boolean;
 
   // Default age of driver is set to 18 years
@@ -64,18 +59,19 @@ export class CreateDriverComponent extends Unsubscriber implements OnInit {
   constructor(
     private driverService: DriverService,
     private dialog: MatDialog,
-    private router: Router,
     private _snackBar: MatSnackBar,
-    private session: SessionService
   ) {
     super();
-    this.createDriverNow = false;
     this.existingDriverFound = false;
     this.driver = new Driver();
   }
 
   ngOnInit(): void {
-    this.openDialog();
+    this.addNewSubscription = this.driverForm.valueChanges.subscribe(() => {
+      setTimeout(() => {
+        this.emitDriverData();
+      })
+    });
   }
 
   autoFillForm(): void {
@@ -95,15 +91,9 @@ export class CreateDriverComponent extends Unsubscriber implements OnInit {
     this.driverForm.controls.license_class.setValue('C');
   }
 
-  reloadDialog() {
-    const currentUrl = this.router.url;
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate([currentUrl]);
-  }
-
-  onFormSubmit(): void {
-    this.createDriver();
+  emitDriverData(): void {
+    this.updateDriverValues();
+    this.driverEmitted.emit(this.driver);
   }
 
   // Use getter and setter because ngModel is deprecated with FormControlName as of Angular V6..
@@ -125,6 +115,7 @@ export class CreateDriverComponent extends Unsubscriber implements OnInit {
       ?.value as string;
   }
 
+  // If driver found set values of form
   setDriverValues() {
     if (this.driver) {
       this.driverForm.setValue({
@@ -146,35 +137,16 @@ export class CreateDriverComponent extends Unsubscriber implements OnInit {
     }
   }
 
-  createDriver() {
-    if (!this.existingDriverFound) {
-      this.updateDriverValues();
-      this.addNewSubscription = this.driverService
-        .createDriver(this.driver)
-        .subscribe((result) => {
-          // Pass driverID to create citation route
-          if (result) {
-            this.session.changeDriver(result);
-            this.router.navigate(['/create-citation', result?.driver_id]);
-          }
-        });
-    } else {
-      this.updateDriverValues();
-      this.addNewSubscription = this.driverService
-        .updateDriver(this.driver)
-        .subscribe((result) => {
-          if (result) {
-            sessionStorage.setItem('driver', JSON.stringify(result));
-            this.router.navigate(['/create-citation', result?.driver_id]);
-          }
-          
-        });
-    }
+  // If driver license number exists ask to autofill form
+  findDriverByLicense(event: string) {
+    this.addNewSubscription = this.driverService.getDriverByLicenseNo(event).subscribe(result => {
+      if (typeof result === 'object') {
+        this.openDialog(result);
+      }
+    });
   }
 
-  // If license number exists retrieves driver information and auto fills form
-  // If no driver is found fills license number only
-  openDialog() {
+  openDialog(driver: Driver) {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.autoFocus = true;
@@ -185,24 +157,14 @@ export class CreateDriverComponent extends Unsubscriber implements OnInit {
     const dialogRef = this.dialog
       .open(DriverLicenseDialogComponent, dialogConfig)
       .afterClosed()
-      .subscribe((result) => {
-        if (typeof result === 'string') {
-          this.driverForm.patchValue({
-            weight: null,
-            zip: null,
-            license_no: result,
-          });
-          this.existingDriverFound = false;
-          this._snackBar.open('Driver not found. Enter Manually.', '', {
-            duration: 3000,
-          });
-        } else if (typeof result === 'object') {
-          this.driver = result;
-          this.setDriverValues();
+      .subscribe(result => {
+        if (result && !this.existingDriverFound) {
+          this.driver = driver;
           this.existingDriverFound = true;
-          this._snackBar.open('Existing driver found!', '', { duration: 2800 });
+          this.setDriverValues();
+        } else {
+          this.existingDriverFound = false;
         }
-        this.createDriverNow = true; // Can now fill form
       });
     this.addNewSubscription = dialogRef;
   }
