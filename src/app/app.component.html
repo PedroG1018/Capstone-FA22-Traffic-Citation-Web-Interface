@@ -12,6 +12,9 @@
         <li>
             <a routerLink="/view-citations" routerLinkActive="active" ariaCurrentWhenActive="page">View Citations</a>
         </li>
+        <li *ngIf="(auth.isAuthenticated$ | async)">
+            <a routerLink="/profile" routerLinkActive="active">Profile</a>
+        </li>
     </ul>
 </nav>
 <router-outlet></router-outlet>

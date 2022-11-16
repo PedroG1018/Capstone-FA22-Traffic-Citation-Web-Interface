@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   intervalSub;
   
-  constructor() {}
+  constructor(public auth: AuthService) {}
 
   ngOnInit() : void {
     this.intervalSub = setInterval(() => {

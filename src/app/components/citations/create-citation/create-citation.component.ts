@@ -32,7 +32,7 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
   existingDriverFound: boolean;
   citationCreated: boolean;
 
-  driverFormGroup: FormGroup = new FormGroup({});
+  //driverFormGroup: FormGroup = new FormGroup({});
 
   citations?: Citation[] = [];
   citationsWithViolations?: CitationWithViolations[] = [];
@@ -102,33 +102,33 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
   );
 
   // FormsGroups to use for stepper
-  // driverFormGroup = this._formBuilder.group({
-  //   name: new FormControl(''[(Validators.required, Validators.name)]),
-  //   date_birth: new FormControl(this.defaultDate),
-  //   sex: new FormControl('F', [Validators.required]),
-  //   hair: new FormControl('', [Validators.required]),
-  //   eyes: new FormControl('', [Validators.required]),
-  //   height: new FormControl('', [Validators.required]),
-  //   weight: new FormControl(<number | undefined>0, [
-  //     Validators.required,
-  //     Validators.pattern('^[0-9]*$'),
-  //   ]),
-  //   race: new FormControl('', [Validators.required]),
-  //   address: new FormControl('', [Validators.required]),
-  //   city: new FormControl('', [Validators.required]),
-  //   state: new FormControl('', [Validators.required]),
-  //   zip: new FormControl(<number | undefined>0, [
-  //     Validators.required,
-  //     Validators.pattern('^[0-9]*$'),
-  //   ]),
-  //   license_no: new FormControl('', [
-  //     Validators.required,
-  //     Validators.pattern('^[A-Z]+[0-9]*$'),
-  //     Validators.maxLength(8),
-  //     Validators.minLength(8),
-  //   ]),
-  //   license_class: new FormControl('C', [Validators.required])
-  // });
+  driverFormGroup = this._formBuilder.group({
+    name: new FormControl(''[(Validators.required, Validators.name)]),
+    date_birth: new FormControl(this.defaultDate),
+    sex: new FormControl('F', [Validators.required]),
+    hair: new FormControl('', [Validators.required]),
+    eyes: new FormControl('', [Validators.required]),
+    height: new FormControl('', [Validators.required]),
+    weight: new FormControl(<number | undefined>0, [
+      Validators.required,
+      Validators.pattern('^[0-9]*$'),
+    ]),
+    race: new FormControl('', [Validators.required]),
+    address: new FormControl('', [Validators.required]),
+    city: new FormControl('', [Validators.required]),
+    state: new FormControl('', [Validators.required]),
+    zip: new FormControl(<number | undefined>0, [
+      Validators.required,
+      Validators.pattern('^[0-9]*$'),
+    ]),
+    license_no: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[A-Z]+[0-9]*$'),
+      Validators.maxLength(8),
+      Validators.minLength(8),
+    ]),
+    license_class: new FormControl('C', [Validators.required])
+  });
 
   currentDate = formatDate(new Date(), 'yyyy-MM-dd', 'en-US');
 
@@ -165,13 +165,13 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
     this.citationWithViolations = new CitationWithViolations();
   }
 
-  getDriverData($event) {
-    this.driver = $event;
-  }
+  // getDriverData($event) {
+  //   this.driver = $event;
+  // }
 
-  getDriverForm($event) {
-    this.driverFormGroup = $event;
-  }
+  // getDriverForm($event) {
+  //   this.driverFormGroup = $event;
+  // }
 
   onFormSubmit(): void {
     this.saveDriver();
@@ -247,51 +247,51 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
     this.citationViolations?.splice(i, 1);
   }
 
-  // autoFillForm(): void {
-  //   this.driver.driver_name = 'Otter';
-  //   this.driver.date_birth = this.defaultDate;
-  //   this.driver.sex = 'F';
-  //   this.driver.hair = 'Black';
-  //   this.driver.eyes = 'Green';
-  //   this.driver.height = '3\'00"';
-  //   this.driver.weight = 90;
-  //   this.driver.race = 'N/A';
-  //   this.driver.address = '100 ST.';
-  //   this.driver.city = 'Seaside';
-  //   this.driver.state = 'CA';
-  //   this.driver.zip = 99999;
-  //   this.driver.license_no = 'D1234567';
-  //   this.driver.license_class = 'C';
-  // }
+  autoFillForm(): void {
+    this.driver.driver_name = 'Otter';
+    this.driver.date_birth = this.defaultDate;
+    this.driver.sex = 'F';
+    this.driver.hair = 'Black';
+    this.driver.eyes = 'Green';
+    this.driver.height = '3\'00"';
+    this.driver.weight = 90;
+    this.driver.race = 'N/A';
+    this.driver.address = '100 ST.';
+    this.driver.city = 'Seaside';
+    this.driver.state = 'CA';
+    this.driver.zip = 99999;
+    this.driver.license_no = 'D1234567';
+    this.driver.license_class = 'C';
+  }
 
-  // If driver license number exists ask to autofill form
-  // findDriverByLicense(event: string) {
-  //   this.addNewSubscription = this.driverService.getDriverByLicenseNo(event).subscribe(result => {
-  //     if (typeof result === 'object') {
-  //       this.openDialog(result);
-  //     }
-  //   });
-  // }
+  //If driver license number exists ask to autofill form
+  findDriverByLicense(event: string) {
+    this.addNewSubscription = this.driverService.getDriverByLicenseNo(event).subscribe(result => {
+      if (typeof result === 'object') {
+        this.openDialog(result);
+      }
+    });
+  }
 
-  // openDialog(driver: Driver) {
-  //   const dialogConfig = new MatDialogConfig();
+  openDialog(driver: Driver) {
+    const dialogConfig = new MatDialogConfig();
 
-  //   dialogConfig.autoFocus = true;
-  //   dialogConfig.disableClose = true;
-  //   dialogConfig.width = '335px';
-  //   dialogConfig.height = 'auto';
+    dialogConfig.autoFocus = true;
+    dialogConfig.disableClose = true;
+    dialogConfig.width = '335px';
+    dialogConfig.height = 'auto';
 
-  //   const dialogRef = this.dialog
-  //     .open(DriverLicenseDialogComponent, dialogConfig)
-  //     .afterClosed()
-  //     .subscribe(result => {
-  //       if (result && !this.existingDriverFound) {
-  //         this.driver = driver;
-  //         this.existingDriverFound = true;
-  //       } else {
-  //         this.existingDriverFound = false;
-  //       }
-  //     });
-  //   this.addNewSubscription = dialogRef;
-  // }
+    const dialogRef = this.dialog
+      .open(DriverLicenseDialogComponent, dialogConfig)
+      .afterClosed()
+      .subscribe(result => {
+        if (result && !this.existingDriverFound) {
+          this.driver = driver;
+          this.existingDriverFound = true;
+        } else {
+          this.existingDriverFound = false;
+        }
+      });
+    this.addNewSubscription = dialogRef;
+  }
 }

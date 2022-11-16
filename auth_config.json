@@ -1,5 +1,8 @@
 {
   "domain": "dev-3k36-3cg.us.auth0.com",
   "clientId": "AUMp2619jwCfVNLdeW6uRSTJUt3wQk01",
-  "apiUrl": "https://traffic-citation-backend.herokuapp.com/api"
+  "audience": "https://traffic-citation-backend.herokuapp.com/api",
+  "apiUri": "https://localhost:7190/api",
+  "appUri": "https://localhost:4200",
+  "errorPath": "/error"
 }

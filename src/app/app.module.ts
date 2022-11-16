@@ -24,10 +24,11 @@ import { MatCardModule } from '@angular/material/card'
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatStepperModule } from '@angular/material/stepper';
 
-
 //Auth0
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment as env } from '../environments/environment';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 
 //Components
 import { AppComponent } from './app.component';
@@ -67,6 +68,12 @@ import { ViewCitationSummaryComponent } from './components/citations/view-citati
   imports: [
     AuthModule.forRoot({
       ...env.auth,
+      // Whenever making http call with apiUrl, insert jwt token
+      httpInterceptor: {
+        allowedList: [
+          `${env.auth.apiUri}/*`,
+        ],
+      },
     }),
     BrowserModule,
     AppRoutingModule,
@@ -105,6 +112,7 @@ import { ViewCitationSummaryComponent } from './components/citations/view-citati
       }
     },
     { provide: ErrorStateMatcher, useClass: InputErrorStateMatcher },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true},
   ],
   bootstrap: [AppComponent],
 })
