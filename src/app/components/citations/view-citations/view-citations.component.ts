@@ -15,6 +15,7 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { catchError, finalize, of, tap } from 'rxjs';
 import { CitationsResponse } from 'src/app/DTO/citationsResponse';
 import { Unsubscriber } from 'src/app/services/unsubscriber';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-view-citations',
@@ -33,6 +34,7 @@ export class ViewCitationsComponent
   driverForRow?: Driver;
   citationToEdit?: Citation;
   citationCount?: number;
+  userId?: string | undefined;
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
@@ -52,7 +54,7 @@ export class ViewCitationsComponent
   ];
 
   constructor(
-    private citationService: CitationService, private dialog: MatDialog) {
+    private citationService: CitationService, private dialog: MatDialog, private auth: AuthService) {
     super();
     this.paginator = new MatPaginator(
       new MatPaginatorIntl(),
@@ -61,7 +63,13 @@ export class ViewCitationsComponent
   }
 
   ngOnInit(): void {
-    this.loadCitations(1, 5);
+    this.addNewSubscription = this.auth.user$.subscribe(user => {
+      if(user) {
+        this.userId = user.sub;
+        console.log(this.userId);
+        this.loadCitations(1, 5);
+      }
+    });
   }
 
   ngAfterViewInit() {
@@ -75,9 +83,10 @@ export class ViewCitationsComponent
   // Retrieve citations from database. Display progress spinner until data is loaded
   loadCitations(pageNumber: number, pageSize: number) {
     this.loadingSubject.next(true);
-    
+
+    // TODO: GET ROLE FROM USER INSTEAD OF HARDCODING VALUE
     this.addNewSubscription = this.citationService
-      .getCitationsPaginator(pageNumber, pageSize)
+      .getCitationsPaginator(pageNumber, pageSize, this.userId!, "officer")
       .pipe(
         catchError(() => of([])),
         finalize(() => this.loadingSubject.next(false))

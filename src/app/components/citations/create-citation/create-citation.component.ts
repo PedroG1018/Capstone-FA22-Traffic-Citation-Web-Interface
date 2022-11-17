@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@ang
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '@auth0/auth0-angular';
 import { Citation } from 'src/app/models/citation';
 import { CitationWithViolations } from 'src/app/models/citation-with-violations';
 import { Driver } from 'src/app/models/driver';
@@ -150,7 +151,7 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
     sign_date: ['']
   });
 
-  constructor(private citationService: CitationService, private driverService: DriverService, private route: ActivatedRoute, private router: Router, private _snackBar: MatSnackBar, private _formBuilder: FormBuilder, private dialog: MatDialog) {
+  constructor(private citationService: CitationService, private driverService: DriverService, private route: ActivatedRoute, private router: Router, private _snackBar: MatSnackBar, private _formBuilder: FormBuilder, private dialog: MatDialog, private auth: AuthService) {
     super()
     this.existingDriverFound = false;
     this.citationCreated = false;
@@ -163,6 +164,13 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
     this.citation = new Citation();
     this.citationViolations = [];
     this.citationWithViolations = new CitationWithViolations();
+
+    // Link the auth user sub property with citation to act as user id
+    this.addNewSubscription = this.auth.user$.subscribe(user => {
+      if(user && this.citation) {
+        this.citation.user_id = user.sub;
+      }
+    });
   }
 
   // getDriverData($event) {
