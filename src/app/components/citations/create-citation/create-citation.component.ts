@@ -274,11 +274,13 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
 
   //If driver license number exists ask to autofill form
   findDriverByLicense(event: string) {
-    this.addNewSubscription = this.driverService.getDriverByLicenseNo(event).subscribe(result => {
-      if (typeof result === 'object') {
-        this.openDialog(result);
-      }
-    });
+    if(event.length == 8) {
+      this.addNewSubscription = this.driverService.getDriverByLicenseNo(event).subscribe(result => {
+        if (typeof result === 'object') {
+          this.openDialog(result);
+        }
+      });  
+    }
   }
 
   openDialog(driver: Driver) {
