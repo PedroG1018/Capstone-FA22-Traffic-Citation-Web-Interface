@@ -40,6 +40,8 @@ import { ViewCitationsComponent } from './components/citations/view-citations/vi
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
+
 
 // Misc
 import { CitationService } from './services/citation.service';
@@ -64,6 +66,7 @@ import { ViewCitationSummaryComponent } from './components/citations/view-citati
     DriverLicenseDialogComponent,
     ProfileComponent,
     ViewCitationSummaryComponent,
+    LandingPageComponent,
   ],
   imports: [
     AuthModule.forRoot({
