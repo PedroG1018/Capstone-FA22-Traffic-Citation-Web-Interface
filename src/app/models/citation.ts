@@ -3,7 +3,7 @@ import { formatDate } from "@angular/common";
 export class Citation {
     citation_id?: number;
     driver_id?: number;
-    user_id?: number;
+    user_id?: string;
     type = "";
     date = formatDate(new Date(), 'yyyy-MM-dd', 'en-US');
     time = new Date().toTimeString().slice(0,5); // Could change locale instead of slicing

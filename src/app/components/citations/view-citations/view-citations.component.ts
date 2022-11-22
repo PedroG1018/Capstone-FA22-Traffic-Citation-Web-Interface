@@ -15,6 +15,7 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { catchError, finalize, of, tap } from 'rxjs';
 import { CitationsResponse } from 'src/app/DTO/citationsResponse';
 import { Unsubscriber } from 'src/app/services/unsubscriber';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-view-citations',
@@ -33,6 +34,8 @@ export class ViewCitationsComponent
   driverForRow?: Driver;
   citationToEdit?: Citation;
   citationCount?: number;
+  userId?: string | undefined;
+  userRole?: string | undefined;
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
@@ -52,7 +55,7 @@ export class ViewCitationsComponent
   ];
 
   constructor(
-    private citationService: CitationService, private dialog: MatDialog) {
+    private citationService: CitationService, private dialog: MatDialog, private auth: AuthService) {
     super();
     this.paginator = new MatPaginator(
       new MatPaginatorIntl(),
@@ -61,7 +64,13 @@ export class ViewCitationsComponent
   }
 
   ngOnInit(): void {
-    this.loadCitations(1, 5);
+    this.addNewSubscription = this.auth.user$.subscribe(user => {
+      if (user) {
+        this.userRole = user['dev-3k36-3cg.us.auth0.com/roles'][0];
+        this.userId = user.sub;
+        this.loadCitations(1, 5);
+      }
+    });
   }
 
   ngAfterViewInit() {
@@ -75,9 +84,10 @@ export class ViewCitationsComponent
   // Retrieve citations from database. Display progress spinner until data is loaded
   loadCitations(pageNumber: number, pageSize: number) {
     this.loadingSubject.next(true);
-    
-    this.addNewSubscription = this.citationService
-      .getCitationsPaginator(pageNumber, pageSize)
+
+    if(this.userId && this.userRole) {
+      this.addNewSubscription = this.citationService
+      .getCitationsPaginator(pageNumber, pageSize, this.userId, this.userRole)
       .pipe(
         catchError(() => of([])),
         finalize(() => this.loadingSubject.next(false))
@@ -89,6 +99,7 @@ export class ViewCitationsComponent
           (this.citationCount = result.totalCitationsCount)
         )
       );
+    }
   }
 
   // Match the citation that's displayed in mat-table row to the driver by driver id
