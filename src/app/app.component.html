@@ -1,20 +1,24 @@
 <nav>
     <ul>
+
         <a routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page"><img src="assets/court_logo.jpeg"
                 alt="court_logo" /></a>
 
-        <li>
+        <li *ngIf="(auth.isAuthenticated$ | async)">
             <a routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
         </li>
-        <li>
+        <li *ngIf="(auth.isAuthenticated$ | async)">
             <a routerLink="/create-citation" routerLinkActive="active" ariaCurrentWhenActive="page">Create Citation</a>
         </li>
-        <li>
+        <li *ngIf="(auth.isAuthenticated$ | async)">
             <a routerLink="/view-citations" routerLinkActive="active" ariaCurrentWhenActive="page">View Citations</a>
         </li>
+
         <li *ngIf="(auth.isAuthenticated$ | async)">
             <a routerLink="/profile" routerLinkActive="active">Profile</a>
         </li>
+
+
     </ul>
 </nav>
 <router-outlet></router-outlet>
