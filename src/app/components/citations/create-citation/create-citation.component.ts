@@ -33,8 +33,6 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
   existingDriverFound: boolean;
   citationCreated: boolean;
 
-  //driverFormGroup: FormGroup = new FormGroup({});
-
   citations?: Citation[] = [];
   citationsWithViolations?: CitationWithViolations[] = [];
 
@@ -172,14 +170,6 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
       }
     });
   }
-
-  // getDriverData($event) {
-  //   this.driver = $event;
-  // }
-
-  // getDriverForm($event) {
-  //   this.driverFormGroup = $event;
-  // }
 
   onFormSubmit(): void {
     this.saveDriver();

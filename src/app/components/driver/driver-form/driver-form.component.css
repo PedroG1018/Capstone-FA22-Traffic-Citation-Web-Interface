@@ -5,34 +5,3 @@
 mat-form-field {
   margin-right: 12px;
 }
-
-.mat-card-header {
-  display: flex;
-  justify-content: center;
-  padding: 20px 0 0 0;
-  background-color: #2D4373;
-  color: white;
-  margin-bottom: 25px;
-}
-
-.mat-card {
-  width: 55%;
-  margin: 0 auto;
-  padding: 0;
-  max-width: 550px;
-}
-
-.mat-card-content {
-  margin: 0 auto;
-  text-align: center;
-  padding: 5px;
-}
-
-.mat-card-actions {
-  display: flex;
-  justify-content: flex-end;
-}
-
-/* ::ng-deep .mat-form-field .mat-form-field-infix {
-  width: 200px;
-} */

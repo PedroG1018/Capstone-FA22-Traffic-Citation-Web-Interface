@@ -23,13 +23,18 @@ mat-form-field {
     justify-content: right;
 }
 
-.icon-delete {
+/* .icon-delete {
     display: flex;
     align-items: center;
     justify-content: center;
-}
+} */
 
-.mat-fab .mat-button-wrapper {
+/* .mat-fab .mat-button-wrapper {
     display: flex !important;
     justify-content: center !important;
+} */
+
+.dialog-container {
+    min-height: 500px !important;
+    min-width: 1000px !important;
 }

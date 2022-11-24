@@ -1,16 +1,36 @@
-.citation-container {
+.mat-card:hover  {
+  /* background-color: #C5CAE9; */
+  cursor: pointer;
+}
+
+.mat-card-header {
+  padding: 15px 0 0 0;
+  background-color: #283593;
+  color: white;
+  margin-bottom: 15px;
+}
+
+.mat-card-title {
+  text-align: center;
+}
+
+.mat-card {
+  padding: 0 0 25px 0;
+  height: 100%;
+}
+
+.mat-card-subtitle {
+  padding-left: 5%;
+}
+
+.mat-card-content {
+  padding-left: 5%;
+}
+
+.mat-card-actions {
   display: flex;
-  flex-direction: column;
-  min-width: 300px; 
+  justify-content: center;
 }
-
-.mat-row:hover  {
-  background-color: #C5CAE9;
-}
-
-/* .mat-row {
-  min-height: 55px;
-} */
 
 .spinner-container {
   position: absolute;

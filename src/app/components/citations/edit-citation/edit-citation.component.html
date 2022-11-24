@@ -1,5 +1,29 @@
-<h2 mat-dialog-title *ngIf="citation"> Editing Citation </h2>
-<div mat-dialog-content *ngIf="citation">
+<h2 mat-dialog-title> Editing Citation </h2>
+<body>
+    <div class="dialog-container">
+        <app-view-citation-summary mat-dialog-content [citation]="citation" [violations]="violations" [driver]="driver">
+    
+        </app-view-citation-summary>
+        
+    </div>
+</body>
+
+<footer>
+    <div mat-dialog-actions>
+        <button mat-fab color="warn" aria-label="Delete icon button" (click)="deleteCitation(citation)"
+            *ngIf="citation.citation_id">
+            <mat-icon class="icon-delete">delete</mat-icon>
+        </button>
+        <button mat-raised-button color="basic" (click)="closeDialog()">Close</button>
+        <button mat-raised-button color="primary" (click)="updateCitation(citation, violations, driver)"
+            *ngIf="citation.citation_id">Save</button>
+    </div>
+
+</footer>
+
+
+
+<!-- <div mat-dialog-content *ngIf="citation">
     <mat-form-field>
         <mat-label>Type</mat-label>
         <input matInput placeholder="Type" [(ngModel)]="citation.type" />
@@ -12,7 +36,6 @@
 
     <mat-form-field>
         <mat-label>Time</mat-label>
-        <!-- One way binding (only html value is changed) for formatting timespan with pipe then on model change, update citation.time (changes actual value). Similar to 2 way binding but you can use pipe in between changes to a value -->
         <input matInput [ngModel]="(citation.time | formatTimespan)" (ngModelChange)="citation.time = $event"
             type="time" />
     </mat-form-field><br>
@@ -64,9 +87,9 @@
         <textarea matInput cols="50" placeholder="Description" [(ngModel)]="citation.desc"></textarea><br>
     </mat-form-field>
 
-</div>
+</div> -->
 
-<div mat-dialog-actions *ngIf="citation">
+<!-- <div mat-dialog-actions *ngIf="citation">
     <button mat-fab color="warn" aria-label="Delete icon button" (click)="deleteCitation(citation)"
         *ngIf="citation.citation_id">
         <mat-icon class="icon-delete">delete</mat-icon>
@@ -74,4 +97,4 @@
     <button mat-raised-button color="basic" (click)="closeDialog()">Close</button>
     <button mat-raised-button color="primary" (click)="updateCitation(citation)"
         *ngIf="citation.citation_id">Save</button>
-</div>
+</div> -->

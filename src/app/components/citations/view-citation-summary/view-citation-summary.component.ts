@@ -1,8 +1,9 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { Citation } from 'src/app/models/citation';
 import { Driver } from 'src/app/models/driver';
 import { Violation } from 'src/app/models/violation';
 import { Unsubscriber } from 'src/app/services/unsubscriber';
+import { EventEmitter } from 'stream';
 
 @Component({
   selector: 'app-view-citation-summary',
@@ -13,9 +14,10 @@ export class ViewCitationSummaryComponent
   extends Unsubscriber
   implements OnInit
 {
+  @Input() driver?: Driver;
   @Input() citation?: Citation;
   @Input() violations?: Violation[];
-  @Input() driver?: Driver;
+  
 
   constructor() {
     super();

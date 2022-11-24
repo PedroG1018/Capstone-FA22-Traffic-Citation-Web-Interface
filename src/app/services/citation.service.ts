@@ -24,6 +24,10 @@ export class CitationService {
     return this.http.get<Citation>(`${environment.apiUrl}/${this.url}/${citation_id}`).pipe(catchError(this.errorService.handleError));
   }
 
+  public getCitationsPaginatorTEST(pageNumber: number, pageSize: number) : Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/${this.url}/${pageNumber}/${pageSize}`).pipe(catchError(this.errorService.handleError));
+  }
+
   public getCitationsPaginator(pageNumber: number, pageSize: number, userId: string, userRole: string) : Observable<any> {
     return this.http.get<any>(`${environment.apiUrl}/${this.url}/${pageNumber}/${pageSize}/${userId}/${userRole}`).pipe(catchError(this.errorService.handleError));
   }

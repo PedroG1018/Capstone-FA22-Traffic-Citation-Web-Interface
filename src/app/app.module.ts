@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio'
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ErrorStateMatcher, MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
@@ -23,6 +23,10 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatCardModule } from '@angular/material/card'
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatStepperModule } from '@angular/material/stepper';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTreeModule } from '@angular/material/tree';
+
 
 //Auth0
 import { AuthModule } from '@auth0/auth0-angular';
@@ -48,6 +52,7 @@ import { DriverLicenseDialogComponent } from './components/driver/driver-license
 import { InputErrorStateMatcher } from './error-state-matching';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ViewCitationSummaryComponent } from './components/citations/view-citation-summary/view-citation-summary.component';
+import { CitationFormComponent } from './components/citations/citation-form/citation-form.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +69,7 @@ import { ViewCitationSummaryComponent } from './components/citations/view-citati
     DriverLicenseDialogComponent,
     ProfileComponent,
     ViewCitationSummaryComponent,
+    CitationFormComponent,
   ],
   imports: [
     AuthModule.forRoot({
@@ -98,7 +104,10 @@ import { ViewCitationSummaryComponent } from './components/citations/view-citati
     MatIconModule,
     MatCardModule,
     MatTabsModule,
-    MatStepperModule
+    MatStepperModule,
+    FlexLayoutModule,
+    MatExpansionModule,
+    MatTreeModule
   ],
   providers: [
     { provide: MatDialogRef, useValue: {} }, CitationService,

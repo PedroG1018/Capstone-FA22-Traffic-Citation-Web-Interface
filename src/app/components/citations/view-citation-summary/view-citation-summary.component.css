@@ -1,4 +1,4 @@
-.summary-container {
+/* .summary-container {
   
   margin: 0 auto;
   margin-top: 10px;
@@ -37,4 +37,8 @@ mat-form-field {
 tr {
   display: flex;
   justify-content: center;
+} */
+
+.summary-container {
+  min-height: 50%;
 }
