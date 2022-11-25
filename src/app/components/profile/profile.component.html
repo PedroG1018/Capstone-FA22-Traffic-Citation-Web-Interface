@@ -1,5 +1,22 @@
-<ul *ngIf="auth.user$ | async as user">
-    <li> {{ user.name }} </li>
-    <li> {{ user.email }} </li>
-    
-</ul>
+<div *ngIf="auth.user$ | async as user" class="main-div">
+    <mat-card class="card">
+        <mat-card-header class="header-title">
+            <mat-card-title>
+                <h2>My Profile</h2>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-header>
+            <div mat-card-avatar class="header-image"></div>
+                <img src="{{ user.picture }}">
+                <mat-card-title>{{ user.name }}</mat-card-title>
+                <mat-card-subtitle>Badge #{{ user['https://example.com/badge_number'] }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p>Role: {{ user['dev-3k36-3cg.us.auth0.com/roles'] }}</p>
+            <p>Email: {{ user.email }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button><a routerLink="/view-citations">My Citations</a></button>
+        </mat-card-actions>
+    </mat-card>
+</div>

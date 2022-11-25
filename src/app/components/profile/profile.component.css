@@ -1,0 +1,28 @@
+.card {
+    max-width: 400px;
+    margin: 0 auto;
+    border-radius: 5px;
+    margin-top: 2%;
+}
+
+.header-title {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0 0 0;
+    background-color: #283593;
+    color: white;
+    margin-bottom: 25px;
+}
+
+.header-image {
+    background-size: cover;
+    border-radius: 50%;
+    flex-shrink: 0;
+    object-fit: cover;
+}
+
+img {
+    border-radius: 50%;
+    flex-shrink: 0;
+    object-fit: cover;
+}
