@@ -1,6 +1,5 @@
-import { formatDate } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Driver } from 'src/app/models/driver';
 import { DriverService } from 'src/app/services/driver.service';
@@ -15,61 +14,64 @@ import { DriverLicenseDialogComponent } from '../driver-license-dialog/driver-li
 })
 export class DriverFormComponent extends Unsubscriber {
   @Input() driver?: Driver;
-  @Input() editingForm?: boolean;
+  @Input() editingCitation?: boolean;
+  @Input() driverFound?: boolean;
+  @Input() states: string[] = [];
+  @Input() form!: FormGroup;
 
-  existingDriverFound: boolean;
+  // Use two way binding to emit change to parent component
+  @Output() driverChange = new EventEmitter<Driver>();
+  @Output() driverFoundChange = new EventEmitter<boolean>();
 
-  // Default age of driver is set to 18 years
-  defaultDate = formatDate(
-    new Date().setFullYear(new Date().getFullYear() - 18),
-    'yyyy-MM-dd',
-    'en-US'
-  );
-
-  driverFormGroup = this._formBuilder.group({
-    name: new FormControl(''[(Validators.required, Validators.name)]),
-    date_birth: new FormControl(this.defaultDate),
-    sex: new FormControl('F', [Validators.required]),
-    hair: new FormControl('', [Validators.required]),
-    eyes: new FormControl('', [Validators.required]),
-    height: new FormControl('', [Validators.required]),
-    weight: new FormControl(<number | undefined>0, [
-      Validators.required,
-      Validators.pattern('^[0-9]*$'),
-    ]),
-    race: new FormControl('', [Validators.required]),
-    address: new FormControl('', [Validators.required]),
-    city: new FormControl('', [Validators.required]),
-    state: new FormControl('', [Validators.required]),
-    zip: new FormControl(<number | undefined>0, [
-      Validators.required,
-      Validators.pattern('^[0-9]*$'),
-    ]),
-    license_no: new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[A-Z]+[0-9]*$'),
-      Validators.maxLength(8),
-      Validators.minLength(8),
-    ]),
-    license_class: new FormControl('C', [Validators.required])
-  });
-
-  constructor(private driverService: DriverService, private dialog: MatDialog, private _formBuilder: FormBuilder) {
+  constructor(private driverService: DriverService, private dialog: MatDialog) {
     super();
-    this.existingDriverFound = false;
+  }
+
+  get driverInfo() {
+    return this.form.get('driverInfo') as FormGroup;
+  }
+
+  submitForm() {
+    // Check validity of form controls and mark as touched (changed)
+    Object.keys(this.driverInfo.controls).forEach(control => {
+      this.driverInfo.controls[control].markAsTouched();
+      this.driverInfo.controls[control].updateValueAndValidity();
+    });
+  }
+
+  // Update form values with found driver
+  setDriverValues(driver: Driver) {
+    this.driverInfo.patchValue({
+      driver_name: driver.driver_name,
+      date_birth: driver.date_birth,
+      sex: driver.sex,
+      hair: driver.hair,
+      eyes: driver.eyes,
+      height: driver.height,
+      weight: driver.weight,
+      race: driver.race,
+      address: driver.address,
+      city: driver.city,
+      state: driver.state,
+      zip: driver.zip,
+      license_class: driver.license_class
+    });
   }
 
   // If driver license number exists ask to autofill form
   findDriverByLicense(event: string) {
-    if (!this.editingForm && event.length == 8) {
+    if (!this.editingCitation && event?.length == 8 && !this.driverFound) {
       this.addNewSubscription = this.driverService.getDriverByLicenseNo(event).subscribe(result => {
         if (typeof result === 'object') {
           this.openDialog(result);
         }
       });
-    }  
+    } else {
+      this.driverFound = false;
+    }
   }
 
+  // Dialog that checks with user if they want to autofill form
   openDialog(driver: Driver) {
     const dialogConfig = new MatDialogConfig();
 
@@ -81,12 +83,22 @@ export class DriverFormComponent extends Unsubscriber {
     const dialogRef = this.dialog
       .open(DriverLicenseDialogComponent, dialogConfig)
       .afterClosed()
-      .subscribe(result => {
-        if (result && !this.existingDriverFound) {
+      .subscribe(isAutofill => {
+        if (isAutofill) {
           this.driver = driver;
-          this.existingDriverFound = true;
+          this.driverChange.emit(this.driver);
+          this.setDriverValues(driver);
+          this.driverFound = true;
+          this.driverFoundChange.emit(this.driverFound);
         } else {
-          this.existingDriverFound = false;
+          this.driverFound = false;
+          this.driverFoundChange.emit(this.driverFound);
+
+          // Clear all fields
+          Object.keys(this.driverInfo.controls).forEach(control => {
+            this.driverInfo.controls[control].patchValue(null);
+            this.driverInfo.controls[control].markAsPristine();
+          });
         }
       });
     this.addNewSubscription = dialogRef;

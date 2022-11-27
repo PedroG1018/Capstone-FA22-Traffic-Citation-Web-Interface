@@ -1,9 +1,7 @@
 import { formatDate } from '@angular/common';
-import { Component, OnInit, EventEmitter, Input, Output, AfterViewInit, ElementRef } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { Citation } from 'src/app/models/citation';
 import { CitationWithViolations } from 'src/app/models/citation-with-violations';
@@ -12,7 +10,6 @@ import { Violation } from 'src/app/models/violation';
 import { CitationService } from 'src/app/services/citation.service';
 import { DriverService } from 'src/app/services/driver.service';
 import { Unsubscriber } from 'src/app/services/unsubscriber';
-import { DriverLicenseDialogComponent } from '../../driver/driver-license-dialog/driver-license-dialog.component';
 
 @Component({
   selector: 'app-create-citation',
@@ -21,23 +18,18 @@ import { DriverLicenseDialogComponent } from '../../driver/driver-license-dialog
 })
 
 export class CreateCitationComponent extends Unsubscriber implements OnInit {
-  @Input() driver: Driver;
-  @Input() citation?: Citation; // citation model
-  @Input() citationViolations?: Violation[] // array of violation models
-  @Input() citationWithViolations?: CitationWithViolations; // model combining citation and violation(s) info
+  driver = new Driver();
+  citation = new Citation(); // citation model
+  violations: Violation[] = [] // array of violation models
+  citationWithViolations = new CitationWithViolations() // model combining citation and violation(s) info
+  driverFound: boolean = false;
+  
 
-  @Input() driverFormGroupEmitted = new EventEmitter<FormGroup>();
-  @Output() citationsCreated = new EventEmitter<Citation[]>();
-  @Output() citationsWithViolationsCreated = new EventEmitter<CitationWithViolations[]>();
+  // @Output() citationsCreated = new EventEmitter<Citation[]>();
+  // @Output() citationsWithViolationsCreated = new EventEmitter<CitationWithViolations[]>();
 
-  existingDriverFound: boolean;
+  citationForm!: FormGroup;
   citationCreated: boolean;
-
-  citations?: Citation[] = [];
-  citationsWithViolations?: CitationWithViolations[] = [];
-
-  date = new FormControl(new Date());
-  serializedDate = new FormControl(new Date().toISOString());
 
   // array of all US states used for state drop-down menu
   states: string[] = [
@@ -94,204 +86,120 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
   ];
 
   // Default age of driver is set to 18 years
-  defaultDate = formatDate(
-    new Date().setFullYear(new Date().getFullYear() - 18),
-    'yyyy-MM-dd',
-    'en-US'
-  );
-
-  // FormsGroups to use for stepper
-  driverFormGroup = this._formBuilder.group({
-    name: new FormControl(''[(Validators.required, Validators.name)]),
-    date_birth: new FormControl(this.defaultDate),
-    sex: new FormControl('F', [Validators.required]),
-    hair: new FormControl('', [Validators.required]),
-    eyes: new FormControl('', [Validators.required]),
-    height: new FormControl('', [Validators.required]),
-    weight: new FormControl(<number | undefined>0, [
-      Validators.required,
-      Validators.pattern('^[0-9]*$'),
-    ]),
-    race: new FormControl('', [Validators.required]),
-    address: new FormControl('', [Validators.required]),
-    city: new FormControl('', [Validators.required]),
-    state: new FormControl('', [Validators.required]),
-    zip: new FormControl(<number | undefined>0, [
-      Validators.required,
-      Validators.pattern('^[0-9]*$'),
-    ]),
-    license_no: new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[A-Z]+[0-9]*$'),
-      Validators.maxLength(8),
-      Validators.minLength(8),
-    ]),
-    license_class: new FormControl('C', [Validators.required])
-  });
-
+  defaultDate = formatDate(new Date().setFullYear(new Date().getFullYear() - 18), 'yyyy-MM-dd', 'en-US');
   currentDate = formatDate(new Date(), 'yyyy-MM-dd', 'en-US');
+  currentTime = new Date().getHours() + ":" + new Date().getMinutes().toString().padStart(2, '0');
 
-  citationFormGroup = this._formBuilder.group({
-    type: ['', Validators.required],
-    date: [this.currentDate],
-    time: ['', Validators.required],
-    owner_fault: [true],
-    desc: [''],
-    violation_loc: ['', Validators.required],
-    vin: ['', Validators.required],
-    vin_state: [''],
-    violations: this._formBuilder.array([]),
-  });
-
-  officerFormGroup = this._formBuilder.group({
-    officer_name: [''],
-    officer_badge: [''],
-    sign_date: ['']
-  });
-
-  constructor(private citationService: CitationService, private driverService: DriverService, private route: ActivatedRoute, private router: Router, private _snackBar: MatSnackBar, private _formBuilder: FormBuilder, private dialog: MatDialog, private auth: AuthService) {
-    super()
-    this.existingDriverFound = false;
+  constructor(private citationService: CitationService, private driverService: DriverService, private snackBar: MatSnackBar, private fb: FormBuilder, private auth: AuthService) {
+    super();
     this.citationCreated = false;
-    this.driver = new Driver();
-
-    sessionStorage.clear();
+    // sessionStorage.clear();
   }
 
   ngOnInit(): void {
-    this.citation = new Citation();
-    this.citationViolations = [];
-    this.citationWithViolations = new CitationWithViolations();
-
     // Link the auth user sub property with citation to act as user id
     this.addNewSubscription = this.auth.user$.subscribe(user => {
       if(user && this.citation) {
         this.citation.user_id = user.sub;
       }
     });
+
+    // Citation form to be used
+    this.citationForm = this.fb.group({
+      'driverInfo': this.fb.group({
+        driver_name: ['', [Validators.required]],
+        date_birth: [this.defaultDate, [Validators.required]],
+        sex: ['', [Validators.required]],
+        hair: ['', [Validators.required]],
+        eyes: ['', [Validators.required]],
+        height: ['', [Validators.required]],
+        weight: [null, [ Validators.required, Validators.pattern('^[0-9]*$')]],
+        race: ['', [Validators.required]],
+        address: ['', [Validators.required]],
+        city: ['', [Validators.required]],
+        state: ['', [Validators.required]],
+        zip: [null, [Validators.required, Validators.pattern('^[0-9]*$')]],
+        license_no: ['', [Validators.required, Validators.pattern('^[A-Z]+[0-9]*$'), Validators.maxLength(8), Validators.minLength(8)]],
+        license_class: ['', [Validators.required]]
+      }),
+      'citationInfo': this.fb.group({
+        type: ['', Validators.required],
+        date: [this.currentDate],
+        time: [this.currentTime, Validators.required],
+        owner_fault: [null, Validators.required],
+        desc: ['', Validators.required],
+        violation_loc: ['', Validators.required],
+        vin: ['', Validators.required],
+        vin_state: ['', Validators.required],
+        violations: this.fb.array([])
+      }),
+      'officerInfo': this.fb.group({
+        officer_name: ['', Validators.required],
+        officer_badge: ['', Validators.required],
+        sign_date: [this.currentDate]
+      })
+    });
   }
 
   onFormSubmit(): void {
+    // Get values from form groups
+    this.driver = Object.assign(this.driver, this.citationForm.get('driverInfo')?.value);
+    this.citation = Object.assign(this.citation, this.citationForm.get('citationInfo')?.value);
+    this.citation = Object.assign(this.citation, this.citationForm.get('officerInfo')?.value);
+    this.violations = Object.assign(this.violations, this.citationForm.get('citationInfo.violations')?.value);
+    console.log(this.violations);
+    console.log(this.driver);
+    console.log(this.citation);
     this.saveDriver();
-    this.saveCitationWithViolations();
   }
 
   saveDriver() {
-    if (!this.existingDriverFound) {
+    console.log(this.driverFound);
+    if (!this.driverFound) {
+      // Create new driver
       this.addNewSubscription = this.driverService
         .createDriver(this.driver)
         .subscribe((result) => {
           if (result) {
             this.driver = result;
-            sessionStorage.setItem('driver', JSON.stringify(result));
+            console.log(this.driver);
+            // sessionStorage.setItem('driver', JSON.stringify(result));
+            this.saveCitationWithViolations();
           }
         });
     } else {
+      // Update existing driver
       this.addNewSubscription = this.driverService
         .updateDriver(this.driver)
         .subscribe((result) => {
           if (result) {
             this.driver = result;
-            sessionStorage.setItem('driver', JSON.stringify(result));
+            console.log(this.driver);
+            // sessionStorage.setItem('driver', JSON.stringify(result));
+            this.saveCitationWithViolations();
           }
         });
     }
+    
   }
 
   saveCitationWithViolations() {
-    if (this.citationWithViolations && this.citation) {
-      this.citation.driver_id = this.driver.driver_id;
-      this.citationWithViolations.citation = this.citation;
-      this.citationWithViolations.violations = this.citationViolations;
+    this.citation.driver_id = this.driver.driver_id;
+    this.citationWithViolations.citation = this.citation;
+    this.citationWithViolations.violations = this.violations;
 
-      this.addNewSubscription = this.citationService.createCitationWithViolations(this.citationWithViolations).subscribe(result => {
-        this._snackBar.open("Successfully Created Traffic Citation", '', { duration: 2800 });
-        console.log(result);
+    this.addNewSubscription = this.citationService.createCitationWithViolations(this.citationWithViolations).subscribe(result => {
+      this.snackBar.open("Successfully Created Traffic Citation", '', { duration: 2800 });
+      console.log(result);
 
-        if (result) {
-          this.citation = result;
-          sessionStorage.setItem('citation', JSON.stringify(result));
-          sessionStorage.setItem('violations', JSON.stringify(this.citationViolations));
+      if (result) {
+        this.citation = result;
+        // sessionStorage.setItem('citation', JSON.stringify(result));
+        // sessionStorage.setItem('violations', JSON.stringify(this.violations));
 
-          this.citationCreated = true;
-        }
-      });
-    }
-  }
-
-  violations(): FormArray {
-    return this.citationFormGroup.get("violations") as FormArray;
-  }
-
-  // creates an empty violation
-  newViolation(): FormGroup {
-    return this._formBuilder.group({
-      group: '',
-      code: '',
-      degree: '',
-      desc: '',
-    })
-  }
-
-  // adds a new violation to the form and citationViolations array
-  addViolation() {
-    this.violations().push(this.newViolation());
-    this.citationViolations?.push(new Violation());
-  }
-
-  // removes a violation from the form and from the citationViolations array
-  removeViolation(i: number) {
-    this.violations().removeAt(i);
-    this.citationViolations?.splice(i, 1);
-  }
-
-  autoFillForm(): void {
-    this.driver.driver_name = 'Otter';
-    this.driver.date_birth = this.defaultDate;
-    this.driver.sex = 'F';
-    this.driver.hair = 'Black';
-    this.driver.eyes = 'Green';
-    this.driver.height = '3\'00"';
-    this.driver.weight = 90;
-    this.driver.race = 'N/A';
-    this.driver.address = '100 ST.';
-    this.driver.city = 'Seaside';
-    this.driver.state = 'CA';
-    this.driver.zip = 99999;
-    this.driver.license_no = 'D1234567';
-    this.driver.license_class = 'C';
-  }
-
-  //If driver license number exists ask to autofill form
-  findDriverByLicense(event: string) {
-    if(event.length == 8) {
-      this.addNewSubscription = this.driverService.getDriverByLicenseNo(event).subscribe(result => {
-        if (typeof result === 'object') {
-          this.openDialog(result);
-        }
-      });  
-    }
-  }
-
-  openDialog(driver: Driver) {
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.autoFocus = true;
-    dialogConfig.disableClose = true;
-    dialogConfig.width = '335px';
-    dialogConfig.height = 'auto';
-
-    const dialogRef = this.dialog
-      .open(DriverLicenseDialogComponent, dialogConfig)
-      .afterClosed()
-      .subscribe(result => {
-        if (result && !this.existingDriverFound) {
-          this.driver = driver;
-          this.existingDriverFound = true;
-        } else {
-          this.existingDriverFound = false;
-        }
-      });
-    this.addNewSubscription = dialogRef;
+        this.citationCreated = true;
+      }
+    });
+    
   }
 }

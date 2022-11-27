@@ -1,10 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-  ViewChild,
-  AfterViewInit,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Citation } from 'src/app/models/citation';
 import { Driver } from 'src/app/models/driver';
 import { CitationService } from 'src/app/services/citation.service';
@@ -13,11 +7,11 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EditCitationComponent } from '../edit-citation/edit-citation.component';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { catchError, finalize, of, tap } from 'rxjs';
-import { CitationsResponse } from 'src/app/DTO/citationsResponse';
 import { Unsubscriber } from 'src/app/services/unsubscriber';
 import { AuthService } from '@auth0/auth0-angular';
 import { Violation } from 'src/app/models/violation';
 import { CompleteCitation } from 'src/app/models/complete-citation';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-view-citations',
@@ -39,10 +33,7 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
   constructor(
     private citationService: CitationService, private dialog: MatDialog, private auth: AuthService) {
     super();
-    this.paginator = new MatPaginator(
-      new MatPaginatorIntl(),
-      ChangeDetectorRef.prototype
-    );
+    this.paginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
   }
 
   ngOnInit(): void {
@@ -80,6 +71,7 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
         if (response) {
           this.completeCitations = response.completeCitationList,
           this.citationCount = response.totalCitationsCount
+          console.log(this.completeCitations);
         }
       });
 
@@ -102,11 +94,14 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
     const dialogRef = this.dialog
       .open(EditCitationComponent, dialogConfig)
       .afterClosed()
-      .subscribe((isDeleted) => {
+      .subscribe((result) => {
+        console.log(result);
         // If citation was deleted after closing dialog then refresh list
-        if (isDeleted && this.citationCount) {
+        if (result == 'delete' && this.citationCount) {
           this.loadCitationsPage();
           this.citationCount--;
+        } else if (result == 'updatedDriver') {
+          this.loadCitationsPage();
         }
       });
     this.addNewSubscription = dialogRef;

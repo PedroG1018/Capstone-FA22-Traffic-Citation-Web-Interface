@@ -1,6 +1,5 @@
-import { formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Citation } from 'src/app/models/citation';
 import { CitationWithViolations } from 'src/app/models/citation-with-violations';
 import { Violation } from 'src/app/models/violation';
@@ -10,93 +9,37 @@ import { Violation } from 'src/app/models/violation';
   templateUrl: './citation-form.component.html',
   styleUrls: ['./citation-form.component.css']
 })
-export class CitationFormComponent implements OnInit {
-  @Input() citation?: Citation; // citation model
-  @Input() violations?: Violation[] // array of violation models
-  @Input() citationWithViolations?: CitationWithViolations; // model combining citation and violation(s) info
+export class CitationFormComponent {
+  // For use when editing citation in view citations
+  @Input() violations?: Violation[]
+  @Input() states: string[] = [];
   @Input() editingCitation: boolean = false;
+  @Input() form!: FormGroup;
 
-  // array of all US states used for state drop-down menu
-  states: string[] = [
-    'Alabama',
-    'Alaska',
-    'Arizona',
-    'Arkansas',
-    'California',
-    'Colorado',
-    'Connecticut',
-    'Delaware',
-    'Florida',
-    'Georgia',
-    'Hawaii',
-    'Idaho',
-    'Illinois',
-    'Indiana',
-    'Iowa',
-    'Kansas',
-    'Kentucky',
-    'Louisiana',
-    'Maine',
-    'Maryland',
-    'Massachusetts',
-    'Michigan',
-    'Minnesota',
-    'Mississippi',
-    'Missouri',
-    'Montana',
-    'Nebraska',
-    'Nevada',
-    'New Hampshire',
-    'New Jersey',
-    'New Mexico',
-    'New York',
-    'North Carolina',
-    'North Dakota',
-    'Ohio',
-    'Oklahoma',
-    'Oregon',
-    'Pennsylvania',
-    'Rhode Island',
-    'South Carolina',
-    'South Dakota',
-    'Tennessee',
-    'Texas',
-    'Utah',
-    'Vermont',
-    'Virginia',
-    'Washington',
-    'West Virginia',
-    'Wisconsin',
-    'Wyoming',
-  ];
-
-  currentDate = formatDate(new Date(), 'yyyy-MM-dd', 'en-US');
-
-  citationFormGroup = this._formBuilder.group({
-    type: ['', Validators.required],
-    date: [this.currentDate],
-    time: ['', Validators.required],
-    owner_fault: [true],
-    desc: [''],
-    violation_loc: ['', Validators.required],
-    vin: ['', Validators.required],
-    vin_state: [''],
-    violations: this._formBuilder.array([]),
-  });
-
-  constructor(private _formBuilder: FormBuilder) {
-   }
-
-  ngOnInit(): void {
+  constructor(private fb: FormBuilder) {
   }
 
+  get citationInfo() {
+    return this.form.get('citationInfo') as FormGroup;
+  }
+
+  // can maybe remove this...
+  submitForm() {
+    // Check validity of form controls and mark as touched (changed)
+    Object.keys(this.citationInfo.controls).forEach(control => {
+      this.citationInfo.controls[control].markAsTouched();
+      this.citationInfo.controls[control].updateValueAndValidity();
+    });
+  }
+
+  // form array violations getter
   violationsArray(): FormArray {
-    return this.citationFormGroup.get("violations") as FormArray;
+    return this.form.get("citationInfo.violations") as FormArray;
   }
 
-  // creates an empty violation
+  // creates an empty violation form group
   newViolation(): FormGroup {
-    return this._formBuilder.group({
+    return this.fb.group({
       group: '',
       code: '',
       degree: '',
@@ -104,13 +47,13 @@ export class CitationFormComponent implements OnInit {
     })
   }
 
-  // adds a new violation to the form and citationViolations array
+  // adds a new violation to the form and violations array
   addViolation() {
     this.violationsArray().push(this.newViolation());
     this.violations?.push(new Violation());
   }
 
-  // removes a violation from the form and from the citationViolations array
+  // removes a violation from the form and from the violations array
   removeViolation(i: number) {
     this.violationsArray().removeAt(i);
     this.violations?.splice(i, 1);

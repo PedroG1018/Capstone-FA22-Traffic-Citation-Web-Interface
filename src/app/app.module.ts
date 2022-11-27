@@ -26,6 +26,10 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTreeModule } from '@angular/material/tree';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
+
 
 
 //Auth0
@@ -53,6 +57,8 @@ import { InputErrorStateMatcher } from './error-state-matching';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ViewCitationSummaryComponent } from './components/citations/view-citation-summary/view-citation-summary.component';
 import { CitationFormComponent } from './components/citations/citation-form/citation-form.component';
+import { OfficerFormComponent } from './components/citations/officer-form/officer-form.component';
+import { CitationReviewComponent } from './components/citations/citation-review/citation-review.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +76,8 @@ import { CitationFormComponent } from './components/citations/citation-form/cita
     ProfileComponent,
     ViewCitationSummaryComponent,
     CitationFormComponent,
+    OfficerFormComponent,
+    CitationReviewComponent,
   ],
   imports: [
     AuthModule.forRoot({
@@ -107,7 +115,9 @@ import { CitationFormComponent } from './components/citations/citation-form/cita
     MatStepperModule,
     FlexLayoutModule,
     MatExpansionModule,
-    MatTreeModule
+    MatTreeModule,
+    MatToolbarModule,
+    MatSlideToggleModule
   ],
   providers: [
     { provide: MatDialogRef, useValue: {} }, CitationService,

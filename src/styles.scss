@@ -28,6 +28,18 @@ $traffic-citation-ui-theme: mat.define-light-theme((
   )
 ));
 
+$traffic-citation-ui-dark-theme: mat.define-dark-theme((
+  color: (
+    primary: $traffic-citation-ui-primary,
+    accent: $traffic-citation-ui-accent,
+    warn: $traffic-citation-ui-warn,
+  )
+));
+
+.darkMode {
+  @include mat.all-component-colors($traffic-citation-ui-dark-theme);
+}
+
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
@@ -39,6 +51,8 @@ $traffic-citation-ui-theme: mat.define-light-theme((
 html, body { height: 100%; }
 body,h1,h2,a { font-family: Roboto, "Helvetica Neue", sans-serif !important; }
 
-.mat-dialog-content {
-    padding: 15px !important;
+.mat-dialog-content::-webkit-scrollbar {
+  display: none; // Chrome
+  -ms-overflow-style: none;  // IE and Edge
+  scrollbar-width: none;  //Firefox
 }

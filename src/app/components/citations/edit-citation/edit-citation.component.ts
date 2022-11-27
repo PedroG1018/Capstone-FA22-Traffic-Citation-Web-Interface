@@ -15,7 +15,7 @@ import { DriverService } from 'src/app/services/driver.service';
   templateUrl: './edit-citation.component.html',
   styleUrls: ['./edit-citation.component.css']
 })
-export class EditCitationComponent extends Unsubscriber {
+export class EditCitationComponent extends Unsubscriber implements OnInit {
   @Input() citation: Citation;
   @Input() violations: Violation[];
   @Input() driver: Driver;
@@ -26,6 +26,7 @@ export class EditCitationComponent extends Unsubscriber {
 
   deletedCitation: boolean = false;
   updatedCitation: boolean = false;
+  updatedDriver: boolean = false;
 
   constructor(
     private citationService: CitationService,
@@ -38,6 +39,11 @@ export class EditCitationComponent extends Unsubscriber {
     this.citation = data.citation;
     this.violations = data.violations;
     this.driver = data.driver;
+  }
+  ngOnInit(): void {
+    this.addNewSubscription = this.driverUpdated.subscribe(() => {
+      this.updatedDriver = true;
+    });
   }
 
   updateCitation(citation: Citation, violations: Violation[], driver: Driver) {
@@ -72,17 +78,18 @@ export class EditCitationComponent extends Unsubscriber {
     });
 
     this.violationService.deleteViolations(ids)
+    this.closeDialog();
   }
 
   closeDialog() {
-    if(this.deletedCitation) {
-      // TODO: Delete Violations associated with citation too!
+    if (this.deletedCitation) {
       this._snackBar.open("Traffic Citation Deleted", '', { duration: 1500 });
-      this.dialogRef.close(this.deletedCitation);
+      this.dialogRef.close("delete");
     } else if (this.updatedCitation) {
       this._snackBar.open("Traffic Citation Updated", '', { duration: 1500 });
-      this.dialogRef.close();
-    } else {
+      this.dialogRef.close("updatedDriver");
+    }
+    else {
       this.dialogRef.close();
     }
 

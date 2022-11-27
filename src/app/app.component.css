@@ -1,34 +1,22 @@
+mat-toolbar {
+  background-color: #1A237E;
+  color: white;
+}
 
+a:hover {
+  background-color: #3949AB;
+}
 
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #1A237E;
-  }
-  
-  nav li {
-    display: inline-block;
-  }
-  
-  nav li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 15px 20px;
-    text-decoration: none;
-    font-family: sans-serif;
-  }
-  
-  nav li a:hover {
-    background-color: #3949AB;
-  }
-  img {
-    max-width:3.5%;
-    max-height:3.5%;
-    padding-top: 5px;
-    padding-bottom: 5px; 
-    padding-right: 5px;
-    padding-left: 5px;
+img {
+  max-width: 2.5%;
+  max-height: 2.5%;
+  margin-left: -10px;
+}
+
+.navLinks, a {
+  color: white;
+  padding: 15px 20px;
+  text-decoration: none;
+  font-family: sans-serif;
+  font-size: large;
 }
