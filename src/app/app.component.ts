@@ -1,5 +1,6 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, HostBinding, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { Component, HostBinding, Inject, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
@@ -14,7 +15,8 @@ export class AppComponent implements OnInit, OnDestroy {
   isDark: boolean = false;
   @HostBinding('class') className = '';
   
-  constructor(public auth: AuthService, private overlay: OverlayContainer, private renderer: Renderer2) {}
+  constructor(public auth: AuthService, private overlay: OverlayContainer, @Inject(DOCUMENT) private doc: Document) {}
+
 
   ngOnInit() : void {
     this.intervalSub = setInterval(() => {
@@ -50,5 +52,8 @@ export class AppComponent implements OnInit, OnDestroy {
       if (this.intervalSub) {
         clearInterval(this.intervalSub);
       }
+  }
+  logout(): void {
+    this.auth.logout({ returnTo: this.doc.location.origin });
   }
 }

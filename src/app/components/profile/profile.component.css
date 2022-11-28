@@ -1,0 +1,22 @@
+.card {
+    margin: 0 auto;
+    border-radius: 5px;
+    margin-top: 2%;
+}
+
+.card-img {
+    border-radius: 50%;
+    flex-shrink: 0;
+    object-fit: cover;
+    width: 40%;
+}
+
+.card-header {
+    background-color: #283593;
+    color: white;
+}
+
+.nav-link {
+    color: white;
+
+}

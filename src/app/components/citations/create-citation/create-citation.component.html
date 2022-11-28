@@ -1,7 +1,6 @@
 <form [formGroup]="citationForm">
     <mat-stepper #stepper linear>
         <mat-step formGroupName="driverInfo" [stepControl]="citationForm.get('driverInfo')!">
-            <!-- <button  mat-raised-button color="primary" (click)="autoFillForm()">Dev Button - Autofill Form</button> -->
             <ng-template matStepLabel>Fill out driver's information</ng-template>
             <div class="p-4">
                 <mat-card>
