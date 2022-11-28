@@ -1,28 +1,22 @@
 .card {
-    max-width: 400px;
     margin: 0 auto;
     border-radius: 5px;
     margin-top: 2%;
 }
 
-.header-title {
-    display: flex;
-    justify-content: center;
-    padding: 20px 0 0 0;
+.card-img {
+    border-radius: 50%;
+    flex-shrink: 0;
+    object-fit: cover;
+    width: 40%;
+}
+
+.card-header {
     background-color: #283593;
     color: white;
-    margin-bottom: 25px;
 }
 
-.header-image {
-    background-size: cover;
-    border-radius: 50%;
-    flex-shrink: 0;
-    object-fit: cover;
-}
+.nav-link {
+    color: white;
 
-img {
-    border-radius: 50%;
-    flex-shrink: 0;
-    object-fit: cover;
 }
