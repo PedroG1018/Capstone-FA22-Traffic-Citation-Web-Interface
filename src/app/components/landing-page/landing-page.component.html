@@ -2,13 +2,16 @@
 <div class="landing-page"></div>
   <div class="landing-page__content">
     <div class="landing-page__content__left">
-      <h1> Welcome to the </h1>
-      <h1>Monterey County Superior Court </h1>
-      <h1> Citation Database</h1>
-      <p> The Monterey County Superior Court is committed to providing the highest quality of service to the public. </p>
-      <div class="landing-page__content__">
-        <button class="btn btn-primary" (click)="redirectLogin()">Login / Register </button>
+      <h1 class="text-center"> Welcome to the </h1>
+      <h1 class="text-center">Monterey County Superior Court </h1>
+      <h1 class="text-center"> Citation Database</h1>
+      <h2 class="text-center"> The Monterey County Superior Court is committed to providing the highest quality of service to the public. </h2>
+
+      <h2 *ngIf="(auth.isAuthenticated$ | async) === false" class="text-center"> Please login to continue </h2>
+      <div class="text-center">
+        <button *ngIf="(auth.isAuthenticated$ | async) === false" id = "loginButton" class="btn btn-primary" (click)="redirectLogin()">Login / Register </button>
       </div>
+      <h3 *ngIf="(auth.isAuthenticated$ | async) === true" class ="text-center"> After Verifying Access please use the Navigation Bar located above to move around the application</h3>
     </div>
   </div>
 </body>
