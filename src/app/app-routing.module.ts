@@ -13,6 +13,7 @@ import { DriverFormComponent } from './components/driver/driver-form/driver-form
 import { EditDriverComponent } from './components/driver/edit-driver/edit-driver.component';
 import { DriverLicenseDialogComponent } from './components/driver/driver-license-dialog/driver-license-dialog.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 // Define all routes in Routes array
 const routes: Routes = [
@@ -25,8 +26,9 @@ const routes: Routes = [
   { path: 'driver-dialog', component: DriverLicenseDialogComponent, title: 'Check for driver' },
   { path: 'driver-form', component: DriverFormComponent, title: 'Driver Information' },
   { path: 'edit-driver', component: EditDriverComponent, title: 'Editing Driver'},
+  { path: 'welcome-page', component: LandingPageComponent, title: 'Welcome Page' },
   { path: 'login', component: LoginComponent, title: 'Login' },
-  { path: '', redirectTo: 'home', pathMatch: 'full' }, // TODO: Change to login page
+  { path: '', redirectTo: 'welcome-page', pathMatch: 'full' }, // TODO: Change to login page
   { path: '**', component: PageNotFoundComponent, title: 'Page Not Found' } // Wildcard route (404 page)
 
 ];

@@ -5,7 +5,7 @@
                 <a [routerLink]=""><img src="assets/court_logo.jpeg" alt="court_logo" /></a>
             </div>
 
-            <div fxFlex class="navLinks" fxLayoutAlign="center center">
+            <div fxFlex class="navLinks" fxLayoutAlign="center center" *ngIf="(auth.isAuthenticated$ | async)">
                 <a [routerLink]="'/home'">Home</a>
                 <a [routerLink]="'/create-citation'">Create Citation</a>
                 <a [routerLink]="'/view-citations'">View Citations</a>
@@ -22,11 +22,11 @@
     <!-- Bottom navigation for mobile -->
     <mat-toolbar fxShow="true" fxHide.gt-xs="true" class="bottomToolBar">
         <mat-toolbar-row fxFlex fxLayout>
-            <div fxFlex fxLayoutAlign="center center">
+            <div fxFlex fxLayoutAlign="center center" *ngIf="(auth.isAuthenticated$ | async)">
                 <a [routerLink]="'/home'"><mat-icon>home_rounded</mat-icon></a>
                 <a [routerLink]="'/create-citation'"><mat-icon>note_add_rounded</mat-icon></a>
                 <a [routerLink]="'/view-citations'"><mat-icon>wysiwyg_rounded</mat-icon></a>
-                <a *ngIf="(auth.isAuthenticated$ | async)" [routerLink]="'/profile'"><mat-icon>account_circle_rounded</mat-icon></a>
+                <a [routerLink]="'/profile'"><mat-icon>account_circle_rounded</mat-icon></a>
             </div>
             <div fxFlex fxLayoutAlign="flex-end center">
                 <mat-icon>brightness_6</mat-icon>

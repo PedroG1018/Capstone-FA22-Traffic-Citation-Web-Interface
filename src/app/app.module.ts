@@ -32,9 +32,6 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatGridListModule } from '@angular/material/grid-list';
 
-
-
-
 //Auth0
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment as env } from '../environments/environment';
@@ -51,6 +48,8 @@ import { ViewCitationsComponent } from './components/citations/view-citations/vi
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
+
 
 // Misc
 import { CitationService } from './services/citation.service';
@@ -79,6 +78,7 @@ import { CitationReviewComponent } from './components/citations/citation-review/
     CitationFormComponent,
     OfficerFormComponent,
     CitationReviewComponent,
+    LandingPageComponent
   ],
   imports: [
     AuthModule.forRoot({
