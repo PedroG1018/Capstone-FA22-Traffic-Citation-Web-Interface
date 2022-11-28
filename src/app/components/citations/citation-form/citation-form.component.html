@@ -1,6 +1,6 @@
-<div [formGroup]="form" fxLayout="column">
-    <div fxLayoutGap="10px" formGroupName="citationInfo">
-        <div>
+<div [formGroup]="form">
+    <div formGroupName="citationInfo">
+        <div fxLayoutAlign="center" fxLayout.xs="column wrap">
             <mat-radio-group formControlName="type" fxLayout.xs="column wrap" fxLayoutGap.xs="15px" fxLayoutGap="16px">
                 <mat-radio-button value="Misdemeanor">Misdemeanor</mat-radio-button>
                 <mat-radio-button value="Traffic">Traffic</mat-radio-button>
@@ -11,64 +11,68 @@
                     <strong>Required</strong>
                 </mat-error>
             </span>
-            <br><br>
+        </div><br>
+        <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="center">
+            <mat-form-field appearance="fill">
+                <mat-label>Date</mat-label>
+                <input matInput required formControlName="date" type="date" />
+            </mat-form-field>
+    
+            <mat-form-field appearance="fill">
+                <mat-label>Time</mat-label>
+                <input matInput formControlName="time" type="time"/>
+                <!-- <input matInput required formControlName="time"
+                    (ngModelChange)="citation.time = $event" type="time"/> -->
+            </mat-form-field>
+    
+            <mat-form-field appearance="fill">
+                <mat-label for="violation_loc">Location</mat-label>
+                <input matInput required formControlName="violation_loc" type="text" name="violation_loc"
+                    placeholder="Location" />
+                <mat-error *ngIf="citationInfo.controls['violation_loc'].hasError('required')">
+                    <strong>Required</strong>
+                </mat-error>
+            </mat-form-field>
+    
+            <mat-form-field appearance="fill">
+                <mat-label>State</mat-label>
+                <mat-select formControlName="vin_state" name="vin_state">
+                    <mat-option *ngFor="let state of states" [value]="state"> {{ state }} </mat-option>
+                </mat-select>
+                <mat-error *ngIf="citationInfo.controls['vin_state'].hasError('required')">
+                    <strong>Required</strong>
+                </mat-error>
+            </mat-form-field>
+            <!-- <br> -->
+    
+            <mat-form-field appearance="fill">
+                <mat-label for="vin">Vehicle License Number or VIN</mat-label>
+                <input matInput required formControlName="vin" type="text" name="vin" placeholder="Veh. Lic. No. or VIN" />
+                <mat-error *ngIf="citationInfo.controls['vin'].hasError('required')">
+                    <strong>Required</strong>
+                </mat-error>
+            </mat-form-field>
+    
+            <br>
         </div>
 
-        <mat-form-field appearance="fill">
-            <mat-label>Date</mat-label>
-            <input matInput required formControlName="date" type="date" />
-        </mat-form-field>
+        <div fxLayout fxLayoutAlign="center">
+            <mat-form-field appearance="fill" fxLayout fxLayoutAlign="center center">
+                <mat-label for="desc">Description</mat-label>
+                <textarea matInput required formControlName="desc" type="text" name="desc" placeholder="Description"
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5"
+                
+                ></textarea>
+                <mat-error *ngIf="citationInfo.controls['desc'].hasError('required')">
+                    <strong>Required</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
 
-        <mat-form-field appearance="fill">
-            <mat-label>Time</mat-label>
-            <input matInput formControlName="time" type="time"/>
-            <!-- <input matInput required formControlName="time"
-                (ngModelChange)="citation.time = $event" type="time"/> -->
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-            <mat-label for="violation_loc">Location</mat-label>
-            <input matInput required formControlName="violation_loc" type="text" name="violation_loc"
-                placeholder="Location" />
-            <mat-error *ngIf="citationInfo.controls['violation_loc'].hasError('required')">
-                <strong>Required</strong>
-            </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-            <mat-label>State</mat-label>
-            <mat-select formControlName="vin_state" name="vin_state">
-                <mat-option *ngFor="let state of states" [value]="state"> {{ state }} </mat-option>
-            </mat-select>
-            <mat-error *ngIf="citationInfo.controls['vin_state'].hasError('required')">
-                <strong>Required</strong>
-            </mat-error>
-        </mat-form-field>
-        <!-- <br> -->
-
-        <mat-form-field appearance="fill">
-            <mat-label for="vin">Vehicle License Number or VIN</mat-label>
-            <input matInput required formControlName="vin" type="text" name="vin" placeholder="Veh. Lic. No. or VIN" />
-            <mat-error *ngIf="citationInfo.controls['vin'].hasError('required')">
-                <strong>Required</strong>
-            </mat-error>
-        </mat-form-field>
-
-        <br>
-
-        <mat-form-field appearance="fill">
-            <mat-label for="desc">Description</mat-label>
-            <textarea matInput required formControlName="desc" type="text" name="desc" placeholder="Description"
-            cdkTextareaAutosize
-            #autosize="cdkTextareaAutosize"
-            cdkAutosizeMinRows="1"
-            cdkAutosizeMaxRows="5"
-            
-            ></textarea>
-            <mat-error *ngIf="citationInfo.controls['desc'].hasError('required')">
-                <strong>Required</strong>
-            </mat-error>
-        </mat-form-field>
+        
 
         <div *ngIf="editingCitation && violations">
             <mat-accordion *ngIf="violations.length > 0">
@@ -84,7 +88,7 @@
                 </mat-accordion>
         </div>
 
-        <form [formGroup]="form">
+        <form [formGroup]="form" fxLayout fxLayoutAlign="center center" fxLayoutGap="15px">
             <div formGroupName="citationInfo">
                 <ng-container formArrayName="violations" *ngFor="let quantity of violationsArray().controls; let i = index">
                     <br><span class="text-center">Violation {{ i+1 }}</span><br>
@@ -131,7 +135,7 @@
             </div>
         </form>
 
-        <div>
+        <div fxLayoutAlign="center" fxLayoutGap="15px">
             <label>Owner's Fault?</label><br>
             <mat-radio-group formControlName="owner_fault" fxLayoutGap.xs="15px" fxLayoutGap="16px">
                 <mat-radio-button [value]="true">Yes</mat-radio-button>

@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio'
-import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ErrorStateMatcher, MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
@@ -28,6 +28,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 
 
@@ -55,7 +58,6 @@ import { FormatTimeSpan } from './components/citations/view-citations/formatTime
 import { DriverLicenseDialogComponent } from './components/driver/driver-license-dialog/driver-license-dialog.component';
 import { InputErrorStateMatcher } from './error-state-matching';
 import { ProfileComponent } from './components/profile/profile.component';
-import { ViewCitationSummaryComponent } from './components/citations/view-citation-summary/view-citation-summary.component';
 import { CitationFormComponent } from './components/citations/citation-form/citation-form.component';
 import { OfficerFormComponent } from './components/citations/officer-form/officer-form.component';
 import { CitationReviewComponent } from './components/citations/citation-review/citation-review.component';
@@ -74,7 +76,6 @@ import { CitationReviewComponent } from './components/citations/citation-review/
     FormatTimeSpan,
     DriverLicenseDialogComponent,
     ProfileComponent,
-    ViewCitationSummaryComponent,
     CitationFormComponent,
     OfficerFormComponent,
     CitationReviewComponent,
@@ -117,7 +118,10 @@ import { CitationReviewComponent } from './components/citations/citation-review/
     MatExpansionModule,
     MatTreeModule,
     MatToolbarModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatDividerModule,
+    MatSidenavModule,
+    MatGridListModule
   ],
   providers: [
     { provide: MatDialogRef, useValue: {} }, CitationService,

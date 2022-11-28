@@ -11,7 +11,6 @@ import { Unsubscriber } from 'src/app/services/unsubscriber';
 import { AuthService } from '@auth0/auth0-angular';
 import { Violation } from 'src/app/models/violation';
 import { CompleteCitation } from 'src/app/models/complete-citation';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-view-citations',
@@ -20,10 +19,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ViewCitationsComponent extends Unsubscriber implements AfterViewInit, OnInit {
   citationToEdit?: Citation;
-  citationCount?: number;
+  citationCount: number = 0;
   userId?: string | undefined;
   userRole?: string | undefined;
   completeCitations: CompleteCitation[] = [];
+  citationsFound: boolean = true;
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
@@ -37,14 +37,13 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
   }
 
   ngOnInit(): void {
-    // this.addNewSubscription = this.auth.user$.subscribe(user => {
-    //   if (user) {
-    //     this.userRole = user['dev-3k36-3cg.us.auth0.com/roles'][0];
-    //     this.userId = user.sub;
-    //     this.loadCitations(1, 5);
-    //   }
-    // });
-    this.loadCitations(1, 8);
+    this.addNewSubscription = this.auth.user$.subscribe(user => {
+      if (user) {
+        this.userRole = user['dev-3k36-3cg.us.auth0.com/roles'][0];
+        this.userId = user.sub;
+        this.loadCitations(1, 8);
+      }
+    });
   }
 
   ngAfterViewInit() {
@@ -61,8 +60,9 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
   loadCitations(pageNumber: number, pageSize: number) {
     this.loadingSubject.next(true);
 
-    this.addNewSubscription = this.citationService
-      .getCitationsPaginatorTEST(pageNumber, pageSize)
+    if(this.userId && this.userRole) {
+      this.addNewSubscription = this.citationService
+      .getCitationsPaginator(pageNumber, pageSize, this.userId, this.userRole)
       .pipe(
         catchError(() => of([])),
         finalize(() => this.loadingSubject.next(false))
@@ -72,12 +72,16 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
           this.completeCitations = response.completeCitationList,
           this.citationCount = response.totalCitationsCount
           console.log(this.completeCitations);
+          this.citationsFound = true;
+        } else {
+          this.citationsFound = false;
         }
       });
+    }
 
-    // if(this.userId && this.userRole) {
-    //
-    // }
+    if (!this.userRole) {
+      this.loadingSubject.next(false)
+    }
   }
   
   openDialog(citation: Citation, violations: Violation[], driver: Driver) {
@@ -98,6 +102,7 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
         console.log(result);
         // If citation was deleted after closing dialog then refresh list
         if (result == 'delete' && this.citationCount) {
+          // TODO: Hide element
           this.loadCitationsPage();
           this.citationCount--;
         } else if (result == 'updatedDriver') {

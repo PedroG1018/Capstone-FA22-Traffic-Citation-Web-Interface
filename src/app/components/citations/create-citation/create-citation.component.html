@@ -75,10 +75,9 @@
                     <mat-card-actions class="mb-2 mt-3">
                         <button mat-raised-button color="primary" matStepperPrevious [hidden]="citationCreated">Back</button>
                         <button mat-raised-button color="primary" (click)="onFormSubmit()"
-                            *ngIf="!citation?.citation_id && !citationCreated" type="submit">Submit</button>
+                            *ngIf="citationCreated == false" type="submit">Submit</button>
     
-                        <button *ngIf="citationCreated" routerLink="/create-citation" routerLinkActive="active"
-                            mat-raised-button color="primary">Create Another</button>
+                        <button mat-raised-button color="primary" *ngIf="citationCreated" (click)="resetForm(); stepper.reset()">Create Another</button>
                     </mat-card-actions>
                 </mat-card>
             </div>

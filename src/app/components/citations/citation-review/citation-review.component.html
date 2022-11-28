@@ -5,33 +5,33 @@
 
 <div *ngIf="!formSubmitted" fxLayout="row wrap" fxLayout.xs="column" class="table" fxLayoutGap="20px">
     <div fxLayout="column" class="row" fxLayout.xs="row">
-        <div class="cell">Type</div>
-        <div fxFlex class="cell"> {{ citationInfo.controls['type'].value }} </div>
+        <div >Type</div>
+        <div fxFlex > {{ citationInfo.controls['type'].value }} </div>
     </div>
     <div fxLayout="column" class="row" fxLayout.xs="row">
-        <div class="cell">Date</div>
-        <div fxFlex class="cell"> {{ citationInfo.controls['date'].value }} </div>
+        <div >Date</div>
+        <div fxFlex > {{ citationInfo.controls['date'].value }} </div>
     </div>
     <div fxLayout="column" class="row" fxLayout.xs="row">
-        <div class="cell">Time</div>
-        <div fxFlex class="cell"> {{ citationInfo.controls['time'].value }} </div>
+        <div >Time</div>
+        <div fxFlex > {{ citationInfo.controls['time'].value }} </div>
     </div>
     <div fxLayout="column" class="row" fxLayout.xs="row">
-        <div class="cell">Location</div>
-        <div fxFlex class="cell">{{ citationInfo.controls['violation_loc'].value}}, {{ citationInfo.controls['vin_state'].value }}   
+        <div >Location</div>
+        <div fxFlex >{{ citationInfo.controls['violation_loc'].value}}, {{ citationInfo.controls['vin_state'].value }}   
         </div>
     </div>
     <div fxLayout="column" class="row" fxLayout.xs="row">
-        <div class="cell">VIN</div>
-        <div fxFlex class="cell"> {{ citationInfo.controls['vin'].value }} </div>
+        <div >VIN</div>
+        <div fxFlex > {{ citationInfo.controls['vin'].value }} </div>
     </div>
     <div fxLayout="column" class="row" fxLayout.xs="row">
-        <div class="cell">Description</div>
-        <div fxFlex class="cell"> {{ citationInfo.controls['desc'].value }} </div>
+        <div >Description</div>
+        <div fxFlex > {{ citationInfo.controls['desc'].value }} </div>
     </div>
     <div fxLayout="column" class="row" fxLayout.xs="row">
-        <div class="cell">Owner's Fault</div>
-        <div fxFlex class="cell"> {{ citationInfo.controls['owner_fault'].value ? 'Yes' : 'No' }} </div>
+        <div>Owner's Fault</div>
+        <div fxFlex> {{ citationInfo.controls['owner_fault'].value ? 'Yes' : 'No' }} </div>
     </div>
     <!-- <div fxLayout="column" class="row" fxLayout.xs="row" *ngFor="let violation of violations">
         <div class="cell">Sign Date</div>

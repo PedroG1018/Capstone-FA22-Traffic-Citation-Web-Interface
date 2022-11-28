@@ -1,27 +1,27 @@
-.mat-radio-button ~ .mat-radio-button {
+/* .mat-radio-button ~ .mat-radio-button {
     margin-left: 16px;
-}
+} */
 
-mat-form-field {
+/* mat-form-field {
     margin-right: 12px;
-}
+} */
 
-.mat-raised-button {
+/* .mat-raised-button {
     margin-right: 10px;
-}
+} */
 
 /* .mat-dialog-content {
     min-width: fit-content;
     min-height: fit-content;
 } */
 
-.mat-warn {
+/* .mat-warn {
     margin-right: 60%;
-}
+} */
 
-.fault-radio-buttons {
+/* .fault-radio-buttons {
     justify-content: right;
-}
+} */
 
 /* .icon-delete {
     display: flex;
@@ -34,7 +34,16 @@ mat-form-field {
     justify-content: center !important;
 } */
 
-.dialog-container {
+/* .dialog-container {
     min-height: 500px !important;
     min-width: 1000px !important;
+} */
+
+mat-dialog-actions {
+    margin-top: 25px;
+    margin-bottom: 1px;
+}
+
+mat-icon {
+    margin-right: 10px;
 }

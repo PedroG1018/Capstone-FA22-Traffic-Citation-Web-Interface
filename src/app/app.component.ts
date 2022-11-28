@@ -1,6 +1,5 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, HostBinding, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
@@ -10,28 +9,41 @@ import { AuthService } from '@auth0/auth0-angular';
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'TrafficCitation.UI';
-
   intervalSub;
 
-  toggleDarkMode = new FormControl(false);
+  isDark: boolean = false;
   @HostBinding('class') className = '';
   
-  constructor(public auth: AuthService, private overlay: OverlayContainer) {}
+  constructor(public auth: AuthService, private overlay: OverlayContainer, private renderer: Renderer2) {}
 
   ngOnInit() : void {
     this.intervalSub = setInterval(() => {
       console.log('Hello from ngOnInit');
     }, 1000);
 
-    this.toggleDarkMode.valueChanges.subscribe((darkMode) => {
-      const darkClassName = 'darkMode';
-      this.className = darkMode? darkClassName : '';
-      if (darkMode) {
-        this.overlay.getContainerElement().classList.add(darkClassName);
-      } else {
-        this.overlay.getContainerElement().classList.remove(darkClassName);
-      }
-    });
+    if (localStorage.getItem('darkMode') == 'true') {
+      this.className = 'darkMode';
+      this.overlay.getContainerElement().classList.add(this.className);
+      this.isDark = true;
+      
+    } else {
+      this.className = '';
+      this.overlay.getContainerElement().classList.remove('darkMode');
+      this.isDark = false;
+    }
+  }
+
+  toggleDarkMode() {
+    const darkClassName = 'darkMode';
+    this.className = this.isDark ? darkClassName : '';
+    
+    if (this.isDark) {
+      this.overlay.getContainerElement().classList.add(darkClassName);
+      localStorage.setItem('darkMode', 'true');
+    } else {
+      this.overlay.getContainerElement().classList.remove(darkClassName);
+      localStorage.setItem('darkMode', 'false');
+    }
   }
 
   ngOnDestroy(): void {

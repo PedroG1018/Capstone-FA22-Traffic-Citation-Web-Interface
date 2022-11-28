@@ -23,10 +23,6 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
   violations: Violation[] = [] // array of violation models
   citationWithViolations = new CitationWithViolations() // model combining citation and violation(s) info
   driverFound: boolean = false;
-  
-
-  // @Output() citationsCreated = new EventEmitter<Citation[]>();
-  // @Output() citationsWithViolationsCreated = new EventEmitter<CitationWithViolations[]>();
 
   citationForm!: FormGroup;
   citationCreated: boolean;
@@ -93,7 +89,6 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
   constructor(private citationService: CitationService, private driverService: DriverService, private snackBar: MatSnackBar, private fb: FormBuilder, private auth: AuthService) {
     super();
     this.citationCreated = false;
-    // sessionStorage.clear();
   }
 
   ngOnInit(): void {
@@ -104,6 +99,10 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
       }
     });
 
+    this.initForm();
+  }
+
+  initForm() {
     // Citation form to be used
     this.citationForm = this.fb.group({
       'driverInfo': this.fb.group({
@@ -139,6 +138,7 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
         sign_date: [this.currentDate]
       })
     });
+
   }
 
   onFormSubmit(): void {
@@ -163,7 +163,6 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
           if (result) {
             this.driver = result;
             console.log(this.driver);
-            // sessionStorage.setItem('driver', JSON.stringify(result));
             this.saveCitationWithViolations();
           }
         });
@@ -175,12 +174,10 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
           if (result) {
             this.driver = result;
             console.log(this.driver);
-            // sessionStorage.setItem('driver', JSON.stringify(result));
             this.saveCitationWithViolations();
           }
         });
     }
-    
   }
 
   saveCitationWithViolations() {
@@ -194,12 +191,15 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
 
       if (result) {
         this.citation = result;
-        // sessionStorage.setItem('citation', JSON.stringify(result));
-        // sessionStorage.setItem('violations', JSON.stringify(this.violations));
-
         this.citationCreated = true;
       }
-    });
-    
+    }); 
+  }
+
+  resetForm() {
+    this.initForm();
+    this.citationCreated = false; 
+    this.driverFound = false;
+    this.citation = new Citation();
   }
 }
