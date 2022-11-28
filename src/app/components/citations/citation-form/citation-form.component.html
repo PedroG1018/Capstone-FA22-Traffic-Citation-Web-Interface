@@ -21,8 +21,6 @@
             <mat-form-field appearance="fill">
                 <mat-label>Time</mat-label>
                 <input matInput formControlName="time" type="time"/>
-                <!-- <input matInput required formControlName="time"
-                    (ngModelChange)="citation.time = $event" type="time"/> -->
             </mat-form-field>
     
             <mat-form-field appearance="fill">
@@ -43,7 +41,6 @@
                     <strong>Required</strong>
                 </mat-error>
             </mat-form-field>
-            <!-- <br> -->
     
             <mat-form-field appearance="fill">
                 <mat-label for="vin">Vehicle License Number or VIN</mat-label>
@@ -72,8 +69,6 @@
             </mat-form-field>
         </div>
 
-        
-
         <div *ngIf="editingCitation && violations">
             <mat-accordion *ngIf="violations.length > 0">
                 <mat-expansion-panel>
@@ -85,7 +80,7 @@
                     
                     </p>
                 </mat-expansion-panel>
-                </mat-accordion>
+            </mat-accordion>
         </div>
 
         <form [formGroup]="form" fxLayout fxLayoutAlign="center center" fxLayoutGap="15px">
