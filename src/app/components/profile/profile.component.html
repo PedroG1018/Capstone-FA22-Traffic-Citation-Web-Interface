@@ -1,4 +1,17 @@
-<ul *ngIf="auth.user$ | async as user">
-    <li> {{ user.name }} </li>
-    <li> {{ user.email }} </li>
-</ul>
+<div *ngIf="auth.user$ | async as user" class="card text-center" style="max-width: 540px">
+    <div class="card-header">
+        <ul class="nav nav-pills card-header-pills">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/view-citations">My Citations</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <figure>
+            <img src="{{ user.picture }}" class="card-img" alt="User Profile Picture">
+        </figure>
+        <h1 class="card-title">{{ user.name }} ({{ user['dev-3k36-3cg.us.auth0.com/roles'] }})</h1>
+        <p class="card-text"><small class="text-muted">Badge #{{ user['https://example.com/badge_number'] }}</small></p>
+        <p class="card-text"><small class="text-muted">Email: {{ user.email }}</small></p>
+    </div>
+</div>

@@ -38,7 +38,7 @@
                             <input matInput (ngModelChange)="findDriverByLicense($event)"
                                 [(ngModel)]="driver.license_no" #input formControlName="license_no"
                                 placeholder="Enter License Number" autocomplete="off"
-                                oninput="this.value = this.value.toUpperCase()" maxlength="8" />
+                                oninput="this.value = this.value.toUpperCase()" maxlength="8" />       
                             <mat-hint align="end"> {{ input.value.length || 0 }}/8 </mat-hint>
                             <mat-error *ngIf="driverFormGroup.controls.license_no.hasError('required')">
                                 <strong>Required</strong></mat-error>
@@ -88,7 +88,7 @@
                         </mat-form-field>
 
                         <mat-form-field>
-                            <mat-label>Height</mat-label>
+                            <mat-label>Height (ft)</mat-label>
                             <span matSuffix>ft</span>
                             <input matInput [(ngModel)]="driver.height" formControlName="height"
                                 placeholder="Enter height" autocomplete="off" />
@@ -97,7 +97,7 @@
                         </mat-form-field>
 
                         <mat-form-field>
-                            <mat-label>Weight</mat-label>
+                            <mat-label>Weight (lb)</mat-label>
                             <span matSuffix>lb</span>
                             <input matInput [(ngModel)]="driver.weight" formControlName="weight"
                                 placeholder="Enter weight" maxlength="3" autocomplete="off" />
@@ -135,8 +135,7 @@
                         <mat-form-field>
                             <mat-label>State</mat-label>
                             <mat-select [(ngModel)]="driver.state" placeholder="Select" formControlName="state">
-                                <mat-option value="CA">CA</mat-option>
-                            </mat-select>
+                                <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>                            </mat-select>
                             <mat-error *ngIf="driverFormGroup.controls.state.hasError('required')">
                                 <strong>Required</strong></mat-error>
                         </mat-form-field>

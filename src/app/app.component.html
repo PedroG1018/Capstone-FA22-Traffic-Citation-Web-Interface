@@ -18,6 +18,9 @@
             <a routerLink="/profile" routerLinkActive="active">Profile</a>
         </li>
 
+        <li *ngIf="(auth.isAuthenticated$ | async)">
+            <a routerLinkActive="active" (click)="logout()">Logout</a>
+        </li>
 
     </ul>
 </nav>

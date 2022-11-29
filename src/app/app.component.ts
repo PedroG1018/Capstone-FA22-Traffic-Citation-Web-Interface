@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
@@ -11,7 +12,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   intervalSub;
   
-  constructor(public auth: AuthService) {}
+  constructor(public auth: AuthService, @Inject(DOCUMENT) private doc: Document) {}
 
   ngOnInit() : void {
     this.intervalSub = setInterval(() => {
@@ -23,5 +24,9 @@ export class AppComponent implements OnInit, OnDestroy {
       if (this.intervalSub) {
         clearInterval(this.intervalSub);
       }
+  }
+
+  logout(): void {
+    this.auth.logout({ returnTo: this.doc.location.origin });
   }
 }
