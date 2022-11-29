@@ -36,5 +36,4 @@ export class ViolationService {
     public deleteViolations(ids: number[]) : Observable<number[] | undefined> {
         return this.http.delete<number[]>(`${environment.apiUrl}/${this.url}/violations`).pipe(catchError(this.errorService.handleError));
     }
-    
 }
