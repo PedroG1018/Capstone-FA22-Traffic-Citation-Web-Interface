@@ -13,6 +13,6 @@ export const environment = {
     clientId,
     audience,
     apiUri,
-    redirectUri: window.location.origin
+    redirectUri: window.location.origin,
   },
 };
