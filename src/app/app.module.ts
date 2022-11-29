@@ -23,6 +23,14 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatCardModule } from '@angular/material/card'
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatStepperModule } from '@angular/material/stepper';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 //Auth0
 import { AuthModule } from '@auth0/auth0-angular';
@@ -49,7 +57,9 @@ import { FormatTimeSpan } from './components/citations/view-citations/formatTime
 import { DriverLicenseDialogComponent } from './components/driver/driver-license-dialog/driver-license-dialog.component';
 import { InputErrorStateMatcher } from './error-state-matching';
 import { ProfileComponent } from './components/profile/profile.component';
-import { ViewCitationSummaryComponent } from './components/citations/view-citation-summary/view-citation-summary.component';
+import { CitationFormComponent } from './components/citations/citation-form/citation-form.component';
+import { OfficerFormComponent } from './components/citations/officer-form/officer-form.component';
+import { CitationReviewComponent } from './components/citations/citation-review/citation-review.component';
 
 @NgModule({
   declarations: [
@@ -65,8 +75,10 @@ import { ViewCitationSummaryComponent } from './components/citations/view-citati
     FormatTimeSpan,
     DriverLicenseDialogComponent,
     ProfileComponent,
-    ViewCitationSummaryComponent,
-    LandingPageComponent,
+    CitationFormComponent,
+    OfficerFormComponent,
+    CitationReviewComponent,
+    LandingPageComponent
   ],
   imports: [
     AuthModule.forRoot({
@@ -101,7 +113,15 @@ import { ViewCitationSummaryComponent } from './components/citations/view-citati
     MatIconModule,
     MatCardModule,
     MatTabsModule,
-    MatStepperModule
+    MatStepperModule,
+    FlexLayoutModule,
+    MatExpansionModule,
+    MatTreeModule,
+    MatToolbarModule,
+    MatSlideToggleModule,
+    MatDividerModule,
+    MatSidenavModule,
+    MatGridListModule
   ],
   providers: [
     { provide: MatDialogRef, useValue: {} }, CitationService,

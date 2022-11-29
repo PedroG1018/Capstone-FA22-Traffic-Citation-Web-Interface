@@ -1,0 +1,9 @@
+tr {
+    display: flex;
+    justify-content: center;
+}
+
+.table-container {
+    display: flex; 
+    justify-content: center;
+}

@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
+import { catchError } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
 import { Citation } from '../models/citation';
@@ -22,6 +22,10 @@ export class CitationService {
 
   public getCitationById(citation_id: number) : Observable<Citation | undefined> {
     return this.http.get<Citation>(`${environment.apiUrl}/${this.url}/${citation_id}`).pipe(catchError(this.errorService.handleError));
+  }
+
+  public getCitationsPaginatorTEST(pageNumber: number, pageSize: number) : Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/${this.url}/${pageNumber}/${pageSize}`).pipe(catchError(this.errorService.handleError));
   }
 
   public getCitationsPaginator(pageNumber: number, pageSize: number, userId: string, userRole: string) : Observable<any> {

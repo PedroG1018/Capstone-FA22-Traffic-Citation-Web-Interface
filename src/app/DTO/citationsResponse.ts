@@ -1,5 +1,4 @@
-import { Citation } from "../models/citation";
-import { Driver } from "../models/driver";
+import { CompleteCitation } from "../models/complete-citation";
 
 /**
  * Retrieves Response of GET METHOD for api/Citation/{pageNumber}/{pageSize}
@@ -7,8 +6,7 @@ import { Driver } from "../models/driver";
  */
 
 export class CitationsResponse {
-    citations: Citation[] = [];
-    drivers: Driver[] = [];
+    completeCitation: CompleteCitation[] = [];
     totalCitationsCount?: number;
     totalPages?: number;
     currentPage: number = 1;

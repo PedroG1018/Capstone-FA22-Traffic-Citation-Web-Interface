@@ -1,77 +1,39 @@
-<h2 mat-dialog-title *ngIf="citation"> Editing Citation </h2>
-<div mat-dialog-content *ngIf="citation">
-    <mat-form-field>
-        <mat-label>Type</mat-label>
-        <input matInput placeholder="Type" [(ngModel)]="citation.type" />
-    </mat-form-field>
+<h2 mat-dialog-title> Editing Citation </h2>
+<mat-dialog-content>
+    <div fxLayout="column wrap" fxLayoutGap="16px grid">
+        <div fxFlex="25" fxFlex.xs="100%" fxFlex.sm="50%">
+            <!-- <mat-icon class="example-tab-icon">description</mat-icon> -->
+            <h1><mat-icon>description</mat-icon>Citation Information</h1>
+            <div>
+                <app-citation-form [form]="citationForm" [editingCitation]="true" [states]="states"></app-citation-form>
+            </div>
+            <mat-divider></mat-divider><br>
+            <h1><mat-icon>person</mat-icon>Driver Information</h1>
+            <div>
+                <app-driver-form [form]="citationForm" [editingCitation]="true" [states]="states"></app-driver-form>
+            </div>
+            <mat-divider></mat-divider><br>
+            <h1><mat-icon>local_police</mat-icon>Officer Information</h1>
+            <div>
+                <app-officer-form [form]="citationForm" [editingCitation]="true"></app-officer-form>
+            </div>
+        </div>
+    </div>
 
-    <mat-form-field>
-        <mat-label>Date</mat-label>
-        <input matInput placeholder="Date" [(ngModel)]="citation.date" type="date" />
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>Time</mat-label>
-        <!-- One way binding (only html value is changed) for formatting timespan with pipe then on model change, update citation.time (changes actual value). Similar to 2 way binding but you can use pipe in between changes to a value -->
-        <input matInput [ngModel]="(citation.time | formatTimespan)" (ngModelChange)="citation.time = $event"
-            type="time" />
-    </mat-form-field><br>
-
-
-    <mat-form-field>
-        <mat-label>VIN</mat-label>
-        <input matInput placeholder="VIN" [(ngModel)]="citation.vin" />
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>State</mat-label>
-        <input matInput placeholder="State" [(ngModel)]="citation.vin_state" />
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>Code</mat-label>
-        <input matInput placeholder="Code" [(ngModel)]="citation.code_section" />
-    </mat-form-field><br>
-
-    <mat-form-field>
-        <mat-label>Officer Name</mat-label>
-        <input matInput placeholder="Name" [(ngModel)]="citation.officer_name" />
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>Badge #</mat-label>
-        <input matInput placeholder="Badge Number" [(ngModel)]="citation.officer_badge" />
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>Sign Date</mat-label>
-        <input matInput placeholder="Sign Date" [(ngModel)]="citation.sign_date" type="date" />
-    </mat-form-field><br>
-
-    <mat-form-field>
-        <mat-label>Location</mat-label>
-        <input matInput placeholder="Location" [(ngModel)]="citation.violation_loc" />
-    </mat-form-field>
-
-    <mat-label style="margin-right: 12px;">Owner Fault</mat-label>
-    <mat-radio-group [(ngModel)]="citation.owner_fault">
-        <mat-radio-button [value]="true">Yes</mat-radio-button>
-        <mat-radio-button [value]="false">No</mat-radio-button>
-    </mat-radio-group><br>
-
-    <mat-form-field appearance="fill">
-        <mat-label>Description</mat-label>
-        <textarea matInput cols="50" placeholder="Description" [(ngModel)]="citation.desc"></textarea><br>
-    </mat-form-field>
-
-</div>
-
-<div mat-dialog-actions *ngIf="citation">
-    <button mat-fab color="warn" aria-label="Delete icon button" (click)="deleteCitation(citation)"
-        *ngIf="citation.citation_id">
-        <mat-icon class="icon-delete">delete</mat-icon>
-    </button>
-    <button mat-raised-button color="basic" (click)="closeDialog()">Close</button>
-    <button mat-raised-button color="primary" (click)="updateCitation(citation)"
-        *ngIf="citation.citation_id">Save</button>
-</div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div fxFlex>
+        <div fxFlex>
+            <button mat-raised-button color="warn" (click)="deleteCitation(citation)">Delete</button>
+            <!-- <button mat-fab color="warn" aria-label="Delete icon button" (click)="deleteCitation(citation)"
+            *ngIf="citation.citation_id">
+            <mat-icon class="icon-delete">delete</mat-icon>
+            </button> -->
+         </div>
+         <div fxFlex fxLayoutAlign="flex-end center" fxLayoutGap="10px">
+            <button mat-raised-button color="accent" (click)="closeDialog()">Close</button>
+            <button mat-raised-button color="primary" (click)="updateCitation(citation, violations, driver)"
+            *ngIf="citation.citation_id">Update</button>
+         </div>
+    </div>
+</mat-dialog-actions>

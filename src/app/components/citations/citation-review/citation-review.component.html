@@ -1,0 +1,98 @@
+<div *ngIf="formSubmitted">
+    <h1>Citation Submitted!</h1>
+</div>
+
+
+<div *ngIf="!formSubmitted" fxLayout="row wrap" fxLayout.xs="column" class="table" fxLayoutGap="20px">
+    <div fxLayout="column" class="row" fxLayout.xs="row">
+        <div >Type</div>
+        <div fxFlex > {{ citationInfo.controls['type'].value }} </div>
+    </div>
+    <div fxLayout="column" class="row" fxLayout.xs="row">
+        <div >Date</div>
+        <div fxFlex > {{ citationInfo.controls['date'].value }} </div>
+    </div>
+    <div fxLayout="column" class="row" fxLayout.xs="row">
+        <div >Time</div>
+        <div fxFlex > {{ citationInfo.controls['time'].value }} </div>
+    </div>
+    <div fxLayout="column" class="row" fxLayout.xs="row">
+        <div >Location</div>
+        <div fxFlex >{{ citationInfo.controls['violation_loc'].value}}, {{ citationInfo.controls['vin_state'].value }}   
+        </div>
+    </div>
+    <div fxLayout="column" class="row" fxLayout.xs="row">
+        <div >VIN</div>
+        <div fxFlex > {{ citationInfo.controls['vin'].value }} </div>
+    </div>
+    <div fxLayout="column" class="row" fxLayout.xs="row">
+        <div >Description</div>
+        <div fxFlex > {{ citationInfo.controls['desc'].value }} </div>
+    </div>
+    <div fxLayout="column" class="row" fxLayout.xs="row">
+        <div>Owner's Fault</div>
+        <div fxFlex> {{ citationInfo.controls['owner_fault'].value ? 'Yes' : 'No' }} </div>
+    </div>
+    <!-- <div fxLayout="column" class="row" fxLayout.xs="row" *ngFor="let violation of violations">
+        <div class="cell">Sign Date</div>
+        <div fxFlex class="cell"> {{ citationInfo.controls['sign_date'].value }} </div>
+    </div> -->
+    
+    <!-- <table>
+        <thead>
+            <tr>
+                <th colspan="5">Citation Information</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Type:</td>&nbsp;
+                <td> {{ citationInfo.controls['type'].value }} </td>
+            </tr>
+            <tr>
+                <td>Date:</td>&nbsp;
+                <td> {{ citationInfo.controls['date'].value }} </td>
+            </tr>
+            <tr>
+                <td>Time:</td>&nbsp;
+                <td> {{ citationInfo.controls['time'].value }} </td>
+            </tr>
+            <tr>
+                <td>Location:</td>&nbsp;
+                <td> {{ citationInfo.controls['violation_loc'].value }},
+                    {{ citationInfo.controls['vin_state'].value }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table>
+        <thead>
+            <tr>
+                <th colspan="5">Driver Information</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Name:</td>&nbsp;
+                <td> {{ driverInfo.controls['name'].value }} </td>
+            </tr>
+            <tr>
+                <td>DOB:</td>&nbsp;
+                <td> {{ driverInfo.controls['date_birth'].value }} </td>
+            </tr>
+            <tr>
+                <td>Sex:</td>&nbsp;
+                <td> {{ driverInfo.controls['sex'].value }} </td>
+            </tr>
+            <tr>
+                <td>Hair:</td>&nbsp;
+                <td> {{ driverInfo.controls['hair'].value }}</td>
+            </tr>
+        </tbody>
+
+    </table> -->
+
+    <!-- <button mat-raised-button color="primary" matStepperPrevious>Back</button>
+        <button mat-raised-button color="primary" (click)="submitCitationForm()">Submit</button> -->
+
+</div>

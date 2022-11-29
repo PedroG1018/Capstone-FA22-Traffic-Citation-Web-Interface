@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-landing-page',
@@ -7,19 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(public auth: AuthService) { }
 
   ngOnInit(): void {
   }
   // Use the button to redirect to the login page
   redirectLogin() {
+    this.isLoggedIn();
     window.location.href = 'https://localhost:4200/login';
     // heroku window.location.href = 'https://traffic-citation-frontend.herokuapp.com/login';
   }
 
   // Creat a check to see if the user is logged in and hide the login button
   // if the user is logged in
-  ifLoggedIn() {
+  isLoggedIn() {
     if (localStorage.getItem('token')) {
       return true;
     } else {

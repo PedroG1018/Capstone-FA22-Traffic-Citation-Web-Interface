@@ -28,4 +28,12 @@ export class ViolationService {
     public updateViolation(violation: Violation) : Observable<Violation | undefined> {
         return this.http.put<Violation>(`${environment.apiUrl}/${this.url}`, violation).pipe(catchError(this.errorService.handleError));
     }
+
+    public updateViolations(violations: Violation[]) : Observable<Violation[] | undefined> {
+        return this.http.put<Violation[]>(`${environment.apiUrl}/${this.url}/violations`, violations).pipe(catchError(this.errorService.handleError));
+    }
+    
+    public deleteViolations(ids: number[]) : Observable<number[] | undefined> {
+        return this.http.delete<number[]>(`${environment.apiUrl}/${this.url}/violations`).pipe(catchError(this.errorService.handleError));
+    }
 }

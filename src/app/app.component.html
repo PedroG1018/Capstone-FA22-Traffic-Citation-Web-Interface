@@ -1,27 +1,42 @@
-<nav>
-    <ul>
+<div class="content mat-typography mat-app-background">
+    <mat-toolbar fxShow="true" fxHide.lt-sm="true">
+        <mat-toolbar-row fxFlex fxLayout>
+            <div fxFlex>
+                <a [routerLink]=""><img src="assets/court_logo.jpeg" alt="court_logo" /></a>
+            </div>
 
-        <a routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page"><img src="assets/court_logo.jpeg"
-                alt="court_logo" /></a>
+            <div fxFlex class="navLinks" fxLayoutAlign="center center" *ngIf="(auth.isAuthenticated$ | async)">
+                <a [routerLink]="'/home'">Home</a>
+                <a [routerLink]="'/create-citation'">Create Citation</a>
+                <a [routerLink]="'/view-citations'">View Citations</a>
+                <a [routerLink]="'/profile'">Profile</a>
+                <a (click)="logout()">Logout</a>
+            </div>
+            <div fxFlex fxLayoutAlign="flex-end center">
+                <mat-icon>brightness_6</mat-icon>
+                <mat-slide-toggle [(ngModel)]="isDark" (change)="toggleDarkMode()">
+                </mat-slide-toggle>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
 
-        <li *ngIf="(auth.isAuthenticated$ | async)">
-            <a routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
-        </li>
-        <li *ngIf="(auth.isAuthenticated$ | async)">
-            <a routerLink="/create-citation" routerLinkActive="active" ariaCurrentWhenActive="page">Create Citation</a>
-        </li>
-        <li *ngIf="(auth.isAuthenticated$ | async)">
-            <a routerLink="/view-citations" routerLinkActive="active" ariaCurrentWhenActive="page">View Citations</a>
-        </li>
-
-        <li *ngIf="(auth.isAuthenticated$ | async)">
-            <a routerLink="/profile" routerLinkActive="active">Profile</a>
-        </li>
-
-        <li *ngIf="(auth.isAuthenticated$ | async)">
-            <a routerLinkActive="active" (click)="logout()">Logout</a>
-        </li>
-
-    </ul>
-</nav>
-<router-outlet></router-outlet>
+    <!-- Bottom navigation for mobile -->
+    <mat-toolbar fxShow="true" fxHide.gt-xs="true" class="bottomToolBar">
+        <mat-toolbar-row fxFlex fxLayout>
+            <div fxFlex fxLayoutAlign="center center" *ngIf="(auth.isAuthenticated$ | async)">
+                <a [routerLink]="'/home'"><mat-icon>home_rounded</mat-icon></a>
+                <a [routerLink]="'/create-citation'"><mat-icon>note_add_rounded</mat-icon></a>
+                <a [routerLink]="'/view-citations'"><mat-icon>wysiwyg_rounded</mat-icon></a>
+                <a [routerLink]="'/profile'"><mat-icon>account_circle_rounded</mat-icon></a>
+                <a (click)="logout()" style="color: red;"><mat-icon>exit_to_app_rounded</mat-icon></a>
+            </div>
+            <div fxFlex fxLayoutAlign="flex-end center">
+                <mat-icon>brightness_6</mat-icon>
+                <mat-slide-toggle [(ngModel)]="isDark" (change)="toggleDarkMode()">
+                </mat-slide-toggle>
+                
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+</div>
