@@ -1,14 +1,14 @@
 <header class="header">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <h1 class="text-center">Welcome to the Auth0 Verification Page</h1>
-        <h1 class ="text-center">Only Authorized Users allowed</h1>
-        <h2 class="text-center">Please login to continue to Auth0</h2>
-        <div class="text-center">
-          <button mat-raised-button *ngIf="(auth.isAuthenticated$ | async) === false" color="primary" (click)="loginWithRedirect()">Login</button>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 class="text-center">Welcome to the Auth0 Verification Page</h1>
+          <h1 class ="text-center">Only Authorized Users allowed</h1>
+          <h2 class="text-center">Please login to continue to Auth0</h2>
+          <div class="text-center">
+            <button mat-raised-button *ngIf="(auth.isAuthenticated$ | async) === false" color="primary" (click)="loginWithRedirect()">Login</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</header>
+  </header>

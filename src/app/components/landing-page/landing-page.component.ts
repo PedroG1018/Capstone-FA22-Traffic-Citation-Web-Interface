@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
@@ -23,9 +22,11 @@ export class LandingPageComponent implements OnInit {
   // Creat a check to see if the user is logged in and hide the login button
   // if the user is logged in
   isLoggedIn() {
-    if (localStorage.getItem('user') != null) {
+    if (localStorage.getItem('token')) {
       return true;
+    } else {
+      return false;
     }
-    return false;
   }
+
 }

@@ -10,7 +10,6 @@ import { Driver } from 'src/app/models/driver';
 import { ViolationService } from 'src/app/services/violation.service';
 import { DriverService } from 'src/app/services/driver.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FormatTimeSpan } from '../view-citations/formatTimespan';
 
 @Component({
   selector: 'app-edit-citation',
