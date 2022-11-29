@@ -1,3 +1,9 @@
+<header fxShow="true" fxHide.gt-xs="true">
+  <mat-paginator #paginator [length]="citationCount" [pageSize]="8" [pageSizeOptions]="[4, 8, 12, 24, 32, 48]"
+  [showFirstLastButtons]="true" [hidden]="(loading$ | async) || !citationCount">
+  </mat-paginator>
+</header>
+
 <div class="spinner-container" *ngIf="loading$ | async">
   <mat-spinner></mat-spinner>
 </div>
@@ -59,7 +65,7 @@
     </mat-card>
   </div>
 </div>
-<footer>
+<footer fxShow="true" fxHide.lt-sm="true">
   <mat-paginator #paginator [length]="citationCount" [pageSize]="8" [pageSizeOptions]="[4, 8, 12, 24, 32, 48]"
   [showFirstLastButtons]="true" [hidden]="(loading$ | async) || !citationCount">
   </mat-paginator>

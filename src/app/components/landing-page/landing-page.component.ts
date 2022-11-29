@@ -14,8 +14,8 @@ export class LandingPageComponent implements OnInit {
   // Use the button to redirect to the login page
   redirectLogin() {
     //window.location.href = 'http://localhost:8080/login';
-    // alternative: window.location.href = 'https://localhost:4200/login';
-    window.location.href = 'https://traffic-citation-frontend.herokuapp.com/login';
+    window.location.href = 'https://localhost:4200/login';
+    //window.location.href = 'https://traffic-citation-frontend.herokuapp.com/login';
   }
 
   // Creat a check to see if the user is logged in and hide the login button
