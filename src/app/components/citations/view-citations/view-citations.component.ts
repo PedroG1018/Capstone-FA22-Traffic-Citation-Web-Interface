@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { Citation } from 'src/app/models/citation';
 import { Driver } from 'src/app/models/driver';
 import { CitationService } from 'src/app/services/citation.service';
@@ -19,11 +19,13 @@ import { CompleteCitation } from 'src/app/models/complete-citation';
 })
 export class ViewCitationsComponent extends Unsubscriber implements AfterViewInit, OnInit {
   citationToEdit?: Citation;
-  citationCount: number = 0;
+  citationCount?: number;
   userId?: string | undefined;
   userRole?: string | undefined;
   completeCitations: CompleteCitation[] = [];
   citationsFound: boolean = true;
+  smallScreen: boolean = false;
+  screenString: string = '';
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
@@ -46,8 +48,16 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
     });
   }
 
+  get isDark() {
+    return localStorage.getItem('darkMode') == 'true' ? true : false;
+  }
+
+  get screenStringFunc() {
+    return this.screenString;
+  }
+
   ngAfterViewInit() {
-    if(this.paginator) {
+    if (this.paginator) {
       this.paginator.page.pipe(tap(() => this.loadCitationsPage())).subscribe();
     }
   }
@@ -71,7 +81,10 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
         if (response) {
           this.completeCitations = response.completeCitationList,
           this.citationCount = response.totalCitationsCount
-          console.log(this.completeCitations);
+          // console.log(this.completeCitations);
+          // console.log(this.citationCount);
+          // console.log('TOTAL PAGE: ' + response.totalPages);
+          // console.log('CURRENT PAGE: ' + response.currentPage);
           this.citationsFound = true;
         } else {
           this.citationsFound = false;
@@ -110,5 +123,9 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
         }
       });
     this.addNewSubscription = dialogRef;
+  }
+
+  isSmallScreen() {
+    return !this.smallScreen;
   }
 }

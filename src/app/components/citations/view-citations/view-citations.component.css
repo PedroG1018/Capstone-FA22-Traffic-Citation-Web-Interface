@@ -1,4 +1,9 @@
-.mat-card:hover  {
+.card-dark:hover {
+  background-color: #5D5F6E;
+  cursor: pointer;
+}
+
+.card-light:hover {
   background-color: #C5CAE9;
   cursor: pointer;
 }
@@ -43,4 +48,11 @@
 
 footer{
   margin-bottom: 50px;
+}
+
+.paginator-buttons {
+  /* background-color: #1A237E; */
+  position: fixed;
+  z-index: 100;
+  bottom: 6.4%; 
 }

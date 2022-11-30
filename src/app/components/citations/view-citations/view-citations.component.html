@@ -1,8 +1,8 @@
-<header fxShow="true" fxHide.gt-xs="true">
+<!-- <header fxShow="true" fxHide.gt-xs="true">
   <mat-paginator #paginator [length]="citationCount" [pageSize]="8" [pageSizeOptions]="[4, 8, 12, 24, 32, 48]"
   [showFirstLastButtons]="true" [hidden]="(loading$ | async) || !citationCount">
   </mat-paginator>
-</header>
+</header> -->
 
 <div class="spinner-container" *ngIf="loading$ | async">
   <mat-spinner></mat-spinner>
@@ -17,8 +17,7 @@
 <div class="p-3" fxLayout="row wrap" fxLayoutGap="16px grid">
   <!-- fxFlex.xs is for mobile screens ... only show 1 citation on mobile vertically-->
   <div fxFlex="25" fxFlex.xs="100%" fxFlex.sm="50%" *ngFor="let info of completeCitations">
-    <mat-card class="mat-elevation-z4"  (click)="openDialog(info.citation, info.violations, info.driver)" *ngIf="info.citation && info.driver">
-    <!-- <mat-card class="mat-elevation-z4"> -->
+    <mat-card class="mat-elevation-z4" [ngClass]="isDark ? 'card-dark' : 'card-light'"  (click)="openDialog(info.citation, info.violations, info.driver)" *ngIf="info.citation && info.driver">
       <mat-card-header>
         <mat-card-title>
           {{ info.citation.type }}
@@ -58,15 +57,12 @@
 
       <!-- <mat-card-actions>
         <button mat-raised-button color="primary"
-          (click)="openDialog(info.citation, info.violations, info.driver)">View</button>
-        <button mat-raised-button color="primary">Edit</button>
+          (click)="openDialog(info.citation, info.violations, info.driver)">Edit</button>
         <button mat-raised-button color="warn">Delete</button>
       </mat-card-actions> -->
     </mat-card>
   </div>
 </div>
-<footer fxShow="true" fxHide.lt-sm="true">
-  <mat-paginator #paginator [length]="citationCount" [pageSize]="8" [pageSizeOptions]="[4, 8, 12, 24, 32, 48]"
+<mat-paginator [ngClass]="smallScreen ? 'paginator-buttons' : ''" #paginator [length]="citationCount" [pageSize]="8" [pageSizeOptions]="[4, 8, 12, 24, 32, 48]"
   [showFirstLastButtons]="true" [hidden]="(loading$ | async) || !citationCount">
-  </mat-paginator>
-</footer>
+</mat-paginator>

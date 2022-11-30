@@ -12,6 +12,7 @@ export class LandingPageComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  
   // Use the button to redirect to the login page
   redirectLogin() {
     this.isLoggedIn();
@@ -19,8 +20,8 @@ export class LandingPageComponent implements OnInit {
     window.location.href = 'https://traffic-citation-frontend.herokuapp.com/login';
   }
 
-  // Creat a check to see if the user is logged in and hide the login button
-  // if the user is logged in
+  // Create a check to see if the user is logged in
+  // Hide the login button if the user is logged in
   isLoggedIn() {
     if (localStorage.getItem('token')) {
       return true;
@@ -28,5 +29,4 @@ export class LandingPageComponent implements OnInit {
       return false;
     }
   }
-
 }
