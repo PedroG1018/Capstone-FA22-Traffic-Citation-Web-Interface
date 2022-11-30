@@ -48,8 +48,16 @@ $traffic-citation-ui-dark-theme: mat.define-dark-theme((
 /* You can add global styles to this file, and also import other style files */
 //@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
-html, body { height: 100%; }
-body,h1,h2,a { font-family: Roboto, "Helvetica Neue", sans-serif !important; }
+html, body { 
+  height: 100vh; 
+  margin: 0;
+}
+
+body,h1,h2,a { 
+  font-family: Roboto, 
+  "Helvetica Neue", 
+  sans-serif !important; 
+}
 
 .mat-dialog-content::-webkit-scrollbar {
   display: none; // Chrome
