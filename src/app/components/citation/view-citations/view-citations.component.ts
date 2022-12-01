@@ -1,9 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Citation } from 'src/app/models/citation';
 import { Driver } from 'src/app/models/driver';
 import { CitationService } from 'src/app/services/citation.service';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { EditCitationComponent } from '../edit-citation/edit-citation.component';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { catchError, finalize, of, tap } from 'rxjs';
@@ -97,35 +97,26 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
     }
   }
   
-  openDialog(citation: Citation, violations: Violation[], driver: Driver) {
-    const dialogConfig = new MatDialogConfig();
+  openEditDialog(citation: Citation, violations: Violation[], driver: Driver) {
+    const dialogRef = this.dialog.open(EditCitationComponent, {
+      autoFocus: true,
+      disableClose: true,
+      data: {
+        citation: citation,
+        violations: violations,
+        driver: driver
+      }
+    });
 
-    dialogConfig.data = {
-      citation: citation,
-      violations: violations,
-      driver: driver
-    }
-    dialogConfig.autoFocus = true;
-    dialogConfig.disableClose = false;
-
-    const dialogRef = this.dialog
-      .open(EditCitationComponent, dialogConfig)
-      .afterClosed()
-      .subscribe((result) => {
-        console.log(result);
-        // If citation was deleted after closing dialog then refresh list
-        if (result == 'delete' && this.citationCount) {
-          // TODO: Hide element
-          this.loadCitationsPage();
-          this.citationCount--;
-        } else if (result == 'updatedDriver') {
-          this.loadCitationsPage();
-        }
-      });
-    this.addNewSubscription = dialogRef;
-  }
-
-  isSmallScreen() {
-    return !this.smallScreen;
+    this.addNewSubscription = dialogRef.afterClosed().subscribe((result) => {
+      // If citation was deleted after closing dialog then refresh list
+      if (result == 'delete' && this.citationCount) {
+        // TODO: Hide element instead of reloading all citations
+        this.loadCitationsPage();
+        this.citationCount--;
+      } else if (result == 'updatedDriver') {
+        this.loadCitationsPage();
+      }
+    });
   }
 }
