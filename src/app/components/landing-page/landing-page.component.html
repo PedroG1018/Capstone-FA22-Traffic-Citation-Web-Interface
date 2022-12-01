@@ -1,14 +1,43 @@
-<div class="landing-page__content">
-  <div class="landing-page__content__left">
-    <h1 class="text-center"> Welcome to the </h1>
-    <h1 class="text-center">Monterey County Superior Court </h1>
-    <h1 class="text-center"> Traffic Citation Database</h1>
+<!--
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <h1 class="text-center"> Welcome to the Monterey Superior Court</h1>
+    <h1 class="text-center"> Citation Database</h1>
     <h2 class="text-center"> The Monterey County Superior Court is committed to providing the highest quality of service to the public. </h2>
-
     <h2 *ngIf="(auth.isAuthenticated$ | async) === false" class="text-center"> Please login to continue </h2>
     <div class="text-center">
-      <button *ngIf="(auth.isAuthenticated$ | async) === false" id = "loginButton" class="btn btn-primary" (click)="redirectLogin()">Login / Register </button>
+      <button *ngIf="(auth.isAuthenticated$ | async) === false" id = "loginButton" class="btn btn-primary" (click)="loginWithRedirect()">Login / Register </button>
     </div>
     <h3 *ngIf="(auth.isAuthenticated$ | async) === true" class ="text-center"> After verifying access please use the navigation bar to move around the application</h3>
+  </mat-card-content>
+</mat-card>
+-->
+
+<!-- Create a card that handles the login and redirect in the center of the page-->
+<div class="container">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <h1 class="text-center"> Welcome to the Monterey Superior Court</h1>
+          <h1 class="text-center"> Citation Database</h1>
+          <h2 class="text-center"> The Monterey County Superior Court is committed to providing the highest quality of service to the public. </h2>
+          <h2 *ngIf="(auth.isAuthenticated$ | async) === false" class="text-center"> Please login to continue </h2>
+          <div class="text-center">
+            <button *ngIf="(auth.isAuthenticated$ | async) === false" id = "loginButton" class="btn btn-primary" (click)="loginWithRedirect()">Login / Register </button>
+          </div>
+          <h3 *ngIf="(auth.isAuthenticated$ | async) === true" class ="text-center"> After verifying access please use the navigation bar to move around the application</h3>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-4"></div>
   </div>
-</div>

@@ -47,7 +47,6 @@ import { EditCitationComponent } from './components/citations/edit-citation/edit
 import { ViewCitationsComponent } from './components/citations/view-citations/view-citations.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 
@@ -69,7 +68,6 @@ import { CitationReviewComponent } from './components/citations/citation-review/
     ViewCitationsComponent,
     PageNotFoundComponent,
     HomeComponent,
-    LoginComponent,
     DriverFormComponent,
     EditDriverComponent,
     FormatTimeSpan,

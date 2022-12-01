@@ -12,12 +12,11 @@ export class LandingPageComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  
+
   // Use the button to redirect to the login page
-  redirectLogin() {
+  loginWithRedirect(): void {
+    this.auth.loginWithRedirect();
     this.isLoggedIn();
-    //window.location.href = 'https://localhost:4200/login';
-    window.location.href = 'https://traffic-citation-frontend.herokuapp.com/login';
   }
 
   // Create a check to see if the user is logged in
