@@ -8,7 +8,6 @@ import { EditCitationComponent } from './components/citation/edit-citation/edit-
 import { ViewCitationsComponent } from './components/citation/view-citations/view-citations.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login.component';
 import { ConfirmationDialogComponent } from './components/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
@@ -25,7 +24,6 @@ const routes: Routes = [
   { path: 'confirmation-dialog', component: ConfirmationDialogComponent, title: 'Check for driver' },
   { path: 'driver-form', component: DriverFormComponent, title: 'Driver Information' },
   { path: 'welcome-page', component: LandingPageComponent, title: 'Welcome Page' },
-  { path: 'login', component: LoginComponent, title: 'Login' },
   { path: '', redirectTo: 'welcome-page', pathMatch: 'full' }, // TODO: Change to login page
   { path: '**', component: PageNotFoundComponent, title: 'Page Not Found' } // Wildcard route (404 page)
 
