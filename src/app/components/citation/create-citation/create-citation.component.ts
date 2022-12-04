@@ -143,7 +143,6 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
         violation_loc: ['', Validators.required],
         vin: ['', Validators.required],
         vin_state: ['', Validators.required],
-        code: ['', Validators.required],
         violations: this.fb.array([])
       }),
     });
