@@ -97,14 +97,19 @@
                             <tr [formGroupName]="i">
                                 <td>
                                     <mat-form-field appearance="fill">
-                                        <mat-label>Group</mat-label>
-                                        <input matInput required type="text" formControlName="group" placeholder="Group">
+                                        <mat-label>Code</mat-label>
+                                        <mat-select formControlName="code" name="code">
+                                            <mat-option *ngFor="let c of codes" [value]="c.code"> {{ c.desc }} </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="citationInfo.controls['code'].hasError('required')">
+                                            <strong>Required</strong>
+                                        </mat-error>
                                     </mat-form-field>
                                 </td>
                                 <td>
                                     <mat-form-field appearance="fill">
-                                        <mat-label>Code</mat-label>
-                                        <input matInput required type="text" formControlName="code" placeholder="Code">
+                                        <mat-label>Group</mat-label>
+                                        <input matInput required type="text" formControlName="group" placeholder="Group">
                                     </mat-form-field>
                                 </td>
                             </tr>

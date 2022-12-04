@@ -16,6 +16,21 @@ export class CitationFormComponent {
   @Input() editingCitation: boolean = false;
   @Input() form!: FormGroup;
 
+  codes = [
+    {
+      'code': 'CUT1105',
+      'desc': 'CUT1105-I-Sleeping in Vehicle',
+      'degree': 'I',
+      'group': 'VC1463 Vehicle Code (Infraction) Violations'
+    },
+    {
+      'code': 'PC664-VC2800.2a-F',
+      'desc': 'PC664-VC2800.2(a)-F-Attempt to Evade Police w/ Disregard for Safety',
+      'degree': 'F',
+      'group': 'VC1463 Vehicle Code (Infraction) Violations'
+    },
+  ];
+
   constructor(private fb: FormBuilder) {
   }
 
