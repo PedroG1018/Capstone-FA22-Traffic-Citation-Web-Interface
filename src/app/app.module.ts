@@ -31,6 +31,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 //Auth0
 import { AuthModule } from '@auth0/auth0-angular';
@@ -118,6 +119,7 @@ import { DriverFormComponent } from './components/citation/forms/driver-form/dri
     MatDividerModule,
     MatSidenavModule,
     MatGridListModule,
+    MatButtonToggleModule
   ],
   providers: [
     { provide: MatDialogRef, useValue: {} }, CitationService,

@@ -1,16 +1,18 @@
-<form [formGroup]="citationForm">
-    <mat-horizontal-stepper #stepperHorizontal linear fxShow="true" fxHide.lt-sm="true">
+<form [formGroup]="citationForm" class="stepper">
+    <mat-horizontal-stepper linear #stepperHorizontal fxShow="true" fxHide.lt-sm="true" class="stepper">
         <mat-step formGroupName="driverInfo" [stepControl]="citationForm.get('driverInfo')!">
             <ng-template matStepLabel>Fill out driver's information</ng-template>
             <div class="p-4">
-                <mat-card>
-                    <mat-card-header>
+                <!-- <app-driver-form [form]="citationForm" [editingCitation]="false" [states]="states" [(driverFound)]="driverFound" [(driver)]="driver"></app-driver-form> -->
+                
+                <mat-card class="default-card">
+                    <mat-card-header class="default-card-header">
                         <mat-card-title>
                             <h2>Driver Information</h2>
                         </mat-card-title>
                     </mat-card-header>
     
-                    <mat-card-content>
+                    <mat-card-content class="default-card-content">
                         <app-driver-form [form]="citationForm" [editingCitation]="false" [states]="states" [(driverFound)]="driverFound" [(driver)]="driver">
                         </app-driver-form>
                     </mat-card-content>
@@ -21,14 +23,14 @@
         <mat-step formGroupName="citationInfo" [stepControl]="citationForm.get('citationInfo')!">
             <ng-template matStepLabel>Fill out traffic citation</ng-template>
             <div class="main-container p-4">
-                <mat-card tabindex="0" class="example-card">
-                    <mat-card-header>
+                <mat-card class="default-card">
+                    <mat-card-header class="default-card-header">
                         <mat-card-title>
                             <h2>Citation</h2>
                         </mat-card-title>
                     </mat-card-header>
     
-                    <mat-card-content>
+                    <mat-card-content class="default-card-content">
                         <app-citation-form [form]="citationForm" [states]="states" [violations]="violations" [editingCitation]="false">
                         </app-citation-form>
                     </mat-card-content>
@@ -38,26 +40,8 @@
     
         </mat-step>
     
-        <mat-step formGroupName="officerInfo" [stepControl]="citationForm.get('officerInfo')!">
-            <ng-template matStepLabel>Fill out officer information</ng-template>
-                <div class="main-container p-4">
-                    <mat-card tabindex="0" class="example-card">
-                        <mat-card-header>
-                            <mat-card-title>
-                                <h2>Officer Information</h2>
-                            </mat-card-title>
-                        </mat-card-header>
-    
-                        <mat-card-content>
-                            <app-officer-form [form]="citationForm" [editingCitation]="false">
-                            </app-officer-form>
-                        </mat-card-content>
-                    </mat-card>
-                </div>
-        </mat-step>
-    
         <mat-step>
-            <ng-template matStepLabel>Done</ng-template>
+            <ng-template matStepLabel>Review</ng-template>
             <div class="p-4">
                 <mat-card>
                     <mat-card-header>
@@ -84,87 +68,40 @@
     </mat-horizontal-stepper>
 
     <!-- Mobile -->
-    <mat-vertical-stepper #stepperVertical linear fxShow="true" fxHide.gt-xs="true">
+    <mat-horizontal-stepper class="mobile-stepper" #stepperMobile fxShow="true" fxHide.gt-xs="true">
         <mat-step formGroupName="driverInfo" [stepControl]="citationForm.get('driverInfo')!">
-            <ng-template matStepLabel>Fill out driver's information</ng-template>
-            <div class="p-4">
-                <mat-card>
-                    <mat-card-header>
-                        <mat-card-title>
-                            <h2>Driver Information</h2>
-                        </mat-card-title>
-                    </mat-card-header>
-    
-                    <mat-card-content>
-                        <app-driver-form [form]="citationForm" [editingCitation]="false" [states]="states" [(driverFound)]="driverFound" [(driver)]="driver">
-                        </app-driver-form>
-                    </mat-card-content>
-                </mat-card>
+            <ng-template matStepLabel>Driver</ng-template>
+            <div class="text-center p-4">
+                <h1>Driver Information</h1>
+                <app-driver-form [form]="citationForm" [editingCitation]="false" [states]="states" [(driverFound)]="driverFound" [(driver)]="driver">
+                </app-driver-form>
             </div>
         </mat-step>
     
         <mat-step formGroupName="citationInfo" [stepControl]="citationForm.get('citationInfo')!">
-            <ng-template matStepLabel>Fill out traffic citation</ng-template>
-            <div class="main-container p-4">
-                <mat-card tabindex="0" class="example-card">
-                    <mat-card-header>
-                        <mat-card-title>
-                            <h2>Citation</h2>
-                        </mat-card-title>
-                    </mat-card-header>
-    
-                    <mat-card-content>
-                        <app-citation-form [form]="citationForm" [states]="states" [violations]="violations" [editingCitation]="false">
-                        </app-citation-form>
-                    </mat-card-content>
-    
-                </mat-card>
+            <ng-template matStepLabel>Citation</ng-template>
+            <div class="text-center p-4">
+                <h1>Citation Information</h1>
+                <app-citation-form [form]="citationForm" [states]="states" [violations]="violations" [editingCitation]="false">
+                </app-citation-form>
             </div>
-    
-        </mat-step>
-    
-        <mat-step formGroupName="officerInfo" [stepControl]="citationForm.get('officerInfo')!">
-            <ng-template matStepLabel>Fill out officer information</ng-template>
-                <div class="main-container p-4">
-                    <mat-card tabindex="0" class="example-card">
-                        <mat-card-header>
-                            <mat-card-title>
-                                <h2>Officer Information</h2>
-                            </mat-card-title>
-                        </mat-card-header>
-    
-                        <mat-card-content>
-                            <app-officer-form [form]="citationForm" [editingCitation]="false">
-                            </app-officer-form>
-                        </mat-card-content>
-                    </mat-card>
-                </div>
         </mat-step>
     
         <mat-step>
-            <ng-template matStepLabel>Done</ng-template>
-            <div class="p-4">
-                <mat-card>
-                    <mat-card-header>
-                        <mat-card-title>
-                            <h2>Review Citation</h2>
-                        </mat-card-title>
-                    </mat-card-header>
-    
-                    <mat-card-content>
-                        <app-citation-review [formSubmitted]="false" [form]="citationForm" [violations]="violations">
-                        </app-citation-review>
-                    </mat-card-content>
-    
-                    <mat-card-actions class="mb-2 mt-3">
-                        <button mat-raised-button color="primary" matStepperPrevious [hidden]="citationCreated">Back</button>
-                        <button mat-raised-button color="primary" (click)="onFormSubmit()"
+            <ng-template matStepLabel>Review</ng-template>
+            <div class="text-center p-4">
+                <h1>Review Information</h1>
+                <app-citation-review [formSubmitted]="false" [form]="citationForm" [violations]="violations" [citation]="citation">
+                </app-citation-review>
+            </div><br>
+
+            <div fxLayoutGap="15px" class="text-center">
+                <button mat-raised-button color="primary" matStepperPrevious [hidden]="citationCreated">Back</button>
+                <button mat-raised-button color="primary" (click)="onFormSubmit()"
                             *ngIf="citationCreated == false" type="submit">Submit</button>
     
-                        <button mat-raised-button color="primary" *ngIf="citationCreated" (click)="resetForm(); stepperVertical.reset()">Create Another</button>
-                    </mat-card-actions>
-                </mat-card>
+                <button mat-raised-button color="primary" *ngIf="citationCreated" (click)="resetForm(); stepperMobile.reset()">Create Another</button>
             </div>
         </mat-step>
-    </mat-vertical-stepper>
+    </mat-horizontal-stepper>
 </form>

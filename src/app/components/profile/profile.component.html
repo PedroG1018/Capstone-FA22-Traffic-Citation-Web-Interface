@@ -1,17 +1,24 @@
-<div *ngIf="auth.user$ | async as user" class="card text-center" style="max-width: 540px">
-    <div class="card-header">
-        <ul class="nav nav-pills card-header-pills">
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/view-citations">My Citations</a>
-            </li>
-        </ul>
-    </div>
-    <div class="card-body">
+<mat-card *ngIf="auth.user$ | async as user" class="text-center" style="max-width: 540px">
+    <mat-card-header>
+        <mat-card-title>
+            <ul class="nav nav-pills card-header-pills">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/view-citations">My Citations</a>
+                </li>
+            </ul>
+        </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="card-body">
         <figure>
             <img src="{{ user.picture }}" class="card-img" alt="User Profile Picture">
         </figure>
-        <h1 class="card-title">{{ user.name }} ({{ user['dev-3k36-3cg.us.auth0.com/roles'] }})</h1>
-        <p class="card-text"><small class="text-muted">Badge #{{ user['https://example.com/badge_number'] }}</small></p>
-        <p class="card-text"><small class="text-muted">Email: {{ user.email }}</small></p>
-    </div>
-</div>
+        <h1>{{ user.name }} ({{ user['dev-3k36-3cg.us.auth0.com/roles'] }})</h1>
+        <mat-card-subtitle> Badge #{{ user['https://example.com/badge_number'] }} </mat-card-subtitle>
+        <mat-card-subtitle> Email: {{ user.email }} </mat-card-subtitle>
+        <mat-button-toggle (click)="isDark = isDark ? false : true; toggleDarkMode()" [checked]="isDark" color="primary">
+            <mat-icon>brightness_6</mat-icon>
+            <span> {{ isDark ? 'Disable Dark Mode' : 'Enable Dark Mode' }}</span>
+        </mat-button-toggle>
+    </mat-card-content>
+</mat-card>

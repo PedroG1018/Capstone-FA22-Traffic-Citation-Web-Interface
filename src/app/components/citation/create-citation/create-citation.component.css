@@ -1,35 +1,23 @@
-.mat-radio-button ~ .mat-radio-button {
-    margin-left: 16px;
-}
-
-mat-form-field {
-    margin-right: 12px;
-}
-
-.mat-card-header {
+.default-card-header {
     display: flex;
     justify-content: center;
     padding: 20px 0 0 0;
     background-color: #283593;
     color: white;
     margin-bottom: 25px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
-.mat-card-title {
-    background-color: #283593;
-}
-
-.mat-card {
-    width: 70%;
+.default-card {
+    width: 80%;
     margin: 0 auto;
     padding: 0 0 25px 0;
     border-radius: 5px;
 }
 
-.mat-card-content {
-    margin: 0 auto;
+.default-card-content {
     text-align: center;
-    padding: 5px;
 }
 
 .mat-card-actions {
@@ -37,12 +25,16 @@ mat-form-field {
     justify-content: center;
 }
 
-tr {
-    display: flex;
-    justify-content: center;
+.stepper {
+    height: 100vh;
 }
 
-.table-container {
-    display: flex; 
-    justify-content: center;
+/* Mobile */
+
+.mat-vertical-stepper-header-container {
+    display: none !important;
+}
+
+.mobile-stepper {
+    padding-bottom: 50px;
 }

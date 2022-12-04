@@ -2,11 +2,11 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<div class="container p-4" [hidden]="citationsFound && !(loading$ | async)">
+<!-- <div class="container p-4" [hidden]="citationsFound && !(loading$ | async)">
   <div class="text-center">
     <h1>No Traffic Citations Found</h1>
   </div>
-</div>
+</div> -->
 
 <div class="p-3" fxLayout="row wrap" fxLayoutGap="16px grid">
   <!-- fxFlex.xs is for mobile screens ... only show 1 citation on mobile vertically-->
@@ -57,6 +57,6 @@
     </mat-card>
   </div>
 </div>
-<mat-paginator [ngClass]="smallScreen ? 'paginator-buttons' : ''" #paginator [length]="citationCount" [pageSize]="8" [pageSizeOptions]="[4, 8, 12, 24, 32, 48]"
+<mat-paginator #paginator [length]="citationCount" [pageSize]="8" [pageSizeOptions]="[4, 8, 12, 24, 32, 48]"
   [showFirstLastButtons]="true" [hidden]="(loading$ | async) || !citationCount">
 </mat-paginator>

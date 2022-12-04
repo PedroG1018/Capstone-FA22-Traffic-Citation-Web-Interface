@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Citation } from 'src/app/models/citation';
 import { Violation } from 'src/app/models/violation';
 
 @Component({
@@ -9,6 +10,7 @@ import { Violation } from 'src/app/models/violation';
 })
 export class CitationReviewComponent {
   @Input() formSubmitted: boolean = false;
+  @Input() citation: Citation = new Citation();
   @Input() violations: Violation[] = [];
   @Input() form!: FormGroup;
 

@@ -1,7 +1,7 @@
 <h2 mat-dialog-title> Editing Citation </h2>
 <mat-dialog-content>
     <div fxLayout="column wrap" fxLayoutGap="16px grid">
-        <div fxFlex="25" fxFlex.xs="100%" fxFlex.sm="50%">
+        <div fxFlex="25" fxFlex.xs="100%" fxFlex.sm="50%" class="text-center">
             <!-- <mat-icon class="example-tab-icon">description</mat-icon> -->
             <h1><mat-icon>description</mat-icon>Citation Information</h1>
             <div>
@@ -15,7 +15,7 @@
             <mat-divider></mat-divider><br>
             <h1><mat-icon>local_police</mat-icon>Officer Information</h1>
             <div>
-                <app-officer-form [form]="citationForm" [editingCitation]="true"></app-officer-form>
+                <app-officer-form [form]="citationForm"></app-officer-form>
             </div>
         </div>
     </div>
@@ -25,10 +25,6 @@
     <div fxFlex>
         <div fxFlex>
             <button mat-raised-button color="warn" (click)="deleteCitation(citation)">Delete</button>
-            <!-- <button mat-fab color="warn" aria-label="Delete icon button" (click)="deleteCitation(citation)"
-            *ngIf="citation.citation_id">
-            <mat-icon class="icon-delete">delete</mat-icon>
-            </button> -->
          </div>
          <div fxFlex fxLayoutAlign="flex-end center" fxLayoutGap="10px">
             <button mat-raised-button color="accent" (click)="closeDialog()">Close</button>

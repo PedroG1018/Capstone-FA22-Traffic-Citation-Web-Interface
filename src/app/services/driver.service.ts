@@ -4,7 +4,7 @@ import { catchError, throwError } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
 import { Driver } from '../models/driver';
-import { ErrorHandleService } from './error-service';
+import { ErrorHandleService } from './error.service';
 
 @Injectable({
   providedIn: 'root'

@@ -24,8 +24,6 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
   userRole?: string | undefined;
   completeCitations: CompleteCitation[] = [];
   citationsFound: boolean = true;
-  smallScreen: boolean = false;
-  screenString: string = '';
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
@@ -49,11 +47,7 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
   }
 
   get isDark() {
-    return localStorage.getItem('darkMode') == 'true' ? true : false;
-  }
-
-  get screenStringFunc() {
-    return this.screenString;
+    return localStorage.getItem('darkMode') == 'darkModeOn' ? true : false;
   }
 
   ngAfterViewInit() {
@@ -81,10 +75,6 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
         if (response) {
           this.completeCitations = response.completeCitationList,
           this.citationCount = response.totalCitationsCount
-          // console.log(this.completeCitations);
-          // console.log(this.citationCount);
-          // console.log('TOTAL PAGE: ' + response.totalPages);
-          // console.log('CURRENT PAGE: ' + response.currentPage);
           this.citationsFound = true;
         } else {
           this.citationsFound = false;
@@ -101,6 +91,8 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
     const dialogRef = this.dialog.open(EditCitationComponent, {
       autoFocus: true,
       disableClose: true,
+      width: '1000px',
+      height: 'auto',
       data: {
         citation: citation,
         violations: violations,
