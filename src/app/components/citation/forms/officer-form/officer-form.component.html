@@ -1,6 +1,6 @@
 <div [formGroup]="form" fxLayout="column">
-    <div fxLayoutGap="10px" formGroupName="officerInfo">
-        <mat-form-field appearance="fill">
+    <div fxLayoutGap="10px" formGroupName="officerInfo" fxLayout="row wrap" fxLayoutAlign="center" fxLayout.xs="column">
+        <mat-form-field appearance="fill" fxFlex="18">
             <mat-label>Arresting Officer Name</mat-label>
             <input matInput required formControlName="officer_name" type="text" placeholder="Name" />
             <mat-error *ngIf="officerInfo.controls['officer_name'].hasError('required')">
@@ -8,7 +8,7 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill" fxFlex="18">
             <mat-label>Badge No.</mat-label>
             <input matInput required formControlName="officer_badge" type="text" placeholder="Badge #" />
             <mat-error *ngIf="officerInfo.controls['officer_badge'].hasError('required')">
@@ -16,14 +16,9 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill" fxFlex="18">
             <mat-label>Signed Date</mat-label>
             <input matInput required formControlName="sign_date" class="form-control" type="date" />
         </mat-form-field>
-        <br><br>
-        <div fxLayoutGap="15px" *ngIf="!editingCitation">
-            <button mat-raised-button color="primary" matStepperPrevious>Back</button>
-            <button mat-raised-button color="primary" matStepperNext (click)="submitForm()">Next</button>
-        </div>
     </div>
 </div>

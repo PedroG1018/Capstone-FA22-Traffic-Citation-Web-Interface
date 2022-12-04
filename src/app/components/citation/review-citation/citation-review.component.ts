@@ -1,8 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { IncomingMessage } from 'http';
 import { Citation } from 'src/app/models/citation';
-import { Driver } from 'src/app/models/driver';
 import { Violation } from 'src/app/models/violation';
 
 @Component({
@@ -10,15 +8,13 @@ import { Violation } from 'src/app/models/violation';
   templateUrl: './citation-review.component.html',
   styleUrls: ['./citation-review.component.css']
 })
-export class CitationReviewComponent implements OnInit {
+export class CitationReviewComponent {
   @Input() formSubmitted: boolean = false;
+  @Input() citation: Citation = new Citation();
   @Input() violations: Violation[] = [];
   @Input() form!: FormGroup;
 
   constructor() {
-  }
-
-  ngOnInit(): void {
   }
 
   get citationInfo() {
@@ -32,9 +28,4 @@ export class CitationReviewComponent implements OnInit {
   get officerInfo() {
     return this.form.get('officerInfo') as FormGroup;
   }
-
-  // submitCitationForm() {
-  //   this.formSubmitted = true;
-  // }
-
 }

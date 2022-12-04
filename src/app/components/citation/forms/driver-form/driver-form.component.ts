@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from 'src/app/components/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { Driver } from 'src/app/models/driver';
 import { DriverService } from 'src/app/services/driver.service';
 import { Unsubscriber } from 'src/app/services/unsubscriber';
-import { DriverLicenseDialogComponent } from '../driver-license-dialog/driver-license-dialog.component';
 
 @Component({
   selector: 'app-driver-form',
@@ -63,7 +63,7 @@ export class DriverFormComponent extends Unsubscriber {
     if (!this.editingCitation && event?.length == 8 && !this.driverFound) {
       this.addNewSubscription = this.driverService.getDriverByLicenseNo(event).subscribe(result => {
         if (typeof result === 'object') {
-          this.openDialog(result);
+          this.openConfirmDialog(result);
         }
       });
     } else {
@@ -71,36 +71,34 @@ export class DriverFormComponent extends Unsubscriber {
     }
   }
 
-  // Dialog that checks with user if they want to autofill form
-  openDialog(driver: Driver) {
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.autoFocus = true;
-    dialogConfig.disableClose = true;
-    dialogConfig.width = '335px';
-    dialogConfig.height = 'auto';
-
-    const dialogRef = this.dialog
-      .open(DriverLicenseDialogComponent, dialogConfig)
-      .afterClosed()
-      .subscribe(isAutofill => {
-        if (isAutofill) {
-          this.driver = driver;
-          this.driverChange.emit(this.driver);
-          this.setDriverValues(driver);
-          this.driverFound = true;
-          this.driverFoundChange.emit(this.driverFound);
-        } else {
-          this.driverFound = false;
-          this.driverFoundChange.emit(this.driverFound);
-
-          // Clear all fields
-          Object.keys(this.driverInfo.controls).forEach(control => {
-            this.driverInfo.controls[control].patchValue(null);
-            this.driverInfo.controls[control].markAsPristine();
-          });
-        }
+  // Dialog to check with user if they want to autofill form
+  openConfirmDialog(driver: Driver) {
+    var dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+        autoFocus: true,
+        disableClose: true,
+        width: '335px',
+        height: 'auto'
       });
-    this.addNewSubscription = dialogRef;
+
+    dialogRef.componentInstance.title = 'Existing driver found. Autofill Form?';
+    
+    this.addNewSubscription = dialogRef.afterClosed().subscribe(isTrue => {
+      if (isTrue) {
+        this.driver = driver;
+        this.driverChange.emit(this.driver);
+        this.setDriverValues(driver);
+        this.driverFound = true;
+        this.driverFoundChange.emit(this.driverFound);
+      } else {
+        this.driverFound = false;
+        this.driverFoundChange.emit(this.driverFound);
+
+      // Clear all fields
+      Object.keys(this.driverInfo.controls).forEach(control => {
+        this.driverInfo.controls[control].patchValue(null);
+        this.driverInfo.controls[control].markAsPristine();
+      });
+    }
+  }); 
   }
 }

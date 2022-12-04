@@ -1,7 +1,9 @@
-.card {
-    margin: 0 auto;
-    border-radius: 5px;
-    margin-top: 2%;
+.mat-card-header {
+    padding: 20px 0 0 0;
+    background-color: #283593;
+    margin-bottom: 15px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .card-img {
@@ -11,12 +13,13 @@
     width: 40%;
 }
 
-.card-header {
-    background-color: #283593;
-    color: white;
+.mat-card {
+    margin: 0 auto;
+    margin-top: 2%;
+    border-radius: 5px;
+    padding: 0 0 25px 0;
 }
 
 .nav-link {
     color: white;
-
-}
+} 

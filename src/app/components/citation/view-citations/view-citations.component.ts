@@ -1,9 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Citation } from 'src/app/models/citation';
 import { Driver } from 'src/app/models/driver';
 import { CitationService } from 'src/app/services/citation.service';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { EditCitationComponent } from '../edit-citation/edit-citation.component';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { catchError, finalize, of, tap } from 'rxjs';
@@ -24,8 +24,6 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
   userRole?: string | undefined;
   completeCitations: CompleteCitation[] = [];
   citationsFound: boolean = true;
-  smallScreen: boolean = false;
-  screenString: string = '';
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
@@ -49,11 +47,7 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
   }
 
   get isDark() {
-    return localStorage.getItem('darkMode') == 'true' ? true : false;
-  }
-
-  get screenStringFunc() {
-    return this.screenString;
+    return localStorage.getItem('darkMode') == 'darkModeOn' ? true : false;
   }
 
   ngAfterViewInit() {
@@ -81,10 +75,6 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
         if (response) {
           this.completeCitations = response.completeCitationList,
           this.citationCount = response.totalCitationsCount
-          // console.log(this.completeCitations);
-          // console.log(this.citationCount);
-          // console.log('TOTAL PAGE: ' + response.totalPages);
-          // console.log('CURRENT PAGE: ' + response.currentPage);
           this.citationsFound = true;
         } else {
           this.citationsFound = false;
@@ -97,35 +87,28 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
     }
   }
   
-  openDialog(citation: Citation, violations: Violation[], driver: Driver) {
-    const dialogConfig = new MatDialogConfig();
+  openEditDialog(citation: Citation, violations: Violation[], driver: Driver) {
+    const dialogRef = this.dialog.open(EditCitationComponent, {
+      autoFocus: true,
+      disableClose: true,
+      width: '1000px',
+      height: 'auto',
+      data: {
+        citation: citation,
+        violations: violations,
+        driver: driver
+      }
+    });
 
-    dialogConfig.data = {
-      citation: citation,
-      violations: violations,
-      driver: driver
-    }
-    dialogConfig.autoFocus = true;
-    dialogConfig.disableClose = false;
-
-    const dialogRef = this.dialog
-      .open(EditCitationComponent, dialogConfig)
-      .afterClosed()
-      .subscribe((result) => {
-        console.log(result);
-        // If citation was deleted after closing dialog then refresh list
-        if (result == 'delete' && this.citationCount) {
-          // TODO: Hide element
-          this.loadCitationsPage();
-          this.citationCount--;
-        } else if (result == 'updatedDriver') {
-          this.loadCitationsPage();
-        }
-      });
-    this.addNewSubscription = dialogRef;
-  }
-
-  isSmallScreen() {
-    return !this.smallScreen;
+    this.addNewSubscription = dialogRef.afterClosed().subscribe((result) => {
+      // If citation was deleted after closing dialog then refresh list
+      if (result == 'delete' && this.citationCount) {
+        // TODO: Hide element instead of reloading all citations
+        this.loadCitationsPage();
+        this.citationCount--;
+      } else if (result == 'updatedDriver') {
+        this.loadCitationsPage();
+      }
+    });
   }
 }

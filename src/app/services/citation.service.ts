@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
 import { Citation } from '../models/citation';
 import { CitationWithViolations } from '../models/citation-with-violations';
-import { ErrorHandleService } from './error-service';
+import { ErrorHandleService } from './error.service';
 
 @Injectable({
   providedIn: 'root'
