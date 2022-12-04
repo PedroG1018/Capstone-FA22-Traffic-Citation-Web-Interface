@@ -4,7 +4,7 @@ import { catchError } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user';
-import { ErrorHandleService } from './error-service';
+import { ErrorHandleService } from './error.service';
 
 // TODO: DELETE
 

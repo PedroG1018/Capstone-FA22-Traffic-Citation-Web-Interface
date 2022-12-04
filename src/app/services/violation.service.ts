@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { catchError, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Violation } from "../models/violation";
-import { ErrorHandleService } from "./error-service";
+import { ErrorHandleService } from "./error.service";
 
 @Injectable({
     providedIn: 'root'

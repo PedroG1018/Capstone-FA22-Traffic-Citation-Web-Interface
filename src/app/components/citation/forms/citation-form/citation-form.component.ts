@@ -1,7 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { Citation } from 'src/app/models/citation';
-import { CitationWithViolations } from 'src/app/models/citation-with-violations';
 import { Violation } from 'src/app/models/violation';
 
 @Component({
@@ -38,7 +36,6 @@ export class CitationFormComponent {
     return this.form.get('citationInfo') as FormGroup;
   }
 
-  // can maybe remove this...
   submitForm() {
     // Check validity of form controls and mark as touched (changed)
     Object.keys(this.citationInfo.controls).forEach(control => {
@@ -68,7 +65,7 @@ export class CitationFormComponent {
     this.violations?.push(new Violation());
   }
 
-  // removes a violation from the form and from the violations array
+  // remove a violation from the form and violations array
   removeViolation(i: number) {
     this.violationsArray().removeAt(i);
     this.violations?.splice(i, 1);

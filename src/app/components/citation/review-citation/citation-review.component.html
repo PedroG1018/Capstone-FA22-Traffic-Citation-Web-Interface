@@ -1,0 +1,51 @@
+<div *ngIf="formSubmitted">
+    <h1>Citation Submitted!</h1>
+</div>
+
+
+<div *ngIf="!formSubmitted" fxLayout="row wrap" fxLayout.xs="column wrap" class="table" fxLayoutGap="20px">
+    <div fxLayout="column" class="row" fxLayout.xs="row">
+        <div >Type</div>
+        <div fxFlex > {{ citationInfo.controls['type'].value }} </div>
+    </div>
+    <div fxLayout="column" class="row" fxLayout.xs="row">
+        <div >Date</div>
+        <div fxFlex > {{ citationInfo.controls['date'].value }} </div>
+    </div>
+    <div fxLayout="column" class="row" fxLayout.xs="row">
+        <div >Time</div>
+        <div fxFlex > {{ citationInfo.controls['time'].value }} </div>
+    </div>
+    <div fxLayout="column" class="row" fxLayout.xs="row">
+        <div >Location</div>
+        <div fxFlex >{{ citationInfo.controls['violation_loc'].value}}, {{ citationInfo.controls['vin_state'].value }}   
+        </div>
+    </div>
+    <div fxLayout="column" class="row" fxLayout.xs="row">
+        <div >VIN</div>
+        <div fxFlex > {{ citationInfo.controls['vin'].value }} </div>
+    </div>
+    <div fxLayout="column" class="row" fxLayout.xs="row">
+        <div >Description</div>
+        <div fxFlex > {{ citationInfo.controls['desc'].value }} </div>
+    </div>
+    <div fxLayout="column" class="row" fxLayout.xs="row">
+        <div>Owner's Fault</div>
+        <div fxFlex> {{ citationInfo.controls['owner_fault'].value ? 'Yes' : 'No' }} </div>
+    </div>
+    <div fxLayout="column" class="row" fxLayout.xs="row">
+        <div class="cell">Sign Date</div>
+        <div fxFlex class="cell"> {{ citation.sign_date }} </div>
+    </div>
+
+    <div fxLayout="column" class="row" fxLayout.xs="row">
+        <div class="cell">Officer Name</div>
+        <div fxFlex class="cell"> {{ citation.officer_name }} </div>
+    </div>
+
+    <div fxLayout="column" class="row" fxLayout.xs="row">
+        <div class="cell">Officer Badge</div>
+        <div fxFlex class="cell"> {{ citation.officer_badge }} </div>
+    </div>
+    
+</div>

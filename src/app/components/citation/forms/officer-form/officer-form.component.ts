@@ -8,7 +8,6 @@ import { FormGroup } from '@angular/forms';
 })
 export class OfficerFormComponent implements OnInit {
   @Input() form!: FormGroup;
-  @Input() editingCitation: boolean = false;
 
   constructor() { }
 
@@ -18,13 +17,4 @@ export class OfficerFormComponent implements OnInit {
   get officerInfo() {
     return this.form.get('officerInfo') as FormGroup;
   }
-
-  submitForm() {
-    // Check validity of form controls and mark as touched (changed)
-    Object.keys(this.officerInfo.controls).forEach(control => {
-      this.officerInfo.controls[control].markAsTouched();
-      this.officerInfo.controls[control].updateValueAndValidity();
-    });
-  }
-
 }

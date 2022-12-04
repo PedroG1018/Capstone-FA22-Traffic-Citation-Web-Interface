@@ -2,58 +2,58 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, HostBinding, Inject, OnDestroy, OnInit } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { AuthService } from '@auth0/auth0-angular';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from './components/dialogs/confirmation-dialog/confirmation-dialog.component';
+import { Unsubscriber } from './services/unsubscriber';
+import { Subject } from 'rxjs';
+import { StorageService } from './services/storage.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent extends Unsubscriber implements OnInit, OnDestroy {
   title = 'TrafficCitation.UI';
   intervalSub;
 
-  isDark: boolean = false;
   @HostBinding('class') className = '';
   
-  constructor(public auth: AuthService, private overlay: OverlayContainer, @Inject(DOCUMENT) private doc: Document) {}
-
+  constructor(public auth: AuthService, private overlay: OverlayContainer, @Inject(DOCUMENT) private doc: Document, private dialog: MatDialog, private storage: StorageService) {
+    super();
+  }
 
   ngOnInit() : void {
-    this.intervalSub = setInterval(() => {
-      console.log('Hello from ngOnInit');
-    }, 1000);
+    this.toggleDarkMode(this.storage.darkMode);
 
-    if (localStorage.getItem('darkMode') == 'true') {
+    this.addNewSubscription = this.storage.observeStorage().subscribe(change => {
+      this.toggleDarkMode(change);
+    })
+  }
+
+  toggleDarkMode(change: string) {
+    if (change === 'darkModeOn') {
       this.className = 'darkMode';
-      this.overlay.getContainerElement().classList.add(this.className);
-      this.isDark = true;
-      
-    } else {
+      this.overlay.getContainerElement().classList.add(this.className);      
+    } else if (change === 'darkModeOff') {
       this.className = '';
       this.overlay.getContainerElement().classList.remove('darkMode');
-      this.isDark = false;
     }
   }
 
-  toggleDarkMode() {
-    const darkClassName = 'darkMode';
-    this.className = this.isDark ? darkClassName : '';
-    
-    if (this.isDark) {
-      this.overlay.getContainerElement().classList.add(darkClassName);
-      localStorage.setItem('darkMode', 'true');
-    } else {
-      this.overlay.getContainerElement().classList.remove(darkClassName);
-      localStorage.setItem('darkMode', 'false');
-    }
-  }
-
-  ngOnDestroy(): void {
-      if (this.intervalSub) {
-        clearInterval(this.intervalSub);
-      }
-  }
   logout(): void {
-    this.auth.logout({ returnTo: this.doc.location.origin });
+    var dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      autoFocus: true,
+      disableClose: true,
+      width: '335px',
+      height: 'auto'
+    });
+
+    dialogRef.componentInstance.title = 'Are you sure you want to logout?';
+    this.addNewSubscription = dialogRef.afterClosed().subscribe(response => {
+      if (response) {
+        this.auth.logout({ returnTo: this.doc.location.origin });
+      }
+    })
   }
 }

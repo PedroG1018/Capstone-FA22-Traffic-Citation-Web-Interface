@@ -2,7 +2,7 @@ import { formatDate } from '@angular/common';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AuthService } from '@auth0/auth0-angular';
+import { AuthService, User } from '@auth0/auth0-angular';
 import { Citation } from 'src/app/models/citation';
 import { CitationWithViolations } from 'src/app/models/citation-with-violations';
 import { Driver } from 'src/app/models/driver';
@@ -19,13 +19,13 @@ import { Unsubscriber } from 'src/app/services/unsubscriber';
 
 export class CreateCitationComponent extends Unsubscriber implements OnInit {
   driver = new Driver();
-  citation = new Citation(); // citation model
-  violations: Violation[] = [] // array of violation models
-  citationWithViolations = new CitationWithViolations() // model combining citation and violation(s) info
+  citation = new Citation();
+  violations: Violation[] = [];
   driverFound: boolean = false;
 
   citationForm!: FormGroup;
   citationCreated: boolean;
+  user: User = new User;
 
   // array of all US states used for state drop-down menu
   states: string[] = [
@@ -83,23 +83,36 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
 
   // Default age of driver is set to 18 years
   defaultDate = formatDate(new Date().setFullYear(new Date().getFullYear() - 18), 'yyyy-MM-dd', 'en-US');
+  // Current date and time for citation
   currentDate = formatDate(new Date(), 'yyyy-MM-dd', 'en-US');
   currentTime = new Date().getHours() + ":" + new Date().getMinutes().toString().padStart(2, '0');
 
-  constructor(private citationService: CitationService, private driverService: DriverService, private snackBar: MatSnackBar, private fb: FormBuilder, private auth: AuthService) {
-    super();
+  constructor(private citationService: CitationService, private driverService: DriverService, private snackBar: MatSnackBar, private fb: FormBuilder, private auth: AuthService) { 
+    super();  
     this.citationCreated = false;
   }
 
   ngOnInit(): void {
-    // Link the auth user sub property with citation to act as user id
+    // Set current user
     this.addNewSubscription = this.auth.user$.subscribe(user => {
-      if(user && this.citation) {
-        this.citation.user_id = user.sub;
+      if (user) {
+        this.user = user;
+        this.setCitationUser();
       }
     });
+    
 
     this.initForm();
+  }
+
+  setCitationUser() {
+    // Link the auth user sub property with citation to act as user id
+    this.citation.user_id = this.user.sub;
+
+    // Use auth0 user data for officer fields
+    this.citation.officer_name = this.user.name!;
+    this.citation.officer_badge =  this.user['https://example.com/badge_number'].toString();
+    this.citation.sign_date = this.currentDate;
   }
 
   initForm() {
@@ -133,29 +146,19 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
         code: ['', Validators.required],
         violations: this.fb.array([])
       }),
-      'officerInfo': this.fb.group({
-        officer_name: ['', Validators.required],
-        officer_badge: ['', Validators.required],
-        sign_date: [this.currentDate]
-      })
     });
-
   }
 
   onFormSubmit(): void {
     // Get values from form groups
     this.driver = Object.assign(this.driver, this.citationForm.get('driverInfo')?.value);
     this.citation = Object.assign(this.citation, this.citationForm.get('citationInfo')?.value);
-    this.citation = Object.assign(this.citation, this.citationForm.get('officerInfo')?.value);
     this.violations = Object.assign(this.violations, this.citationForm.get('citationInfo.violations')?.value);
-    console.log(this.violations);
-    console.log(this.driver);
-    console.log(this.citation);
     this.saveDriver();
   }
 
   saveDriver() {
-    console.log(this.driverFound);
+    console.log('Driver Found Status: ' + this.driverFound);
     if (!this.driverFound) {
       // Create new driver
       this.addNewSubscription = this.driverService
@@ -163,7 +166,6 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
         .subscribe((result) => {
           if (result) {
             this.driver = result;
-            console.log(this.driver);
             this.saveCitationWithViolations();
           }
         });
@@ -174,7 +176,6 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
         .subscribe((result) => {
           if (result) {
             this.driver = result;
-            console.log(this.driver);
             this.saveCitationWithViolations();
           }
         });
@@ -182,15 +183,15 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
   }
 
   saveCitationWithViolations() {
+    let citationWithViolations = new CitationWithViolations();
     this.citation.driver_id = this.driver.driver_id;
-    this.citationWithViolations.citation = this.citation;
-    this.citationWithViolations.violations = this.violations;
+    citationWithViolations.citation = this.citation;
+    citationWithViolations.violations = this.violations;
+    console.log(citationWithViolations);
 
-    this.addNewSubscription = this.citationService.createCitationWithViolations(this.citationWithViolations).subscribe(result => {
-      this.snackBar.open("Successfully Created Traffic Citation", '', { duration: 2800 });
-      console.log(result);
-
+    this.addNewSubscription = this.citationService.createCitationWithViolations(citationWithViolations).subscribe(result => {
       if (result) {
+        this.snackBar.open("Successfully Created Traffic Citation", '', { duration: 2800 });
         this.citation = result;
         this.citationCreated = true;
       }
@@ -202,5 +203,6 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
     this.citationCreated = false; 
     this.driverFound = false;
     this.citation = new Citation();
+    this.setCitationUser();
   }
 }

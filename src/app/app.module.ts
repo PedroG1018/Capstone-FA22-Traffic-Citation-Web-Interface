@@ -31,6 +31,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 //Auth0
 import { AuthModule } from '@auth0/auth0-angular';
@@ -40,11 +41,9 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 
 //Components
 import { AppComponent } from './app.component';
-import { DriverFormComponent } from './components/driver/driver-form/driver-form.component';
-import { EditDriverComponent } from './components/driver/edit-driver/edit-driver.component';
-import { CreateCitationComponent } from './components/citations/create-citation/create-citation.component';
-import { EditCitationComponent } from './components/citations/edit-citation/edit-citation.component';
-import { ViewCitationsComponent } from './components/citations/view-citations/view-citations.component';
+import { CreateCitationComponent } from './components/citation/create-citation/create-citation.component';
+import { EditCitationComponent } from './components/citation/edit-citation/edit-citation.component';
+import { ViewCitationsComponent } from './components/citation/view-citations/view-citations.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
@@ -52,13 +51,14 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 
 // Misc
 import { CitationService } from './services/citation.service';
-import { FormatTimeSpan } from './components/citations/view-citations/formatTimespan';
-import { DriverLicenseDialogComponent } from './components/driver/driver-license-dialog/driver-license-dialog.component';
+import { FormatTimeSpan } from './components/citation/view-citations/formatTimespan';
+import { ConfirmationDialogComponent } from './components/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { InputErrorStateMatcher } from './error-state-matching';
 import { ProfileComponent } from './components/profile/profile.component';
-import { CitationFormComponent } from './components/citations/citation-form/citation-form.component';
-import { OfficerFormComponent } from './components/citations/officer-form/officer-form.component';
-import { CitationReviewComponent } from './components/citations/citation-review/citation-review.component';
+import { CitationFormComponent } from './components/citation/forms/citation-form/citation-form.component';
+import { OfficerFormComponent } from './components/citation/forms/officer-form/officer-form.component';
+import { CitationReviewComponent } from './components/citation/review-citation/citation-review.component';
+import { DriverFormComponent } from './components/citation/forms/driver-form/driver-form.component';
 
 @NgModule({
   declarations: [
@@ -69,9 +69,8 @@ import { CitationReviewComponent } from './components/citations/citation-review/
     PageNotFoundComponent,
     HomeComponent,
     DriverFormComponent,
-    EditDriverComponent,
     FormatTimeSpan,
-    DriverLicenseDialogComponent,
+    ConfirmationDialogComponent,
     ProfileComponent,
     CitationFormComponent,
     OfficerFormComponent,
@@ -119,7 +118,8 @@ import { CitationReviewComponent } from './components/citations/citation-review/
     MatSlideToggleModule,
     MatDividerModule,
     MatSidenavModule,
-    MatGridListModule
+    MatGridListModule,
+    MatButtonToggleModule
   ],
   providers: [
     { provide: MatDialogRef, useValue: {} }, CitationService,

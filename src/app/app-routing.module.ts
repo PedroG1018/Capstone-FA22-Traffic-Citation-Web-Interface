@@ -3,16 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 
 // Import different components (views)
 import { AppComponent } from './app.component';
-import { CreateCitationComponent } from './components/citations/create-citation/create-citation.component';
-import { EditCitationComponent } from './components/citations/edit-citation/edit-citation.component';
-import { ViewCitationsComponent } from './components/citations/view-citations/view-citations.component';
+import { CreateCitationComponent } from './components/citation/create-citation/create-citation.component';
+import { EditCitationComponent } from './components/citation/edit-citation/edit-citation.component';
+import { ViewCitationsComponent } from './components/citation/view-citations/view-citations.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
-import { DriverFormComponent } from './components/driver/driver-form/driver-form.component';
-import { EditDriverComponent } from './components/driver/edit-driver/edit-driver.component';
-import { DriverLicenseDialogComponent } from './components/driver/driver-license-dialog/driver-license-dialog.component';
+import { ConfirmationDialogComponent } from './components/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { DriverFormComponent } from './components/citation/forms/driver-form/driver-form.component';
 
 // Define all routes in Routes array
 const routes: Routes = [
@@ -22,9 +21,8 @@ const routes: Routes = [
   { path: 'create-citation', component: CreateCitationComponent, title: 'Creating Citation' },
   { path: 'edit-citation', component: EditCitationComponent, title: 'Editing Citations' },
   { path: 'view-citations', component: ViewCitationsComponent, title: 'Viewing Citations' },
-  { path: 'driver-dialog', component: DriverLicenseDialogComponent, title: 'Check for driver' },
+  { path: 'confirmation-dialog', component: ConfirmationDialogComponent, title: 'Check for driver' },
   { path: 'driver-form', component: DriverFormComponent, title: 'Driver Information' },
-  { path: 'edit-driver', component: EditDriverComponent, title: 'Editing Driver'},
   { path: 'welcome-page', component: LandingPageComponent, title: 'Welcome Page' },
   { path: '', redirectTo: 'welcome-page', pathMatch: 'full' }, // TODO: Change to login page
   { path: '**', component: PageNotFoundComponent, title: 'Page Not Found' } // Wildcard route (404 page)
