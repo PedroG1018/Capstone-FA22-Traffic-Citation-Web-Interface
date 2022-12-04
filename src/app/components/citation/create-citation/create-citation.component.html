@@ -68,7 +68,7 @@
     </mat-horizontal-stepper>
 
     <!-- Mobile -->
-    <mat-horizontal-stepper class="mobile-stepper" #stepperMobile fxShow="true" fxHide.gt-xs="true">
+    <mat-horizontal-stepper linear class="mobile-stepper" #stepperMobile fxShow="true" fxHide.gt-xs="true">
         <mat-step formGroupName="driverInfo" [stepControl]="citationForm.get('driverInfo')!">
             <ng-template matStepLabel>Driver</ng-template>
             <div class="text-center p-4">
