@@ -90,7 +90,7 @@
             </mat-accordion>
         </div> -->
 
-        <form [formGroup]="form" fxLayout fxLayoutAlign="center center" fxLayoutGap="15px">
+        <form [formGroup]="form" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="15px">
             <div formGroupName="citationInfo">
                 <ng-container formArrayName="violations"
                     *ngFor="let quantity of violationsArray().controls; let i = index">
@@ -106,30 +106,37 @@
                                 <td>
                                     <mat-form-field appearance="fill">
                                         <mat-label>Group</mat-label>
-                                        <input matInput required type="text" formControlName="group"
-                                            placeholder="Group">
+                                        <mat-select formControlName="group" name="group">
+                                            <mat-option *ngFor="let group of groups" [value]="group"> {{ group }} </mat-option>
+                                        </mat-select>
                                     </mat-form-field>
                                 </td>
                                 <td>
                                     <mat-form-field appearance="fill">
                                         <mat-label>Code</mat-label>
-                                        <input matInput required type="text" formControlName="code" placeholder="Code">
+                                        <mat-select formControlName="code" name="code">
+                                            <mat-option *ngFor="let code of codes" [value]="code"> {{ code }} </mat-option>
+                                        </mat-select>
                                     </mat-form-field>
                                 </td>
                             </tr>
                             <tr [formGroupName]="i">
                                 <td>
                                     <mat-form-field appearance="fill">
-                                        <mat-label>Degree</mat-label>
-                                        <input matInput required type="text" formControlName="degree"
-                                            placeholder="Degree">
+                                        <mat-label>Description</mat-label>
+                                        <mat-select formControlName="desc" name="desc">
+                                            <mat-option *ngFor="let desc of descriptions" [value]="desc"> {{ desc }} </mat-option>
+                                        </mat-select>
                                     </mat-form-field>
-
                                 </td>
                                 <td>
                                     <mat-form-field appearance="fill">
-                                        <mat-label>Description</mat-label>
-                                        <input matInput required type="text" formControlName="desc" placeholder="Desc">
+                                        <mat-label>Degree</mat-label>
+                                        <mat-select formControlName="degree" name="degree">
+                                            <mat-option value="I">I</mat-option>
+                                            <mat-option value="M">M</mat-option>
+                                            <mat-option value="F">F</mat-option>
+                                        </mat-select>
                                     </mat-form-field>
                                 </td>
                             </tr>

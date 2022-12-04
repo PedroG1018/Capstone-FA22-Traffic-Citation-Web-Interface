@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Citation } from 'src/app/models/citation';
 import { Violation } from 'src/app/models/violation';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-citation-review',
@@ -14,7 +15,7 @@ export class CitationReviewComponent {
   @Input() violations: Violation[] = [];
   @Input() form!: FormGroup;
 
-  constructor() {
+  constructor(public auth: AuthService) {
   }
 
   get citationInfo() {

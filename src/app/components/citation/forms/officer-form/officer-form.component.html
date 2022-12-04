@@ -1,8 +1,8 @@
-<div [formGroup]="form" fxLayout="column">
+<div *ngIf="auth.user$ | async as user" [formGroup]="form" fxLayout="column">
     <div fxLayoutGap="10px" formGroupName="officerInfo" fxLayout="row wrap" fxLayoutAlign="center" fxLayout.xs="column">
         <mat-form-field appearance="fill" fxFlex="18">
             <mat-label>Arresting Officer Name</mat-label>
-            <input matInput required formControlName="officer_name" type="text" placeholder="Name" />
+            <input matInput required formControlName="officer_name" type="text" placeholder="Name" [defaultValue]="user.name"/>
             <mat-error *ngIf="officerInfo.controls['officer_name'].hasError('required')">
                 <strong>Required</strong>
             </mat-error>
@@ -10,7 +10,7 @@
 
         <mat-form-field appearance="fill" fxFlex="18">
             <mat-label>Badge No.</mat-label>
-            <input matInput required formControlName="officer_badge" type="text" placeholder="Badge #" />
+            <input matInput required formControlName="officer_badge" type="text" placeholder="Badge #" [defaultValue]="user['https://example.com/badge_number']"/>
             <mat-error *ngIf="officerInfo.controls['officer_badge'].hasError('required')">
                 <strong>Required</strong>
             </mat-error>
