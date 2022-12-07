@@ -1,5 +1,5 @@
 <form [formGroup]="citationForm" class="stepper">
-    <mat-horizontal-stepper  #stepperHorizontal fxShow="true" fxHide.lt-sm="true" class="stepper">
+    <mat-horizontal-stepper linear #stepperHorizontal fxShow="true" fxHide.lt-sm="true" class="stepper">
         <mat-step formGroupName="driverInfo" [stepControl]="citationForm.get('driverInfo')!">
             <ng-template matStepLabel>Fill out driver's information</ng-template>
             <div class="p-4">
