@@ -8,7 +8,6 @@ import { CreateCitationComponent } from './components/citation/create-citation/c
 import { EditCitationComponent } from './components/citation/edit-citation/edit-citation.component';
 import { ViewCitationsComponent } from './components/citation/view-citations/view-citations.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { HomeComponent } from './components/home/home.component';
 import { ConfirmationDialogComponent } from './components/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
@@ -17,12 +16,6 @@ import { DriverFormComponent } from './components/citation/forms/driver-form/dri
 // Define all routes in Routes array
 const routes: Routes = [
   { path: 'app', component: AppComponent },
-  {
-    path: 'home',
-    component: HomeComponent,
-    canActivate: [AuthGuard],
-    title: 'Traffic Citation Interface',
-  },
   { path: 'profile', component: ProfileComponent, title: 'Profile' },
   {
     path: 'create-citation',
@@ -55,11 +48,11 @@ const routes: Routes = [
     title: 'Driver Information',
   },
   {
-    path: 'welcome-page',
+    path: 'home',
     component: LandingPageComponent,
-    title: 'Welcome Page',
+    title: 'Home',
   },
-  { path: '', redirectTo: 'welcome-page', pathMatch: 'full' }, // TODO: Change to login page
+  { path: '', redirectTo: 'home', pathMatch: 'full' }, // TODO: Change to login page
   { path: '**', component: PageNotFoundComponent, title: 'Page Not Found' }, // Wildcard route (404 page)
 ];
 
