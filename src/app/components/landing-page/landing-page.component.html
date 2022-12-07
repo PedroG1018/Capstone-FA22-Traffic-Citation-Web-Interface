@@ -33,7 +33,8 @@
           <h2 class="text-center"> The Monterey County Superior Court is committed to providing the highest quality of service to the public. </h2>
           <h2 *ngIf="(auth.isAuthenticated$ | async) === false" class="text-center"> Please login to continue </h2>
           <div class="text-center">
-            <button mat-raised-button color="primary" *ngIf="(auth.isAuthenticated$ | async) === false" id = "loginButton" (click)="loginWithRedirect()">Login / Register </button>
+            <button mat-raised-button color="primary" *ngIf="(auth.isAuthenticated$ | async) === false" id = "loginButton" (click)="loginWithRedirect()">Login</button><br><br>
+            <button mat-raised-button color="primary" *ngIf="(auth.isAuthenticated$ | async) === false" (click)="registerWithRedirect()">Register</button>
           </div>
           <h3 *ngIf="(auth.isAuthenticated$ | async) === true" class ="text-center"> After verifying access please use the navigation bar to move around the application</h3>
         </mat-card-content>

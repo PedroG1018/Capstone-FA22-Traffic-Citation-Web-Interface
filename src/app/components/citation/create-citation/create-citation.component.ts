@@ -157,7 +157,6 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
   }
 
   saveDriver() {
-    console.log('Driver Found Status: ' + this.driverFound);
     if (!this.driverFound) {
       // Create new driver
       this.addNewSubscription = this.driverService

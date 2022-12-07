@@ -19,6 +19,11 @@ export class LandingPageComponent implements OnInit {
     this.isLoggedIn();
   }
 
+  registerWithRedirect(): void {
+    this.auth.loginWithRedirect({ screen_hint: 'signup'});
+    this.isLoggedIn();
+  }
+
   // Create a check to see if the user is logged in
   // Hide the login button if the user is logged in
   isLoggedIn() {

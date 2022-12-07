@@ -2,8 +2,7 @@
     <h1>Citation Submitted!</h1>
 </div>
 
-
-<div *ngIf="!formSubmitted" fxLayout="row wrap" fxLayout.xs="column wrap" class="table" fxLayoutGap="20px">
+<div *ngIf="!formSubmitted" fxLayoutAlign="center" fxLayout="row wrap" fxLayout.xs="column wrap" class="table" fxLayoutGap="20px">
     <div fxLayout="column" class="row" fxLayout.xs="row">
         <div >Type</div>
         <div fxFlex > {{ citationInfo.controls['type'].value }} </div>

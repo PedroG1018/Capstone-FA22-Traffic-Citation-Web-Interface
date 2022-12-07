@@ -13,17 +13,17 @@
             </span>
         </div><br>
         <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="center" fxLayout.xs="column">
-            <mat-form-field appearance="outline" fxFlex="18">
+            <mat-form-field fxFlex="18">
                 <mat-label>Date of Violation</mat-label>
                 <input matInput required formControlName="date" type="date" />
             </mat-form-field>
 
-            <mat-form-field appearance="outline" fxFlex="18">
+            <mat-form-field fxFlex="18">
                 <mat-label>Time</mat-label>
                 <input matInput formControlName="time" type="time" />
             </mat-form-field>
 
-            <mat-form-field appearance="outline" fxFlex="18">
+            <mat-form-field fxFlex="18">
                 <mat-label for="violation_loc">Location of Violation</mat-label>
                 <input matInput required formControlName="violation_loc" type="text" name="violation_loc"
                     placeholder="Location" />
@@ -32,7 +32,7 @@
                 </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" fxFlex="18">
+            <mat-form-field fxFlex="18">
                 <mat-label>State</mat-label>
                 <mat-select formControlName="vin_state" name="vin_state">
                     <mat-option *ngFor="let state of states" [value]="state"> {{ state }} </mat-option>
@@ -42,7 +42,7 @@
                 </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" fxFlex="18">
+            <mat-form-field fxFlex="18">
                 <mat-label for="vin">Vehicle License Number or VIN</mat-label>
                 <input matInput required formControlName="vin" type="text" name="vin"
                     placeholder="Veh. Lic. No. or VIN" />
@@ -50,7 +50,7 @@
                     <strong>Required</strong>
                 </mat-error>
             </mat-form-field>
-            <mat-form-field appearance="outline" fxFlex="18">
+            <mat-form-field fxFlex="18">
                 <mat-label for="desc">Description</mat-label>
                 <textarea matInput required formControlName="desc" type="text" name="desc" placeholder="Description"
                     cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
@@ -102,9 +102,9 @@
                                     <button (click)="removeViolation(i)" mat-raised-button color="warn">Remove</button>
                                 </td>
                             </tr>
-                            <tr [formGroupName]="i">
+                            <tr [formGroupName]="i" fxLayoutGap="15px">
                                 <td>
-                                    <mat-form-field appearance="outline">
+                                    <mat-form-field>
                                         <mat-label>Group</mat-label>
                                         <mat-select formControlName="group" name="group">
                                             <mat-option *ngFor="let group of groups" [value]="group"> {{ group }} </mat-option>
@@ -112,7 +112,7 @@
                                     </mat-form-field>
                                 </td>
                                 <td>
-                                    <mat-form-field appearance="outline">
+                                    <mat-form-field>
                                         <mat-label>Code</mat-label>
                                         <mat-select formControlName="code" name="code">
                                             <mat-option *ngFor="let code of codes" [value]="code"> {{ code }} </mat-option>
@@ -122,7 +122,7 @@
                             </tr>
                             <tr [formGroupName]="i">
                                 <td>
-                                    <mat-form-field appearance="fill">
+                                    <mat-form-field>
                                         <mat-label>Description</mat-label>
                                         <mat-select formControlName="desc" name="desc">
                                             <mat-option *ngFor="let desc of descriptions" [value]="desc"> {{ desc }} </mat-option>

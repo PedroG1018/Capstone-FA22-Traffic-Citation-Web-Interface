@@ -3,7 +3,8 @@ mat-toolbar, mat-drawer {
 }
 
 a:hover {
-  color: yellow !important;
+  color: #3949AB;
+  /* color: yellow !important; */
 }
 
 .navLinks a {
