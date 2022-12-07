@@ -24,8 +24,8 @@
     
         <!-- Bottom navigation for mobile -->
         <mat-toolbar fxShow="true" fxHide.gt-xs="true" class="bottomToolBar">
-            <mat-toolbar-row fxFlex fxLayout>
-                <div fxFlex fxLayoutAlign="center center" *ngIf="(auth.isAuthenticated$ | async)">
+            <mat-toolbar-row>
+                <div class="bottomToolBarLinks" fxLayoutAlign="center center" *ngIf="(auth.isAuthenticated$ | async)" >
                     <a routerLink="/home" routerLinkActive="active-link"><mat-icon>home_rounded</mat-icon><span>Home</span></a>
                     <a routerLink="/create-citation" routerLinkActive="active-link"><mat-icon>note_add_rounded</mat-icon><span>Create</span></a>
                     <a routerLink="/view-citations" routerLinkActive="active-link"><mat-icon>wysiwyg_rounded</mat-icon><span>View</span></a>

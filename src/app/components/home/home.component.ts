@@ -12,6 +12,6 @@ export class HomeComponent implements OnInit {
   constructor(public auth: AuthService, @Inject(DOCUMENT) private doc: Document) { }
 
   ngOnInit(): void {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   }
 }
