@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { AuthService } from '@auth0/auth0-angular';
+
 
 @Component({
   selector: 'app-officer-form',
@@ -9,7 +11,7 @@ import { FormGroup } from '@angular/forms';
 export class OfficerFormComponent implements OnInit {
   @Input() form!: FormGroup;
 
-  constructor() { }
+  constructor(public auth: AuthService,) { }
 
   ngOnInit(): void {
   }
