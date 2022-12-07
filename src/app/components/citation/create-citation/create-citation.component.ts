@@ -85,7 +85,7 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
   defaultDate = formatDate(new Date().setFullYear(new Date().getFullYear() - 18), 'yyyy-MM-dd', 'en-US');
   // Current date and time for citation
   currentDate = formatDate(new Date(), 'yyyy-MM-dd', 'en-US');
-  currentTime = new Date().getHours() + ":" + new Date().getMinutes().toString().padStart(2, '0');
+  currentTime = new Date().getHours().toString().padStart(2, '0') + ":" + new Date().getMinutes().toString().padStart(2, '0');
 
   constructor(private citationService: CitationService, private driverService: DriverService, private snackBar: MatSnackBar, private fb: FormBuilder, private auth: AuthService) { 
     super();  
@@ -100,7 +100,7 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
         this.setCitationUser();
       }
     });
-    
+    console.log(this.currentTime);
 
     this.initForm();
   }
@@ -157,7 +157,6 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
   }
 
   saveDriver() {
-    console.log('Driver Found Status: ' + this.driverFound);
     if (!this.driverFound) {
       // Create new driver
       this.addNewSubscription = this.driverService
@@ -203,5 +202,6 @@ export class CreateCitationComponent extends Unsubscriber implements OnInit {
     this.driverFound = false;
     this.citation = new Citation();
     this.setCitationUser();
+    window.scrollTo(0, 0);
   }
 }

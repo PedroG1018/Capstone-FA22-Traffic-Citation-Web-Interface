@@ -1,9 +1,20 @@
 mat-toolbar, mat-drawer {
   background-color: #1A237E;
-  color: white;
 }
 
 a:hover {
+  color: #3949AB;
+  color: yellow !important;
+}
+
+.navLinks a {
+  color: white;
+  padding: 15px 20px;
+  text-decoration: none;
+  font-size: medium;
+}
+
+.active-link {
   background-color: #3949AB;
 }
 
@@ -11,21 +22,6 @@ img {
   max-width: 45px;
   max-height: auto;
   margin-left: -10px;
-}
-
-.navLinks, a {
-  color: white;
-  padding: 15px 20px;
-  text-decoration: none;
-  font-family: sans-serif;
-  font-size: large;
-}
-
-.sideNav {
-  color: white;
-  text-decoration: none;
-  font-family: sans-serif;
-  font-size: large;
 }
 
 html, body, .content, app-root {
@@ -37,4 +33,27 @@ html, body, .content, app-root {
   z-index: 100;
   bottom: 0; 
   text-align: center;
+  padding-top: 5px;
+}
+
+.bottomToolBar a {
+  color: white;
+  padding: 8px 12px 0px 12px;
+  text-decoration: none;
+  font-family: sans-serif;
+  font-size: small;
+  height: calc(100% - 20px);
+  cursor: pointer;
+
+  
+}
+
+.bottomToolBarLinks {
+  margin: 0 auto;
+  width: calc(100% - 50px);
+}
+
+span {
+  display: block;
+  margin-top: -10px;
 }

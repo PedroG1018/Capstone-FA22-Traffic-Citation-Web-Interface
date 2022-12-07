@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { throwError, of } from 'rxjs';
 
@@ -12,7 +13,7 @@ import { throwError, of } from 'rxjs';
   providedIn: 'root',
 })
 export class ErrorHandleService {
-  constructor(private router: Router) {}
+  constructor(private snackBar: MatSnackBar) {}
 
   public handleError(error: HttpErrorResponse) {
     let errorMessage = '';
@@ -31,6 +32,7 @@ export class ErrorHandleService {
     console.log(errorMessage);
 
     return throwError(() => {
+      // this.snackBar.open(errorMessage, '', { duration: 2800 });
       return errorMessage;
     });
   }

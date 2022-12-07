@@ -5,13 +5,12 @@ import { AuthService } from '@auth0/auth0-angular';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './components/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { Unsubscriber } from './services/unsubscriber';
-import { Subject } from 'rxjs';
 import { StorageService } from './services/storage.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css',]
 })
 export class AppComponent extends Unsubscriber implements OnInit, OnDestroy {
   title = 'TrafficCitation.UI';

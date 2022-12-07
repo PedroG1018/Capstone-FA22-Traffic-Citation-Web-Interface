@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio'
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ErrorStateMatcher, MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
@@ -32,6 +32,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 
 //Auth0
 import { AuthModule } from '@auth0/auth0-angular';
@@ -119,7 +121,8 @@ import { DriverFormComponent } from './components/citation/forms/driver-form/dri
     MatDividerModule,
     MatSidenavModule,
     MatGridListModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatProgressBarModule
   ],
   providers: [
     { provide: MatDialogRef, useValue: {} }, CitationService,
@@ -134,6 +137,10 @@ import { DriverFormComponent } from './components/citation/forms/driver-form/dri
     },
     { provide: ErrorStateMatcher, useClass: InputErrorStateMatcher },
     { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true},
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {
+      appearance: 'outline',
+      hideRequiredMarker: true,
+    }},
   ],
   bootstrap: [AppComponent],
 })

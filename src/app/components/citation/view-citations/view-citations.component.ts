@@ -64,7 +64,7 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
   loadCitations(pageNumber: number, pageSize: number) {
     this.loadingSubject.next(true);
 
-    if(this.userId && this.userRole) {
+    if (this.userId && this.userRole) {
       this.addNewSubscription = this.citationService
       .getCitationsPaginator(pageNumber, pageSize, this.userId, this.userRole)
       .pipe(
@@ -72,7 +72,7 @@ export class ViewCitationsComponent extends Unsubscriber implements AfterViewIni
         finalize(() => this.loadingSubject.next(false))
       )
       .subscribe(response => {
-        if (response) {
+        if (response && response.totalCitationsCount > 0) {
           this.completeCitations = response.completeCitationList,
           this.citationCount = response.totalCitationsCount
           this.citationsFound = true;

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { BehaviorSubject, finalize } from 'rxjs';
 import { ConfirmationDialogComponent } from 'src/app/components/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { Driver } from 'src/app/models/driver';
 import { DriverService } from 'src/app/services/driver.service';
@@ -22,6 +23,10 @@ export class DriverFormComponent extends Unsubscriber {
   // Use two way binding to emit change to parent component
   @Output() driverChange = new EventEmitter<Driver>();
   @Output() driverFoundChange = new EventEmitter<boolean>();
+
+  // For displaying spinner while checking for existing driver
+  private loadingDriverSubject = new BehaviorSubject<boolean>(false);
+  public loading$ = this.loadingDriverSubject.asObservable();
 
   constructor(private driverService: DriverService, private dialog: MatDialog) {
     super();
@@ -61,7 +66,11 @@ export class DriverFormComponent extends Unsubscriber {
   // If driver license number exists ask to autofill form
   findDriverByLicense(event: string) {
     if (!this.editingCitation && event?.length == 8 && !this.driverFound) {
-      this.addNewSubscription = this.driverService.getDriverByLicenseNo(event).subscribe(result => {
+      this.loadingDriverSubject.next(true);
+      this.addNewSubscription = this.driverService.getDriverByLicenseNo(event).pipe(
+        finalize(() => this.loadingDriverSubject.next(false))
+      )
+      .subscribe(result => {
         if (typeof result === 'object') {
           this.openConfirmDialog(result);
         }

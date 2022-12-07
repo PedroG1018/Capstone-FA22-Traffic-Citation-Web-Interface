@@ -1,35 +1,39 @@
-<div class="content mat-typography mat-app-background">
-    <mat-toolbar fxShow="true" fxHide.lt-sm="true">
-        <mat-toolbar-row fxFlex fxLayout>
-            <div fxFlex>
-                <a [routerLink]=""><img src="assets/court_logo.jpeg" alt="court_logo" /></a>
-            </div>
-
-            <div fxFlex class="navLinks" fxLayoutAlign="center center" *ngIf="(auth.isAuthenticated$ | async)">
-                <a [routerLink]="'/home'">Home</a>
-                <a [routerLink]="'/create-citation'">Create Citation</a>
-                <a [routerLink]="'/view-citations'">View Citations</a>
-                <a [routerLink]="'/profile'">Profile</a>
-            </div>
-            <div fxFlex fxLayoutAlign="flex-end center" *ngIf="(auth.isAuthenticated$ | async)">
-                <a (click)="logout()">Logout</a>
-            </div>
-        </mat-toolbar-row>
-    </mat-toolbar>
-
-    <!-- Bottom navigation for mobile -->
-    <mat-toolbar fxShow="true" fxHide.gt-xs="true" class="bottomToolBar">
-        <mat-toolbar-row fxFlex fxLayout>
-            <div fxFlex fxLayoutAlign="center center" *ngIf="(auth.isAuthenticated$ | async)">
-                <a [routerLink]="'/home'"><mat-icon>home_rounded</mat-icon></a>
-                <a [routerLink]="'/create-citation'"><mat-icon>note_add_rounded</mat-icon></a>
-                <a [routerLink]="'/view-citations'"><mat-icon>wysiwyg_rounded</mat-icon></a>
-                <a [routerLink]="'/profile'"><mat-icon>account_circle_rounded</mat-icon></a>
-            </div>
-            <div fxFlex fxLayoutAlign="flex-end center" *ngIf="(auth.isAuthenticated$ | async)">
-                <a (click)="logout()" style="color: red;"><mat-icon>exit_to_app_rounded</mat-icon></a>
-            </div>
-        </mat-toolbar-row>
-    </mat-toolbar>
-    <router-outlet></router-outlet>
+<div class="spinner-container" *ngIf="auth.isLoading$ | async; else loaded">
+    <mat-spinner></mat-spinner>
 </div>
+
+<ng-template #loaded>
+    <div class="content mat-typography mat-app-background">
+        <mat-toolbar fxShow="true" fxHide.lt-sm="true">
+            <mat-toolbar-row fxFlex fxLayout>
+                <div fxFlex>
+                    <img src="assets/court_logo.jpeg" alt="court_logo" />
+                </div>
+    
+                <div fxFlex class="navLinks" fxLayoutAlign="center center" *ngIf="(auth.isAuthenticated$ | async)">
+                    <a routerLink="/home" routerLinkActive="active-link">Home</a>
+                    <a routerLink="/create-citation" routerLinkActive="active-link">Create Citation</a>
+                    <a routerLink="/view-citations" routerLinkActive="active-link">View Citations</a>
+                    <a routerLink="/profile" routerLinkActive="active-link">Profile</a>
+                </div>
+                <div class="navLinks" fxFlex fxLayoutAlign="flex-end center" *ngIf="(auth.isAuthenticated$ | async)">
+                    <a (click)="logout()">Logout</a>
+                </div>
+            </mat-toolbar-row>
+        </mat-toolbar>
+    
+        <!-- Bottom navigation for mobile -->
+        <mat-toolbar fxShow="true" fxHide.gt-xs="true" class="bottomToolBar">
+            <mat-toolbar-row>
+                <div class="bottomToolBarLinks" fxLayoutAlign="center center" *ngIf="(auth.isAuthenticated$ | async)" >
+                    <a routerLink="/home" routerLinkActive="active-link"><mat-icon>home_rounded</mat-icon><span>Home</span></a>
+                    <a routerLink="/create-citation" routerLinkActive="active-link"><mat-icon>note_add_rounded</mat-icon><span>Create</span></a>
+                    <a routerLink="/view-citations" routerLinkActive="active-link"><mat-icon>wysiwyg_rounded</mat-icon><span>View</span></a>
+                    <a routerLink="/profile" routerLinkActive="active-link"><mat-icon>account_circle_rounded</mat-icon><span>Profile</span></a>
+                    <a (click)="logout()" style="color: red;"><mat-icon>exit_to_app_rounded</mat-icon><span>Logout</span></a>
+                </div>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <router-outlet></router-outlet>
+    </div>
+</ng-template>

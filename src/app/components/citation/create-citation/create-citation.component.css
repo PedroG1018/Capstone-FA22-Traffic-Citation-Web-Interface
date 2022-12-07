@@ -10,7 +10,7 @@
 }
 
 .default-card {
-    width: 80%;
+    /* width: 80%; */
     margin: 0 auto;
     padding: 0 0 25px 0;
     border-radius: 5px;
@@ -20,20 +20,11 @@
     text-align: center;
 }
 
-.mat-card-actions {
-    display: flex;
-    justify-content: center;
-}
-
 .stepper {
     height: 100vh;
 }
 
 /* Mobile */
-
-.mat-vertical-stepper-header-container {
-    display: none !important;
-}
 
 .mobile-stepper {
     padding-bottom: 50px;

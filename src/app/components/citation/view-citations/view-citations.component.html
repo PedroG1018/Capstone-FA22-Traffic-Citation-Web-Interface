@@ -1,12 +1,16 @@
-<div class="spinner-container" *ngIf="loading$ | async">
+<div class="spinner-container" *ngIf="loading$ | async; else loaded">
   <mat-spinner></mat-spinner>
 </div>
 
-<!-- <div class="container p-4" [hidden]="citationsFound && !(loading$ | async)">
-  <div class="text-center">
-    <h1>No Traffic Citations Found</h1>
+<ng-template #loaded>
+  <div class="container p-4" [hidden]="citationsFound">
+    <div class="text-center">
+      <h1>No Traffic Citations Found</h1><br>
+      <button routerLink="/create-citation" mat-raised-button color="primary">Create Traffic Citation</button>
+    </div>
   </div>
-</div> -->
+</ng-template>
+
 
 <div class="p-3" fxLayout="row wrap" fxLayoutGap="16px grid">
   <!-- fxFlex.xs is for mobile screens ... only show 1 citation on mobile vertically-->

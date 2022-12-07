@@ -2,14 +2,13 @@
     <h1>Citation Submitted!</h1>
 </div>
 
-
-<div *ngIf="!formSubmitted" fxLayout="row wrap" fxLayout.xs="column wrap" class="table" fxLayoutGap="20px">
+<div *ngIf="!formSubmitted" fxLayoutAlign="center" fxLayout="row wrap" fxLayout.xs="column wrap" class="table" fxLayoutGap="20px">
     <div fxLayout="column" class="row" fxLayout.xs="row">
         <div >Type</div>
         <div fxFlex > {{ citationInfo.controls['type'].value }} </div>
     </div>
     <div fxLayout="column" class="row" fxLayout.xs="row">
-        <div >Date</div>
+        <div >Date of Violation</div>
         <div fxFlex > {{ citationInfo.controls['date'].value }} </div>
     </div>
     <div fxLayout="column" class="row" fxLayout.xs="row">
@@ -17,7 +16,7 @@
         <div fxFlex > {{ citationInfo.controls['time'].value }} </div>
     </div>
     <div fxLayout="column" class="row" fxLayout.xs="row">
-        <div >Location</div>
+        <div >Location of Violation</div>
         <div fxFlex >{{ citationInfo.controls['violation_loc'].value}}, {{ citationInfo.controls['vin_state'].value }}   
         </div>
     </div>

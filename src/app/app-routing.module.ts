@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '@auth0/auth0-angular';
 
 // Import different components (views)
 import { AppComponent } from './app.component';
@@ -16,21 +17,54 @@ import { DriverFormComponent } from './components/citation/forms/driver-form/dri
 // Define all routes in Routes array
 const routes: Routes = [
   { path: 'app', component: AppComponent },
-  { path: 'home', component: HomeComponent, title: 'Traffic Citation Interface' },
-  { path: 'profile', component: ProfileComponent, title: 'Profile'},
-  { path: 'create-citation', component: CreateCitationComponent, title: 'Creating Citation' },
-  { path: 'edit-citation', component: EditCitationComponent, title: 'Editing Citations' },
-  { path: 'view-citations', component: ViewCitationsComponent, title: 'Viewing Citations' },
-  { path: 'confirmation-dialog', component: ConfirmationDialogComponent, title: 'Check for driver' },
-  { path: 'driver-form', component: DriverFormComponent, title: 'Driver Information' },
-  { path: 'welcome-page', component: LandingPageComponent, title: 'Welcome Page' },
+  {
+    path: 'home',
+    component: HomeComponent,
+    canActivate: [AuthGuard],
+    title: 'Traffic Citation Interface',
+  },
+  { path: 'profile', component: ProfileComponent, title: 'Profile' },
+  {
+    path: 'create-citation',
+    canActivate: [AuthGuard],
+    component: CreateCitationComponent,
+    title: 'Creating Citation',
+  },
+  {
+    path: 'edit-citation',
+    canActivate: [AuthGuard],
+    component: EditCitationComponent,
+    title: 'Editing Citations',
+  },
+  {
+    path: 'view-citations',
+    canActivate: [AuthGuard],
+    component: ViewCitationsComponent,
+    title: 'Viewing Citations',
+  },
+  {
+    path: 'confirmation-dialog',
+    canActivate: [AuthGuard],
+    component: ConfirmationDialogComponent,
+    title: 'Check for driver',
+  },
+  {
+    path: 'driver-form',
+    canActivate: [AuthGuard],
+    component: DriverFormComponent,
+    title: 'Driver Information',
+  },
+  {
+    path: 'welcome-page',
+    component: LandingPageComponent,
+    title: 'Welcome Page',
+  },
   { path: '', redirectTo: 'welcome-page', pathMatch: 'full' }, // TODO: Change to login page
-  { path: '**', component: PageNotFoundComponent, title: 'Page Not Found' } // Wildcard route (404 page)
-
+  { path: '**', component: PageNotFoundComponent, title: 'Page Not Found' }, // Wildcard route (404 page)
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

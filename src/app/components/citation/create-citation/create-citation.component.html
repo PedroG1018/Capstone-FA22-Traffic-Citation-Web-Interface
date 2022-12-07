@@ -43,8 +43,8 @@
         <mat-step>
             <ng-template matStepLabel>Review</ng-template>
             <div class="p-4">
-                <mat-card>
-                    <mat-card-header>
+                <mat-card class="default-card">
+                    <mat-card-header class="default-card-header">
                         <mat-card-title>
                             <h2>Review Citation</h2>
                         </mat-card-title>
@@ -55,7 +55,7 @@
                         </app-citation-review>
                     </mat-card-content>
     
-                    <mat-card-actions class="mb-2 mt-3">
+                    <mat-card-actions class="mb-2 mt-3 text-center">
                         <button mat-raised-button color="primary" matStepperPrevious [hidden]="citationCreated">Back</button>
                         <button mat-raised-button color="primary" (click)="onFormSubmit()"
                             *ngIf="citationCreated == false" type="submit">Submit</button>
