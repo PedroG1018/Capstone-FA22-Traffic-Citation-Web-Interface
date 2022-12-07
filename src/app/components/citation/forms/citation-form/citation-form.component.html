@@ -1,7 +1,7 @@
 <div [formGroup]="form">
     <div formGroupName="citationInfo">
         <div fxLayoutAlign="center center" fxLayout="row wrap">
-            <mat-radio-group formControlName="type" fxLayout.xs="column wrap" fxLayoutGap.xs="15px" fxLayoutGap="16px">
+            <mat-radio-group formControlName="type" fxLayout.lt-sm="column wrap" fxLayoutGap.xs="15px" fxLayoutGap="16px">
                 <mat-radio-button value="Misdemeanor">Misdemeanor</mat-radio-button>
                 <mat-radio-button value="Traffic">Traffic</mat-radio-button>
                 <mat-radio-button value="Non-Traffic">Non-Traffic</mat-radio-button>
@@ -13,18 +13,18 @@
             </span>
         </div><br>
         <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="center" fxLayout.xs="column">
-            <mat-form-field appearance="fill" fxFlex="18">
-                <mat-label>Date</mat-label>
+            <mat-form-field appearance="outline" fxFlex="18">
+                <mat-label>Date of Violation</mat-label>
                 <input matInput required formControlName="date" type="date" />
             </mat-form-field>
 
-            <mat-form-field appearance="fill" fxFlex="18">
+            <mat-form-field appearance="outline" fxFlex="18">
                 <mat-label>Time</mat-label>
                 <input matInput formControlName="time" type="time" />
             </mat-form-field>
 
-            <mat-form-field appearance="fill" fxFlex="18">
-                <mat-label for="violation_loc">Location</mat-label>
+            <mat-form-field appearance="outline" fxFlex="18">
+                <mat-label for="violation_loc">Location of Violation</mat-label>
                 <input matInput required formControlName="violation_loc" type="text" name="violation_loc"
                     placeholder="Location" />
                 <mat-error *ngIf="citationInfo.controls['violation_loc'].hasError('required')">
@@ -32,7 +32,7 @@
                 </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" fxFlex="18">
+            <mat-form-field appearance="outline" fxFlex="18">
                 <mat-label>State</mat-label>
                 <mat-select formControlName="vin_state" name="vin_state">
                     <mat-option *ngFor="let state of states" [value]="state"> {{ state }} </mat-option>
@@ -42,7 +42,7 @@
                 </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" fxFlex="18">
+            <mat-form-field appearance="outline" fxFlex="18">
                 <mat-label for="vin">Vehicle License Number or VIN</mat-label>
                 <input matInput required formControlName="vin" type="text" name="vin"
                     placeholder="Veh. Lic. No. or VIN" />
@@ -50,7 +50,7 @@
                     <strong>Required</strong>
                 </mat-error>
             </mat-form-field>
-            <mat-form-field appearance="fill" fxFlex="18">
+            <mat-form-field appearance="outline" fxFlex="18">
                 <mat-label for="desc">Description</mat-label>
                 <textarea matInput required formControlName="desc" type="text" name="desc" placeholder="Description"
                     cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
@@ -104,14 +104,14 @@
                             </tr>
                             <tr [formGroupName]="i">
                                 <td>
-                                    <mat-form-field appearance="fill">
+                                    <mat-form-field appearance="outline">
                                         <mat-label>Group</mat-label>
                                         <input matInput required type="text" formControlName="group"
                                             placeholder="Group">
                                     </mat-form-field>
                                 </td>
                                 <td>
-                                    <mat-form-field appearance="fill">
+                                    <mat-form-field appearance="outline">
                                         <mat-label>Code</mat-label>
                                         <input matInput required type="text" formControlName="code" placeholder="Code">
                                     </mat-form-field>
@@ -119,7 +119,7 @@
                             </tr>
                             <tr [formGroupName]="i">
                                 <td>
-                                    <mat-form-field appearance="fill">
+                                    <mat-form-field appearance="outline">
                                         <mat-label>Degree</mat-label>
                                         <input matInput required type="text" formControlName="degree"
                                             placeholder="Degree">
@@ -127,7 +127,7 @@
 
                                 </td>
                                 <td>
-                                    <mat-form-field appearance="fill">
+                                    <mat-form-field appearance="outline">
                                         <mat-label>Description</mat-label>
                                         <input matInput required type="text" formControlName="desc" placeholder="Desc">
                                     </mat-form-field>
