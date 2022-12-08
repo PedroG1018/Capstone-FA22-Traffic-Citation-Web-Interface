@@ -1,4 +1,4 @@
-<div *ngIf="auth.user$ | async as user" [formGroup]="form" fxLayout="column">
+<div *ngIf="auth.user$ | async as user" [formGroup]="form" fxLayout="column" class="p-4">
     <div fxLayoutGap="10px" formGroupName="officerInfo" fxLayout="row wrap" fxLayoutAlign="center" fxLayout.lt-sm="column">
         <mat-form-field appearance="outline" fxFlex="18">
             <mat-label>Arresting Officer Name</mat-label>
