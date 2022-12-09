@@ -11,7 +11,11 @@ a:hover {
   color: white;
   padding: 15px 20px;
   text-decoration: none;
-  font-size: medium;
+  font-family: Barlow,sans-serif;
+  display: block;
+  -webkit-font-smoothing: antialiased;
+  font-size:18px;
+  font-weight: 300;
 }
 
 .active-link {
