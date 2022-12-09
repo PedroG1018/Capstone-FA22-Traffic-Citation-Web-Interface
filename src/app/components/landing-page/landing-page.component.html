@@ -29,7 +29,8 @@
             </mat-card-title>
           </mat-card-header>
           <mat-card-content>
-            <h1 class="text-center"> Welcome to the Monterey Superior Court</h1>
+            <h1 *ngIf="auth.user$ | async as user" class = "text-center"> Hi {{ user.name }}!</h1>
+            <h1 class="text-center" > Welcome the Monterey Superior Court</h1>
             <h1 class="text-center"> Citation Database</h1>
             <h2 class="text-center"> The Monterey County Superior Court is committed to providing the highest quality of service to the public. </h2>
             <h2 *ngIf="(auth.isAuthenticated$ | async) === false" class="text-center"> Please login to continue </h2>
@@ -38,9 +39,9 @@
               <button mat-raised-button color="primary" *ngIf="(auth.isAuthenticated$ | async) === false" (click)="registerWithRedirect()">Register</button>
             </div>
             <h3 *ngIf="(auth.isAuthenticated$ | async) === true" class ="text-center"> After verifying access please use the navigation bar to move around the application</h3>
+            <div class = "text-center">
+              <a *ngIf="(auth.isAuthenticated$ | async) === true" class = "linkButton" mat-flat-button href="https://www.monterey.courts.ca.gov/" target="_blank">Visit us to learn more</a>
+            </div>
           </mat-card-content>
         </mat-card>
       </div>
-      <div class="col-md-4"></div>
-    </div>
-

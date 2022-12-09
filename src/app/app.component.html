@@ -11,13 +11,13 @@
                 </div>
     
                 <div fxFlex class="navLinks" fxLayoutAlign="center center" *ngIf="(auth.isAuthenticated$ | async)">
-                    <a routerLink="/home" routerLinkActive="active-link">Home</a>
-                    <a routerLink="/create-citation" routerLinkActive="active-link">Create Citation</a>
-                    <a routerLink="/view-citations" routerLinkActive="active-link">View Citations</a>
-                    <a routerLink="/profile" routerLinkActive="active-link">Profile</a>
+                    <a routerLink="/home" routerLinkActive="active-link">HOME</a>
+                    <a routerLink="/create-citation" routerLinkActive="active-link">CREATE CITATION</a>
+                    <a routerLink="/view-citations" routerLinkActive="active-link">VIEW CITATIONS</a>
+                    <a routerLink="/profile" routerLinkActive="active-link">PROFILE</a>
                 </div>
                 <div class="navLinks" fxFlex fxLayoutAlign="flex-end center" *ngIf="(auth.isAuthenticated$ | async)">
-                    <a (click)="logout()">Logout</a>
+                    <button class = "button-8" (click)="logout()">LOGOUT</button>
                 </div>
             </mat-toolbar-row>
         </mat-toolbar>
